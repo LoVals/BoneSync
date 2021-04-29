@@ -14,9 +14,10 @@ namespace BoneSync
     {
         static void Main()
         {
-            bool SetPath = false;
-            string rootPath = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones";      //Replace this with Current Directory + \Soundbones as the script resides in the same folder as pre build sync
-            string path = Directory.GetCurrentDirectory();                                      // will likely change to the SOUNDSOUL root
+            bool SetPath = false;                                                                                               //Shall I actually give users custom Folders? I am thinking Fuck no
+            string CurrentDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls";                                               //Replace this with Directory.GetCurrentDirectory
+            string rootPath = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones";                                      //Replace this with Current Directory + \Soundbones as the script resides in the same folder as pre build sync
+            string path = Directory.GetCurrentDirectory();                                                                      // will likely change to the SOUNDSOUL root
             Console.WriteLine(" _________________________");
             Console.WriteLine("¦                         ¦");
             Console.WriteLine("¦       Bonesync 1.0      ¦");
@@ -26,7 +27,7 @@ namespace BoneSync
             Console.WriteLine("Preparing to syncronize...");
             Console.WriteLine("Press any key to start");
 
-            if (SetPath = false)
+            if (SetPath == false)
             {
                 BoneSync.ChangeFolder();
             }
@@ -43,7 +44,7 @@ namespace BoneSync
 
 
         }
-        public static void XMLMake(string rootPath)                                                                 //Will copy over the fdp files as xml to merge them subsequently
+        public static void XMLMake(string rootPath)                                                                             //Will copy over the fdp files as xml to merge them subsequently
         {
             string sourceDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones";
             string backupDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs";
@@ -55,7 +56,7 @@ namespace BoneSync
             foreach (string file in files)
             {
                 Console.WriteLine(file);
-            }                                                                                                      //spits out the file list
+            }                                                                                                                    //spits out the file list
             Console.WriteLine("SoundBones have been Fetched, Copying...");
             try
             {
@@ -103,7 +104,7 @@ namespace BoneSync
             }
         }
 
-        public static void ChangeBoneExtension(string OldExt, string NewExt)                                       //should swap the extension of fdp files to XML
+        public static void ChangeBoneExtension(string OldExt, string NewExt)                                                        //should swap the extension of fdp files to XML
         {
             string XMLDIR = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs";
             var FDPFILE = Directory.GetFiles(XMLDIR, "*", SearchOption.TopDirectoryOnly);
@@ -116,9 +117,11 @@ namespace BoneSync
             }
         }
 
-        public static void MainProjectCopy()                                                                    //Copies over the soundsouls project as XML
+        public static void MainProjectCopy()                                                                                     //Copies over the soundsouls project as XML
         {
-            //
+            string sourceDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls";                                                 //will need replacement with dynamic shit
+            string backupDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs";
+            File.Copy(sourceDir + @"\SoundSouls.fdp", backupDir + @"SoundSouls.xml");                                           //Should also convert to XML
         }
     }
 }
