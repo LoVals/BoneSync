@@ -34,8 +34,8 @@ namespace BoneSync
 
             Console.ReadLine();
             BoneSync.WipeOldFiles();
-            BoneSync.MainProjectCopy();
             BoneSync.XMLMake(rootPath);
+            BoneSync.MainProjectCopy();
             Console.WriteLine("I STILL NEED TO WRITE THE SYNC TOOL - THUS THAT's IT YA CUNT!");
             Console.ReadLine();
 
@@ -121,7 +121,7 @@ namespace BoneSync
         {
             string sourceDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls";                                                 //will need replacement with dynamic shit
             string backupDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs";
-            File.Copy(sourceDir + @"\SoundSouls.fdp", backupDir + @"SoundSouls.xml");                                           //Should also convert to XML
+            File.Copy(sourceDir + @"\SoundSouls.fdp", backupDir + @"\SoundSouls.xml");                                           //Should also convert to XML
         }
     }
 }
