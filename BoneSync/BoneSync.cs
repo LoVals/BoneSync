@@ -26,6 +26,7 @@ namespace BoneSync
             Console.WriteLine("The current directory is {0}", path);
             Console.WriteLine("Preparing to syncronize...");
             Console.WriteLine("Press any key to start");
+            //File.Copy(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSouls.xml", @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\PreviousVersion\SoundSoulsCache.xml");
 
             if (SetPath == false)
             {
@@ -98,6 +99,7 @@ namespace BoneSync
 
 
             string[] filePaths = Directory.GetFiles(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs");
+            //File.Delete(filePaths + @"\PreviousVersion\SoundSoulsCache.xml");
             foreach (string filePath in filePaths)
             {
                 File.Delete(filePath);
