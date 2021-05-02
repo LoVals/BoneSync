@@ -7,14 +7,14 @@ using System.ComponentModel;
 using System.IO;
 using System.Drawing;
 using System.Data;
+using XmlDiffLib;
 
 namespace BoneSync
 {
     class BoneSync
     {
         static void Main()
-        {
-            bool SetPath = false;                                                                                               //Shall I actually give users custom Folders? I am thinking Fuck no
+        {                                                                                          //Shall I actually give users custom Folders? I am thinking Fuck no
             string CurrentDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls";                                               //Replace this with Directory.GetCurrentDirectory
             string rootPath = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones";                                      //Replace this with Current Directory + \Soundbones as the script resides in the same folder as pre build sync
             string path = Directory.GetCurrentDirectory();                                                                      // will likely change to the SOUNDSOUL root
@@ -27,16 +27,11 @@ namespace BoneSync
             Console.WriteLine("Preparing to syncronize...");
             Console.WriteLine("Press any key to start");
             //File.Copy(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSouls.xml", @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\PreviousVersion\SoundSoulsCache.xml");
-
-            if (SetPath == false)
-            {
-                BoneSync.ChangeFolder();
-            }
-
             Console.ReadLine();
             BoneSync.WipeOldFiles();
             BoneSync.XMLMake(rootPath);
-            BoneSync.MainProjectCopy();
+            BoneSync.MainProjectCopy("SoundSouls.xml", "SoundSoulsCache.xml");
+            BoneSync.XMLDiff("SoundSouls.xml", "SoundSoulsCache.xml");
             Console.WriteLine("I STILL NEED TO WRITE THE SYNC TOOL - THUS THAT's IT YA CUNT!");
             Console.ReadLine();
 
@@ -62,7 +57,7 @@ namespace BoneSync
             try
             {
                 string[] BoneList = Directory.GetFiles(sourceDir, "*.fdp");
-                foreach (string f in BoneList)                  
+                foreach (string f in BoneList)
                 {
                     // Remove path from the file name.
                     string fName = f.Substring(sourceDir.Length + 1);
@@ -88,11 +83,6 @@ namespace BoneSync
 
             BoneSync.ChangeBoneExtension(".fdp", ".xml");
         }
-
-        public static void ChangeFolder()
-        {
-            //Code goes here
-        }
         public static void WipeOldFiles()
         {
             //Wipes any leftover file in the XML dir
@@ -105,7 +95,6 @@ namespace BoneSync
                 File.Delete(filePath);
             }
         }
-
         public static void ChangeBoneExtension(string OldExt, string NewExt)                                                        //should swap the extension of fdp files to XML
         {
             string XMLDIR = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs";
@@ -114,16 +103,42 @@ namespace BoneSync
             foreach (string file in FDPFILE)
             {
                 string filename = Path.GetFileNameWithoutExtension(file);
-                File.Move(XMLDIR+@"/"+filename+OldExt,XMLDIR+@"/"+filename+NewExt);
+                File.Move(XMLDIR + @"/" + filename + OldExt, XMLDIR + @"/" + filename + NewExt);
                 Console.WriteLine(filename + OldExt + " has been converted to " + filename + NewExt);
             }
         }
-
-        public static void MainProjectCopy()                                                                                     //Copies over the soundsouls project as XML
+        public static void MainProjectCopy(string OldFileName, string NewFileName)                                                  //Copies over the soundsouls project as XML
         {
-            string sourceDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls";                                                 //will need replacement with dynamic shit
-            string backupDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs";
-            File.Copy(sourceDir + @"\SoundSouls.fdp", backupDir + @"\SoundSouls.xml");                                           //Should also convert to XML
+            var SoundSoulsFDP = Directory.GetFiles(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls", "SoundSouls.fdp", SearchOption.TopDirectoryOnly);
+            string BackUpDIR = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\Cache";
+            string MXMLDIR = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML";
+            string[] CachePath = Directory.GetFiles(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\Cache");
+            foreach (string filePath in CachePath)
+            {
+                File.Delete(filePath);
+            }
+
+            foreach (string file in SoundSoulsFDP)
+            {
+                File.Move(MXMLDIR + @"/" + OldFileName, BackUpDIR + @"/" + NewFileName);
+            }
+
+            File.Copy(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundSouls.fdp", @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\SoundSouls.xml");                                           //Should also convert to XML
+
+        }
+
+        public static void XMLDiff(string XMLFile, string Cachefile)
+        {
+            Console.WriteLine("Comparing SoundSouls XML Files");
+            Console.WriteLine("Will detect any changes and apply it to Soundbones");
+            Console.WriteLine("this will take some time");
+            var SoundSoulCache = File.ReadAllText(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\Cache\"+Cachefile);
+            var SoundSoulXML = File.ReadAllText(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\"+XMLFile);
+
+            var diff = new XmlDiff(SoundSoulXML, SoundSoulCache);
+
+            diff.CompareDocuments(new XmlDiffOptions());
+            diff.ToString();
         }
     }
 }
