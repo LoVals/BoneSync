@@ -7,7 +7,10 @@ using System.ComponentModel;
 using System.IO;
 using System.Drawing;
 using System.Data;
-using XmlDiffLib;
+using System.Xml;
+using System.Xml.Linq;
+//using XmlDiffLib;
+using Microsoft.XmlDiffPatch;
 
 namespace BoneSync
 {
@@ -31,8 +34,9 @@ namespace BoneSync
             BoneSync.WipeOldFiles();
             BoneSync.XMLMake(rootPath);
             BoneSync.MainProjectCopy("SoundSouls.xml", "SoundSoulsCache.xml");
-            BoneSync.XMLDiff("SoundSouls.xml", "SoundSoulsCache.xml");
+            //BoneSync.XMLDiff("frpg_c1000.xml", "frpg_c1200.xml");
             Console.WriteLine("I STILL NEED TO WRITE THE SYNC TOOL - THUS THAT's IT YA CUNT!");
+            BoneSync.ParseXML();
             Console.ReadLine();
 
             //NEED TO WRITE THE SYNC ALGORITHM - XML MERGE will likely be the way
@@ -107,7 +111,8 @@ namespace BoneSync
                 Console.WriteLine(filename + OldExt + " has been converted to " + filename + NewExt);
             }
         }
-        public static void MainProjectCopy(string OldFileName, string NewFileName)                                                  //Copies over the soundsouls project as XML
+        public static void MainProjectCopy(string OldFileName, string NewFileName)
+        //Copies over the soundsouls project as XML
         {
             var SoundSoulsFDP = Directory.GetFiles(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls", "SoundSouls.fdp", SearchOption.TopDirectoryOnly);
             string BackUpDIR = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\Cache";
@@ -127,18 +132,23 @@ namespace BoneSync
 
         }
 
-        public static void XMLDiff(string XMLFile, string Cachefile)
+
+        //public static void XMLCompare() //Simplified to understand its workings
+        // {
+        //    var exampleA = File.ReadAllText(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\TEST_A.xml");
+        //  var exampleB = File.ReadAllText(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\TEST_B.xml");
+        //
+        //var diff = new XmlDiff(exampleA, exampleB);
+
+        //          diff.CompareDocuments(new XmlDiffOptions());
+        //            diff.ToJsonString(); //where the fuck is this writing the file???
+        //        diff.ToString(Directory);
+        //      Console.WriteLine("Writing shit to file");  
+        //}
+            
+        public static void ParseXML()
         {
-            Console.WriteLine("Comparing SoundSouls XML Files");
-            Console.WriteLine("Will detect any changes and apply it to Soundbones");
-            Console.WriteLine("this will take some time");
-            var SoundSoulCache = File.ReadAllText(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\Cache\"+Cachefile);
-            var SoundSoulXML = File.ReadAllText(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\"+XMLFile);
-
-            var diff = new XmlDiff(SoundSoulXML, SoundSoulCache);
-
-            diff.CompareDocuments(new XmlDiffOptions());
-            diff.ToString();
+            XMLParse.ParseXML();
         }
     }
 }
