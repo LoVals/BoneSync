@@ -10,7 +10,7 @@ using System.Data;
 using System.Xml;
 using System.Xml.Linq;
 //using XmlDiffLib;
-using Microsoft.XmlDiffPatch;
+//using Microsoft.XmlDiffPatch;
 
 namespace BoneSync
 {
@@ -28,16 +28,40 @@ namespace BoneSync
             Console.WriteLine("");
             Console.WriteLine("The current directory is {0}", path);
             Console.WriteLine("Preparing to syncronize...");
-            Console.WriteLine("Press any key to start");
+            Console.WriteLine("Would You like to skip the XML conversion? TEST ONLY! 1 = yes 0 = no");
             //File.Copy(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSouls.xml", @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\PreviousVersion\SoundSoulsCache.xml");
-            Console.ReadLine();
-            BoneSync.WipeOldFiles();
-            BoneSync.XMLMake(rootPath);
-            BoneSync.MainProjectCopy("SoundSouls.xml", "SoundSoulsCache.xml");
-            //BoneSync.XMLDiff("frpg_c1000.xml", "frpg_c1200.xml");
-            Console.WriteLine("I STILL NEED TO WRITE THE SYNC TOOL - THUS THAT's IT YA CUNT!");
-            BoneSync.ParseXML();
-            Console.ReadLine();
+            int SkipSelect = int.Parse(Console.ReadLine());
+            switch (SkipSelect)
+            {
+                case 0:
+                    Console.WriteLine("Executing Full Protocol");
+                    BoneSync.WipeOldFiles();
+                    BoneSync.XMLMake(rootPath);
+                    BoneSync.MainProjectCopy("SoundSouls.xml", "SoundSoulsCache.xml");
+                    //BoneSync.XMLDiff("frpg_c1000.xml", "frpg_c1200.xml");
+                    Console.WriteLine("I STILL NEED TO WRITE THE SYNC TOOL - THUS THAT's IT YA CUNT!");
+                    BoneSync.ParseXML();
+                    Console.ReadLine();
+
+                    break;
+                case 1:
+                    Console.WriteLine("Skipping XML preconversion");
+                    BoneSync.ParseXML();
+                    Console.ReadLine();
+                    break;
+                default:
+                    Console.WriteLine("Default case Detecte");
+                    Console.WriteLine("Executing Full Protocol");
+                    BoneSync.WipeOldFiles();
+                    BoneSync.XMLMake(rootPath);
+                    BoneSync.MainProjectCopy("SoundSouls.xml", "SoundSoulsCache.xml");
+                    //BoneSync.XMLDiff("frpg_c1000.xml", "frpg_c1200.xml");
+                    Console.WriteLine("I STILL NEED TO WRITE THE SYNC TOOL - THUS THAT's IT YA CUNT!");
+                    BoneSync.ParseXML();
+                    Console.ReadLine();
+                    break;
+            }
+            
 
             //NEED TO WRITE THE SYNC ALGORITHM - XML MERGE will likely be the way
 
