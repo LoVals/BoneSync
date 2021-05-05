@@ -9,7 +9,6 @@ using System.Drawing;
 using System.Data;
 using System.Xml;
 using System.Xml.Linq;
-//using XmlDiffLib;
 //using Microsoft.XmlDiffPatch;
 
 namespace BoneSync
@@ -47,6 +46,7 @@ namespace BoneSync
                 case 1:
                     Console.WriteLine("Skipping XML preconversion");
                     BoneSync.ParseXML();
+                    //BoneSync.XMLComp();
                     Console.ReadLine();
                     break;
                 default:
@@ -154,22 +154,7 @@ namespace BoneSync
 
             File.Copy(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundSouls.fdp", @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\SoundSouls.xml");                                           //Should also convert to XML
 
-        }
-
-
-        //public static void XMLCompare() //Simplified to understand its workings
-        // {
-        //    var exampleA = File.ReadAllText(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\TEST_A.xml");
-        //  var exampleB = File.ReadAllText(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSoulsXML\TEST_B.xml");
-        //
-        //var diff = new XmlDiff(exampleA, exampleB);
-
-        //          diff.CompareDocuments(new XmlDiffOptions());
-        //            diff.ToJsonString(); //where the fuck is this writing the file???
-        //        diff.ToString(Directory);
-        //      Console.WriteLine("Writing shit to file");  
-        //}
-            
+        }            
         public static void ParseXML()
         {
             XMLParse.ParseXML();

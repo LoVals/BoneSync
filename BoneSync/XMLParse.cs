@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml;
+using DiffMatchPatch;
 
 namespace BoneSync
 {
@@ -36,41 +37,27 @@ namespace BoneSync
             {
                 Console.WriteLine("GuID in File B: " + element.Value);
             }
-
+            XMLParse.DiffMatch();
             Console.ReadLine();
         }
 
-        public bool CheckIfSame(string file1, string file2)
+        public static void DiffMatch()
         {
-            int file1byte;
-            int file2byte;
-            FileStream fs1;
-            FileStream fs2;
-            if (file1 == file2)
-            {
-                return true;
-            }
-            fs1 = new FileStream(file1, FileMode.Open);
-            fs2 = new FileStream(file2, FileMode.Open);
-            if (fs1.Length != fs2.Length)
-            {
-                fs1.Close();
-                fs2.Close();
-                return false;
-            }
-            do
-            {
-                // Read one byte from each file.
-                file1byte = fs1.ReadByte();
-                file2byte = fs2.ReadByte();
-            }
-            while ((file1byte == file2byte) && (file1byte != -1));
 
-            // Close the files.
-            fs1.Close();
-            fs2.Close();
+            //Testing the Google DiffPatch API with this scrit
+            //need to figure out if I can diff a whole file and output the result into a patch to apply to a specific bone
+            //out of all the things I tried this is the most promising - DO NOT CAN THIS BUT EXPAND
 
-            return ((file1byte - file2byte) == 0);
+            diff_match_patch dmp = new diff_match_patch();
+            List<Diff> diff = dmp.diff_main("Hello World.", "Hello World.");
+            // Result: [(-1, "Hell"), (1, "G"), (0, "o"), (1, "odbye"), (0, " World.")]
+            dmp.diff_cleanupSemantic(diff);
+            // Result: [(-1, "Hello"), (1, "Goodbye"), (0, " World.")]
+            for (int i = 0; i < diff.Count; i++)
+            {
+                Console.WriteLine(diff[i]);
+            }
+
         }
     }
 }
