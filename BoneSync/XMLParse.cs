@@ -34,56 +34,25 @@ namespace BoneSync
 
             //XML comparison Setup for Main Projects: VARIABLES
             //----------------------------------------------------------------------------
-            IEnumerable<XElement> SoundDefModifications = ModifiedProject.Descendants("sounddeffolder");
-            IEnumerable<XElement> EventGroupModifications = ModifiedProject.Descendants("eventgroup");
-            IEnumerable<XElement> SoundDefCache = CachedProject.Descendants("sounddeffolder");
-            IEnumerable<XElement> EventGroupCache = CachedProject.Descendants("eventgroup");
+            string ModString = ModifiedProject.Document.ToString(SaveOptions.DisableFormatting);
+            string CacheString = CachedProject.Document.ToString(SaveOptions.DisableFormatting);
+            //STRINGS MIGHT BE USELESS
             List<string> ModificationsList = new List<string>();
             List<string> CacheList = new List<string>();
             //----------------------------------------------------------------------------
 
-            //Reading values and adding them to a list
-            //----------------------------------------------------------------------------
-            foreach (XElement element in SoundDefModifications)
-            {
-                Console.WriteLine("Detected Sound Def: " + element.Value);
-                ModificationsList.Add(element.Value);
-                Console.WriteLine();
-            }
-
-            foreach (XElement element in EventGroupModifications)
-            {
-                Console.WriteLine("Detected Event: " + element.Value);
-                ModificationsList.Add(element.Value);
-                Console.WriteLine();
-            }
-
-            foreach (XElement element in SoundDefCache)
-            {
-                Console.WriteLine("Caching Sound Def from Cache: " + element.Value);
-                CacheList.Add(element.Value);
-                Console.WriteLine();
-            }
-
-            foreach (XElement element in EventGroupCache)
-            {
-                Console.WriteLine("Caching Event from Cache: " + element.Value);
-                CacheList.Add(element.Value);
-                Console.WriteLine();
-            }
-
             diff_match_patch XmlDocs = new diff_match_patch();
-            List<Diff> diff = XmlDocs.diff_main("", "");
-            XmlDocs.patch_make("TextA","TextB");
+            List<Diff> diff = XmlDocs.diff_main(ModString, CacheString);
+            XmlDocs.patch_make(ModString, CacheString);     //Meed to find a way to convert the patch into a txt file tha I can split and feed to the various children
             //diff_match_patch dmp = new diff_match_patch();
             //List<Diff> diff = dmp.diff_main("Hello World.", "Hello World.");
             // Result: [(-1, "Hell"), (1, "G"), (0, "o"), (1, "odbye"), (0, " World.")]
-            //dmp.diff_cleanupSemantic(diff);
+            //XmlDocs.diff_cleanupSemantic(diff);
             // Result: [(-1, "Hello"), (1, "Goodbye"), (0, " World.")]
-            //for (int i = 0; i < diff.Count; i++)
-           // {
-             //   Console.WriteLine(diff[i]);
-            //}
+            for (int i = 0; i < diff.Count; i++)
+            {
+                    Console.WriteLine(diff[i]);
+            }
 
         }
     }
