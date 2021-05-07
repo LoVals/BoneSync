@@ -16,11 +16,11 @@ namespace BoneSync
         public static void ParseXML()
         {
 
-            XDocument xmlA = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml");
-            XDocument xmlB = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
+            XDocument XProject = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml");
+            XDocument XCache = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
             Console.Clear();
             Console.WriteLine("Parsing Files...");
-            XMLParse.DiffMatch(xmlA, xmlB);
+            XMLParse.DiffMatch(XProject, XCache);
             Console.ReadLine();
         }
 
@@ -36,22 +36,22 @@ namespace BoneSync
             //----------------------------------------------------------------------------
             string ModString = ModifiedProject.Document.ToString(SaveOptions.DisableFormatting);
             string CacheString = CachedProject.Document.ToString(SaveOptions.DisableFormatting);
-            //STRINGS MIGHT BE USELESS
-            List<string> ModificationsList = new List<string>();
-            List<string> CacheList = new List<string>();
+            List<string> PatchList = new List<string>();
             //----------------------------------------------------------------------------
-
+            
             diff_match_patch XmlDocs = new diff_match_patch();
-            List<Diff> diff = XmlDocs.diff_main(ModString, CacheString);
-            XmlDocs.patch_make(ModString, CacheString);     //Meed to find a way to convert the patch into a txt file tha I can split and feed to the various children
-            //diff_match_patch dmp = new diff_match_patch();
-            //List<Diff> diff = dmp.diff_main("Hello World.", "Hello World.");
-            // Result: [(-1, "Hell"), (1, "G"), (0, "o"), (1, "odbye"), (0, " World.")]
-            //XmlDocs.diff_cleanupSemantic(diff);
-            // Result: [(-1, "Hello"), (1, "Goodbye"), (0, " World.")]
-            for (int i = 0; i < diff.Count; i++)
+            XmlDocs.Diff_Timeout = 0;
+            //List<Diff> diff = XmlDocs.diff_main(ModString, CacheString);
+            List<Patch> Patch = XmlDocs.patch_make(ModString, CacheString);           
+            for (int i = 0; i < Patch.Count; i++)
             {
-                    Console.WriteLine(diff[i]);
+                    Console.WriteLine(Patch[i]);
+                //THIS WILL RETURN:
+                //@@ -37,17 +37,17 @@      --- Data's Nature to be interpreted: I suspect it's the instruction ID
+                //d % 3e % 7b6660b         --- d>{6660b is the chunk of text (8 character) that preceeds the changed data - Special Characters encoded in Hex
+                //   - 1                   --- Removed 1 from the old file
+                //   + 2                   --- Added 2 to the old file
+                //71-01ae-                 --- 71-01ae- is the chunk of text (8 character) that follows the changed data
             }
 
         }
