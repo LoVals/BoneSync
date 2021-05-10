@@ -17,7 +17,7 @@ namespace BoneSync
         {
 
             XDocument XProject = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml");
-            XDocument XCache = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
+            XDocument XCache = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_C.xml");
             Console.Clear();
             Console.WriteLine("Parsing Files...");
             XMLParse.DiffMatch(XProject, XCache);
@@ -45,9 +45,10 @@ namespace BoneSync
             List<Patch> Patch = XmlDocs.patch_make(ModString, CacheString);           
             for (int i = 0; i < Patch.Count; i++)
             {
-                    Console.WriteLine(Patch[i]);
+                    XMLParse.WritePatch(Patch[i]);
                 //THIS WILL RETURN:
-                //@@ -37,17 +37,17 @@      --- Data's Nature to be interpreted: I suspect it's the instruction ID
+                //@@ -37,17 +37,17 @@      --- Change's Coordinates in A,B - C,D format: STILL TO BE DECIPHERED
+
                 //d % 3e % 7b6660b         --- d>{6660b is the chunk of text (8 character) that preceeds the changed data - Special Characters encoded in Hex
                 //   - 1                   --- Removed 1 from the old file
                 //   + 2                   --- Added 2 to the old file
@@ -55,5 +56,35 @@ namespace BoneSync
             }
 
         }
+
+        public static void WritePatch(DiffMatchPatch.Patch DataInput)
+        {
+
+            //NOT GOOD AS IS - ONLY WRITES DOWN THE LAST COMMAND
+            string DiffDataFile = (@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\DiffData.txt");
+            FileStream ostrm;
+            StreamWriter writer;
+            TextWriter oldOut = Console.Out;
+            try
+            {
+                ostrm = new FileStream(DiffDataFile, FileMode.OpenOrCreate, FileAccess.Write);
+                writer = new StreamWriter(ostrm);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Cannot open Redirect.txt for writing");
+                Console.WriteLine(e.Message);
+                return;
+            }
+            Console.SetOut(writer);
+            Console.WriteLine(DataInput);
+            Console.SetOut(oldOut);
+            writer.Close();
+            ostrm.Close();
+            var files = File.ReadAllLines(DiffDataFile);
+            files.ToList().ForEach(s => Console.WriteLine(s));
+        }
+
+        //RATHER THAN INTERPRETING THE DATA: Diff children and apply the content change only to matching IDs (FIRST HALF)
     }
 }
