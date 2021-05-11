@@ -16,8 +16,8 @@ namespace BoneSync
         public static void ParseXML()
         {
 
-            XDocument XProject = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml");
-            XDocument XCache = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_C.xml");
+            XDocument XProject = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TESTCHILD.xml");
+            XDocument XCache = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\MODCHILD.xml");
             Console.Clear();
             Console.WriteLine("Parsing Files...");
             XMLParse.DiffMatch(XProject, XCache);
@@ -38,7 +38,7 @@ namespace BoneSync
             string CacheString = CachedProject.Document.ToString(SaveOptions.DisableFormatting);
             List<string> PatchList = new List<string>();
             //----------------------------------------------------------------------------
-            
+            Console.WriteLine("Diff protocol starting up");
             diff_match_patch XmlDocs = new diff_match_patch();
             XmlDocs.Diff_Timeout = 0;
             //List<Diff> diff = XmlDocs.diff_main(ModString, CacheString);
@@ -54,6 +54,9 @@ namespace BoneSync
                 //   + 2                   --- Added 2 to the old file
                 //71-01ae-                 --- 71-01ae- is the chunk of text (8 character) that follows the changed data
             }
+            Console.WriteLine("Diff Ended Successfully.");
+            //Issue with main project: MAXIMUM SIZE EXCEEDED - NEED TO MOD HKCU\Software\Microsoft\VisualStudio\16.0_06bd41dc_Config\XmlEditor\MaxFileSizeSupportedByLanguageService in REGEDIT
+            //
 
         }
 
