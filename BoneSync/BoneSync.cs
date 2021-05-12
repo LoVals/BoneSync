@@ -37,7 +37,7 @@ namespace BoneSync
                     BoneSync.WipeOldFiles();
                     BoneSync.XMLMake(rootPath);
                     BoneSync.MainProjectCopy("SoundSouls.xml", "SoundSoulsCache.xml");
-                    //BoneSync.XMLDiff("frpg_c1000.xml", "frpg_c1200.xml");
+                    BoneSync.ParseXML();
                     Console.WriteLine("I STILL NEED TO WRITE THE SYNC TOOL - THUS THAT's IT YA CUNT!");
                     BoneSync.ParseXML();
                     Console.ReadLine();
@@ -46,19 +46,19 @@ namespace BoneSync
                 case 1:
                     Console.WriteLine("Skipping XML preconversion");
                     BoneSync.ParseXML();
-                    //BoneSync.XMLComp();
-                    Console.ReadLine();
+                    Console.WriteLine("Press any key to continue");
+                    Console.ReadKey();
                     break;
                 default:
-                    Console.WriteLine("Default case Detecte");
+                    Console.WriteLine("Default case Detected - Failsafe redirection to full protocol");
                     Console.WriteLine("Executing Full Protocol");
                     BoneSync.WipeOldFiles();
                     BoneSync.XMLMake(rootPath);
                     BoneSync.MainProjectCopy("SoundSouls.xml", "SoundSoulsCache.xml");
-                    //BoneSync.XMLDiff("frpg_c1000.xml", "frpg_c1200.xml");
                     Console.WriteLine("I STILL NEED TO WRITE THE SYNC TOOL - THUS THAT's IT YA CUNT!");
                     BoneSync.ParseXML();
-                    Console.ReadLine();
+                    Console.WriteLine("Press any key to continue");
+                    Console.ReadKey();
                     break;
             }
             
@@ -122,8 +122,10 @@ namespace BoneSync
             {
                 File.Delete(filePath);
             }
-        }
-        public static void ChangeBoneExtension(string OldExt, string NewExt)                                                        //should swap the extension of fdp files to XML
+        }                                                                                    
+        //WIPES OLD FILES FROM THE DRIVE - happens before XML conversion of FDPS
+        public static void ChangeBoneExtension(string OldExt, string NewExt)                                                    
+        
         {
             string XMLDIR = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs";
             var FDPFILE = Directory.GetFiles(XMLDIR, "*", SearchOption.TopDirectoryOnly);
@@ -135,6 +137,7 @@ namespace BoneSync
                 Console.WriteLine(filename + OldExt + " has been converted to " + filename + NewExt);
             }
         }
+        //Swaps the extension of fdp files to XML
         public static void MainProjectCopy(string OldFileName, string NewFileName)
         //Copies over the soundsouls project as XML
         {
@@ -159,5 +162,6 @@ namespace BoneSync
         {
             XMLParse.ParseXML();
         }
+        //Executes diff protocol
     }
 }

@@ -49,7 +49,7 @@
 <eventcategory>
 <name>Voice</name>
 <guid>{427bff5f-7dba-4504-b08d-76e53903c8c6}</guid>
-<volume_db>0</volume_db>
+<volume_db>2</volume_db>
 <pitch>0</pitch>
 <maxplaybacks>0</maxplaybacks>
 <maxplaybacks_behavior>Steal_oldest</maxplaybacks_behavior>

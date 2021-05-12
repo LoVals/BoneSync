@@ -20,11 +20,10 @@ namespace BoneSync
             XDocument XCache = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\MODCHILD.xml");
             Console.Clear();
             Console.WriteLine("Parsing Files...");
-            XMLParse.DiffMatch(XProject, XCache);
-            Console.ReadLine();
-        }
+            XMLParse.DiffMain(XProject, XCache);
+        } //MAIN SEQUENCE
 
-        public static void DiffMatch(XDocument ModifiedProject, XDocument CachedProject)
+        public static void DiffMain(XDocument ModifiedProject, XDocument CachedProject)
         {
 
             //Testing the Google DiffPatch API with this script
@@ -37,15 +36,22 @@ namespace BoneSync
             string ModString = ModifiedProject.Document.ToString(SaveOptions.DisableFormatting);
             string CacheString = CachedProject.Document.ToString(SaveOptions.DisableFormatting);
             List<string> PatchList = new List<string>();
+            string DiffDataFile = (@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\DiffData.txt");
+            FileStream ostrm;
+            StreamWriter writer;
+            TextWriter oldOut = Console.Out;
             //----------------------------------------------------------------------------
             Console.WriteLine("Diff protocol starting up");
             diff_match_patch XmlDocs = new diff_match_patch();
             XmlDocs.Diff_Timeout = 0;
             //List<Diff> diff = XmlDocs.diff_main(ModString, CacheString);
-            List<Patch> Patch = XmlDocs.patch_make(ModString, CacheString);           
+            List<Patch> Patch = XmlDocs.patch_make(ModString, CacheString);
+            ostrm = new FileStream(DiffDataFile, FileMode.OpenOrCreate, FileAccess.Write);
+            writer = new StreamWriter(ostrm);
+            Console.SetOut(writer);
             for (int i = 0; i < Patch.Count; i++)
             {
-                    XMLParse.WritePatch(Patch[i]);
+                    Console.WriteLine(Patch[i]);
                 //THIS WILL RETURN:
                 //@@ -37,17 +37,17 @@      --- Change's Coordinates in A,B - C,D format: STILL TO BE DECIPHERED
 
@@ -54,40 +60,15 @@ namespace BoneSync
                 //   + 2                   --- Added 2 to the old file
                 //71-01ae-                 --- 71-01ae- is the chunk of text (8 character) that follows the changed data
             }
-            Console.WriteLine("Diff Ended Successfully.");
-            //Issue with main project: MAXIMUM SIZE EXCEEDED - NEED TO MOD HKCU\Software\Microsoft\VisualStudio\16.0_06bd41dc_Config\XmlEditor\MaxFileSizeSupportedByLanguageService in REGEDIT
-            //
-
-        }
-
-        public static void WritePatch(DiffMatchPatch.Patch DataInput)
-        {
-
-            //NOT GOOD AS IS - ONLY WRITES DOWN THE LAST COMMAND
-            string DiffDataFile = (@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\DiffData.txt");
-            FileStream ostrm;
-            StreamWriter writer;
-            TextWriter oldOut = Console.Out;
-            try
-            {
-                ostrm = new FileStream(DiffDataFile, FileMode.OpenOrCreate, FileAccess.Write);
-                writer = new StreamWriter(ostrm);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Cannot open Redirect.txt for writing");
-                Console.WriteLine(e.Message);
-                return;
-            }
-            Console.SetOut(writer);
-            Console.WriteLine(DataInput);
             Console.SetOut(oldOut);
             writer.Close();
             ostrm.Close();
             var files = File.ReadAllLines(DiffDataFile);
             files.ToList().ForEach(s => Console.WriteLine(s));
-        }
+            Console.WriteLine("Diff Ended Successfully.");
+            //Issue with main project: MAXIMUM SIZE EXCEEDED - NEED TO MOD HKCU\Software\Microsoft\VisualStudio\16.0_06bd41dc_Config\XmlEditor\MaxFileSizeSupportedByLanguageService in REGEDIT
+            //
 
-        //RATHER THAN INTERPRETING THE DATA: Diff children and apply the content change only to matching IDs (FIRST HALF)
+        } //this function will diff two target files. For testing purposes those are set as static variables.
     }
 }
