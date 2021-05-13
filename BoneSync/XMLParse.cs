@@ -16,14 +16,14 @@ namespace BoneSync
         public static void ParseXML()
         {
 
-            XDocument XProject = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TESTCHILD.xml");
-            XDocument XCache = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\MODCHILD.xml");
+            XDocument XProject = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml");
+            XDocument XCache = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A_Child.xml");
             Console.Clear();
             Console.WriteLine("Parsing Files...");
             XMLParse.DiffMain(XProject, XCache);
         } //MAIN SEQUENCE
 
-        public static void DiffMain(XDocument ModifiedProject, XDocument CachedProject)
+        public static void DiffMain(XDocument CachedProject, XDocument ModifiedProject)
         {
 
             //Testing the Google DiffPatch API with this script
@@ -35,8 +35,9 @@ namespace BoneSync
             //----------------------------------------------------------------------------
             string ModString = ModifiedProject.Document.ToString(SaveOptions.DisableFormatting);
             string CacheString = CachedProject.Document.ToString(SaveOptions.DisableFormatting);
+            int DIFFID = 0;
             List<string> PatchList = new List<string>();
-            string DiffDataFile = (@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\DiffData.txt");
+            string DiffDataFile = (@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\MainDiffData.txt"); //Will need curent direcroties & Shit
             FileStream ostrm;
             StreamWriter writer;
             TextWriter oldOut = Console.Out;
@@ -44,14 +45,15 @@ namespace BoneSync
             Console.WriteLine("Diff protocol starting up");
             diff_match_patch XmlDocs = new diff_match_patch();
             XmlDocs.Diff_Timeout = 0;
-            //List<Diff> diff = XmlDocs.diff_main(ModString, CacheString);
             List<Patch> Patch = XmlDocs.patch_make(ModString, CacheString);
             ostrm = new FileStream(DiffDataFile, FileMode.OpenOrCreate, FileAccess.Write);
             writer = new StreamWriter(ostrm);
             Console.SetOut(writer);
             for (int i = 0; i < Patch.Count; i++)
             {
+                DIFFID = DIFFID + 1;
                     Console.WriteLine(Patch[i]);
+                //One Blob per patch
                 //THIS WILL RETURN:
                 //@@ -37,17 +37,17 @@      --- Change's Coordinates in A,B - C,D format: STILL TO BE DECIPHERED
 

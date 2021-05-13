@@ -65,7 +65,6 @@
   <ItemGroup>
     <Compile Include="BoneSync.cs" />
     <Compile Include="BoneDiffer.cs" />
-    <Compile Include="PatchMatcher.cs" />
     <Compile Include="XMLParse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
