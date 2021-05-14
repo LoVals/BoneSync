@@ -17,9 +17,9 @@ namespace BoneSync
         {
             XDocument XSkeleton = XDocument.Load(Skeleton);
             XDocument XBone = XDocument.Load(Bone);
-            Console.WriteLine("Comparing Skeleton Project to targer SoundBone: "+Bone);
+            Console.WriteLine("Comparing Skeleton Project to targer SoundBone: " + Bone);
             BoneDiffer.DiffBone(XSkeleton, XBone, BoneName);
-           //BoneDiffer.PatchCompare("TEMP","TEMP2");
+            //BoneDiffer.PatchCompare("TEMP","TEMP2");
         }
 
         public static void DiffBone(XDocument SoundSkeleton, XDocument SoundBone, String BoneID)
@@ -50,8 +50,8 @@ namespace BoneSync
         }
 
         public static void PatchPrinter(DiffMatchPatch.Patch DataInput, string BoneID, int Part)
-        { 
-            string DiffDataFile = (@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\"+BoneID+@"\Patch_"+BoneID+"_"+Part+".txt");
+        {
+            string DiffDataFile = (@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\" + BoneID + @"\Patch_" + BoneID + "_" + Part + ".txt");
             FileStream ostrm;
             StreamWriter writer;
             TextWriter oldOut = Console.Out;
@@ -68,7 +68,7 @@ namespace BoneSync
         }
         public static void PatchCompare(string BonePatchFilePath, string SkeletonPatchFilePath)
         {
-            string BonePatchData = File.ReadAllText(BonePatchFilePath);
+
             string MainDiffData = File.ReadAllText(SkeletonPatchFilePath);
             //---------------------------------------------------------------------------
             //Searches for matching patterns between the main changelist and the bone diff results
@@ -76,10 +76,36 @@ namespace BoneSync
             Console.WriteLine("Comparing Diff results with Parent Patch");
             foreach (string file in files)
             {
-                Console.WriteLine(file);
-                //Add diff algorythm + Document Merge
+                Console.WriteLine("Parsing PatchPart -  "+file);
+                string BonePatchData = File.ReadAllText(file);
+                if (BoneDiffer.FindMatch(BonePatchData, MainDiffData) = true)
+                {
+
+                }
+               // {
+              //  }
+
             }
 
+        }
+        public bool FindMatch(string SkeletonPatchFilePathIN, string BonePatchDataIN)
+        {
+            diff_match_patch MatchTest = new diff_match_patch();
+            double x = 0.25;
+            x = MatchTest.Match_Threshold;
+            int MatchValue = 1;
+            MatchValue = MatchTest.Match_Distance;
+            int FoundMatch = MatchTest.match_main(SkeletonPatchFilePathIN, BonePatchDataIN, 100);
+            
+            if  (FoundMatch > 0) //match found
+            {
+                Console.WriteLine("Match found, Patch part is valid");
+                return true;
+            }
+            else
+            {
+                return false;
+            }   
         }
     }
 }
