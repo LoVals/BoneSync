@@ -19,6 +19,7 @@ namespace BoneSync
             XDocument XProject = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml");
             XDocument XCache = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
             Console.Clear();
+            XMLParse.WipeOldPatchData();
             Console.WriteLine("Parsing Files...");
             XMLParse.DiffMain(XProject, XCache);
         } //MAIN SEQUENCE
@@ -52,7 +53,7 @@ namespace BoneSync
             for (int i = 0; i < Patch.Count; i++)
             {
                 DIFFID = DIFFID + 1;
-                    Console.WriteLine(Patch[i]);
+                Console.WriteLine(Patch[i]);
                 //One Blob per patch
                 //THIS WILL RETURN:
                 //@@ -37,17 +37,17 @@      --- Change's Coordinates in A,B - C,D format: STILL TO BE DECIPHERED
@@ -74,5 +75,14 @@ namespace BoneSync
             //
 
         } //this function will diff two target files. For testing purposes those are set as static variables.
+
+        public static void WipeOldPatchData()
+        {
+            string[] filePaths = Directory.GetFiles(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData");
+            foreach (string filePath in filePaths)
+            {
+                File.Delete(filePath);
+            }
+        }
     }
 }

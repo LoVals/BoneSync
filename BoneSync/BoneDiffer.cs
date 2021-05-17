@@ -19,6 +19,7 @@ namespace BoneSync
             XDocument XBone = XDocument.Load(Bone);
             Console.WriteLine("Comparing Skeleton Project to target SoundBone: " + Bone);
             //need to add file cleanup  
+            BoneDiffer.WipeOldFiles(BoneName);
             BoneDiffer.DiffBone(XSkeleton, XBone, BoneName);
             //------------------------------------------
             string BoneFolder = Path.GetFileNameWithoutExtension(BoneName);
@@ -29,7 +30,6 @@ namespace BoneSync
 
         public static void DiffBone(XDocument SoundSkeleton, XDocument SoundBone, String BoneID)
         {
-            // TO CONTINUE
             string SkeletonString = SoundSkeleton.Document.ToString(SaveOptions.DisableFormatting);
             string BoneString = SoundBone.Document.ToString(SaveOptions.DisableFormatting);
             List<string> PatchList = new List<string>();
@@ -78,6 +78,20 @@ namespace BoneSync
                 Console.WriteLine("Parsing PatchPart -  "+file);
                 Console.WriteLine();
                 Console.WriteLine("Matches found will be printed on screen");
+                FileInfo fi = new FileInfo(file);
+                long FilterBySize = fi.Length;
+                switch (FilterBySize)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+
+                //Finish this fucking Filter
+                }
+
                 string BonePatchData = File.ReadAllText(file);
                 if (BoneDiffer.FindMatch(MainDiffData, BonePatchData) == true)
                 {
@@ -109,5 +123,16 @@ namespace BoneSync
                 return false;
             }       
         }
+
+        public static void WipeOldFiles(string TargetFolder)
+        {
+            string[] filePaths = Directory.GetFiles(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\" + TargetFolder);
+            //File.Delete(filePaths + @"\PreviousVersion\SoundSoulsCache.xml");
+            foreach (string filePath in filePaths)
+            {
+                File.Delete(filePath);
+            }
+        }
+
     }
 }
