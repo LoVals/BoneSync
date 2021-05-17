@@ -11,13 +11,14 @@ using DiffMatchPatch;
 
 namespace BoneSync
 {
-    class BoneDiffer
+    class BoneDiffer    
     {
         public static void SkeletonToBone(string Skeleton, string Bone, String BoneName)
         {
             XDocument XSkeleton = XDocument.Load(Skeleton);
             XDocument XBone = XDocument.Load(Bone);
             Console.WriteLine("Comparing Skeleton Project to target SoundBone: " + Bone);
+            //need to add file cleanup  
             BoneDiffer.DiffBone(XSkeleton, XBone, BoneName);
             //------------------------------------------
             string BoneFolder = Path.GetFileNameWithoutExtension(BoneName);
