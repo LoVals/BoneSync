@@ -19,7 +19,9 @@ namespace BoneSync
         {                                                                                          //Shall I actually give users custom Folders? I am thinking Fuck no
             string CurrentDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls";                                               //Replace this with Directory.GetCurrentDirectory
             string rootPath = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones";                                      //Replace this with Current Directory + \Soundbones as the script resides in the same folder as pre build sync
-            string path = Directory.GetCurrentDirectory();                                                                      // will likely change to the SOUNDSOUL root
+            string path = Directory.GetCurrentDirectory();
+            Console.ForegroundColor = ConsoleColor.Green;
+            // will likely change to the SOUNDSOUL root
             Console.WriteLine(" _________________________");
             Console.WriteLine("¦                         ¦");
             Console.WriteLine("¦       Bonesync 1.0      ¦");
@@ -27,7 +29,9 @@ namespace BoneSync
             Console.WriteLine("");
             Console.WriteLine("The current directory is {0}", path);
             Console.WriteLine("Preparing to syncronize...");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Would You like to skip the XML conversion? TEST ONLY! 1 = yes 0 = no");
+            Console.ForegroundColor = ConsoleColor.White;
             //File.Copy(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\SoundSouls.xml", @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs\PreviousVersion\SoundSoulsCache.xml");
             int SkipSelect = int.Parse(Console.ReadLine());
             switch (SkipSelect)
@@ -49,8 +53,7 @@ namespace BoneSync
                 case 1:
                     Console.WriteLine("Skipping XML preconversion");
                     BoneSync.ParseXML();
-                    Console.WriteLine("Press any key to continue with children comparison");
-                    Console.ReadKey();
+                    Console.WriteLine("Moving on to children comparison");
                     BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild"); 
                     //For now this shit is static - Wil need dynamic
                     break;

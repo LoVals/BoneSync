@@ -17,12 +17,12 @@ namespace BoneSync
         {
             XDocument XSkeleton = XDocument.Load(Skeleton);
             XDocument XBone = XDocument.Load(Bone);
-            Console.WriteLine("Comparing Skeleton Project to targer SoundBone: " + Bone);
+            Console.WriteLine("Comparing Skeleton Project to target SoundBone: " + Bone);
             BoneDiffer.DiffBone(XSkeleton, XBone, BoneName);
             //------------------------------------------
             string BoneFolder = Path.GetFileNameWithoutExtension(BoneName);
             BoneDiffer.PatchCompare(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\" + BoneFolder, @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\MainDiffData.txt");
-            Console.WriteLine("FoundAllMatches, proceeding...");
+            Console.WriteLine("Match protocol finished, proceeding to next step...");
             Console.ReadKey();
         }
 
@@ -37,7 +37,7 @@ namespace BoneSync
             Console.WriteLine("Diff Skeleton with " + BoneID);
             diff_match_patch BonePatch = new diff_match_patch();
             BonePatch.Diff_Timeout = 0;
-            List<Patch> Patch = BonePatch.patch_make(SkeletonString, BoneString);
+            List<Patch> Patch = BonePatch.patch_make(BoneString, SkeletonString);
 
 
             for (int i = 0; i < Patch.Count; i++)
@@ -73,40 +73,38 @@ namespace BoneSync
             Console.WriteLine("Comparing Diff results with Parent Patch");
             foreach (string file in files)
             {
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Parsing PatchPart -  "+file);
+                Console.WriteLine();
                 Console.WriteLine("Matches found will be printed on screen");
                 string BonePatchData = File.ReadAllText(file);
-                if (BoneDiffer.FindMatch(BonePatchData, MainDiffData) == true)
+                if (BoneDiffer.FindMatch(MainDiffData, BonePatchData) == true)
                 {
-                    ConsoleColor newForeColor = ConsoleColor.Green;
+                    Console.WriteLine();
                     Console.WriteLine("Match found for " + file);
-                    Console.WriteLine(BonePatchData);
+                    //Console.WriteLine(BonePatchData);
                     Console.ReadLine();
                 }
-                else;
-                {
-                    Console.WriteLine("No Match found for" + BonePatchData);
-                }
-
             }
-
         }
         public static bool FindMatch(string SkeletonPatchFilePathIN, string BonePatchDataIN)
         {
             diff_match_patch MatchTest = new diff_match_patch();
-            MatchTest.Match_Threshold = 0.01f;
-            Console.WriteLine(MatchTest.Match_Threshold);
-            MatchTest.Match_Distance = 1;
+            Console.WriteLine(BonePatchDataIN);
+            Console.WriteLine();
+            MatchTest.Match_Threshold = 0.69f;
+            MatchTest.Match_Distance = 30;
             var FoundMatch = MatchTest.match_main(SkeletonPatchFilePathIN, BonePatchDataIN, -1); //the matching algorythm isn't really working right now - WHY?
             
             if  (FoundMatch != -1) //match found
             {
                 Console.WriteLine("Match found, Patch part is valid");
-                Console.WriteLine(FoundMatch);
                 return true;
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Match Not found for this part: Patch part is invalid");
                 return false;
             }       
         }

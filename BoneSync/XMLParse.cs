@@ -67,6 +67,8 @@ namespace BoneSync
             ostrm.Close();
             var files = File.ReadAllLines(DiffDataFile);
             files.ToList().ForEach(s => Console.WriteLine(s));
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Diff Ended Successfully.");
             //Issue with main project: MAXIMUM SIZE EXCEEDED - NEED TO MOD HKCU\Software\Microsoft\VisualStudio\16.0_06bd41dc_Config\XmlEditor\MaxFileSizeSupportedByLanguageService in REGEDIT
             //
