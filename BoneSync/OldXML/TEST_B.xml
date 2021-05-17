@@ -1,6 +1,6 @@
 <project>
-<name>frpg_c1099</name>
-<guid>{6660b171-01ae-48da-9a9b-b2104996aa85}</guid>
+<name>frpg_c1000</name>
+<guid>{6660b271-01ae-48da-9a9b-b2104996aa85}</guid>
 <version>4</version>
 <eventgroup_nextid>0</eventgroup_nextid>
 <soundbank_nextid>0</soundbank_nextid>
@@ -12,7 +12,7 @@
 <build_applytemplate>0</build_applytemplate>
 <currentbank>frpg_c1000</currentbank>
 <currentlanguage>default</currentlanguage>
-<primarylanguage>CHANGED VALUE</primarylanguage>
+<primarylanguage>default</primarylanguage>
 <language>default</language>
 <templatefilename></templatefilename>
 <templatefileopen>1</templatefileopen>
@@ -41,11 +41,11 @@
 <guid>{0a97c987-d7dc-41db-a575-37b0504b1656}</guid>
 <open>0</open>
 <sounddeffolder>
-<name>frpg_c1000 - INVISIBLE</name>
+<name>frpg_c1000 - Unknown</name>
 <guid>{9647d78c-cdda-464e-a166-34b48736c30f}</guid>
 <open>1</open>
 <sounddef>
-<name>/frpg_c1000 - Unknown/Sfx_Empty</name>
+<name>/frpg_c1000 - Unknown/Sfx_Blank</name>
 <guid>{18b1e89e-29cb-452c-b137-9c04d0be4bc5}</guid>
 <type>sequential</type>
 <spawntime_min>0</spawntime_min>
@@ -312,7 +312,7 @@
 </eventgroup>
 <default_soundbank_props>
 <name>default_soundbank_props</name>
-<guid>{c90be848-b597-46c5-9a24-88eeg4d25d46}</guid>
+<guid>{c90be848-b597-46c5-9a24-883b64d25d46}</guid>
 <load_into_rsx>0</load_into_rsx>
 <disable_seeking>0</disable_seeking>
 <enable_syncpoints>1</enable_syncpoints>
@@ -386,7 +386,7 @@
 <notes></notes>
 <rebuild>1</rebuild>
 <waveform>
-<filename>../../souls sfx/fsb.frpg_c1000/Sfx_Blank.aiff</filename>
+<filename>../../souls sfx/fsb.frpg_c1000/Sfx_Blank.wav</filename>
 <guid>{01d411fe-3698-426b-9b42-10b4c8634cff}</guid>
 <mindistance>1</mindistance>
 <maxdistance>10000</maxdistance>

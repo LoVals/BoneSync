@@ -1,12 +1,35 @@
-@@ -506,23 +506,26 @@
- anguage%3e
--default
-+TESTCHANGE
- %3c/primar
+@@ -8,34 +8,34 @@
+ t%3e%3cname%3efrpg_c10
+-00
++99
+ %3c/name%3e%3cguid%3e%7b66
 
-@@ -600,16 +600,312 @@
- lename%3e%3c
-+templatefileopen%3e1%3c/templatefileopen%3e%3ceventcategory%3e%3cname%3emusic%3c/name%3e%3cguid%3e%7b3770dc9f-e624-4cee-b193-4fe52a9296f0%7d%3c/guid%3e%3cvolume_db%3e0%3c/volume_db%3e%3cpitch%3e0%3c/pitch%3e%3cmaxplaybacks%3e0%3c/maxplaybacks%3e%3cmaxplaybacks_behavior%3eSteal_oldest%3c/maxplaybacks_behavior%3e%3cnotes%3e%3c/notes%3e%3copen%3e0%3c/open%3e%3c/eventcategory%3e%3c
+@@ -510,18 +510,21 @@
+ age%3e
+-TEST
+ CHANGE
++D VALUE
+ %3c/pr
+
+@@ -1288,23 +1288,25 @@
+ c1000 - 
+-Unknown
++INVISIBLE
+ %3c/name%3e%3c
+
+@@ -1403,37 +1403,37 @@
+ 0 - Unknown/Sfx_
+-Blank
++Empty
+ %3c/name%3e%3cguid%3e%7b18
+
+@@ -13202,35 +13202,36 @@
+ c1000/Sfx_Blank.
+-wav
++aiff
+ %3c/filename%3e%3cguid
+
+al_oldest%3c/maxplaybacks_behavior%3e%3cnotes%3e%3c/notes%3e%3copen%3e0%3c/open%3e%3c/eventcategory%3e%3c
  eventcat
 
 @@ -10283,11 +10283,11 @@

@@ -40,7 +40,10 @@ namespace BoneSync
                     BoneSync.ParseXML();
                     Console.WriteLine("I STILL NEED TO WRITE THE SYNC TOOL - THUS THAT's IT YA CUNT!");
                     BoneSync.ParseXML();
-                    Console.ReadLine();
+                    Console.WriteLine("Press any key to continue with children comparison");
+                    Console.ReadKey();
+                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild");
+                    //For now this shit is static - Wil need dynamic
 
                     break;
                 case 1:
@@ -48,7 +51,7 @@ namespace BoneSync
                     BoneSync.ParseXML();
                     Console.WriteLine("Press any key to continue with children comparison");
                     Console.ReadKey();
-                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A_Child.xml", "TestChild"); 
+                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild"); 
                     //For now this shit is static - Wil need dynamic
                     break;
                 default:
@@ -59,8 +62,10 @@ namespace BoneSync
                     BoneSync.MainProjectCopy("SoundSouls.xml", "SoundSoulsCache.xml");
                     Console.WriteLine("I STILL NEED TO WRITE THE SYNC TOOL - THUS THAT's IT YA CUNT!");
                     BoneSync.ParseXML();
-                    Console.WriteLine("Press any key to continue");
+                    Console.WriteLine("Press any key to continue with children comparison");
                     Console.ReadKey();
+                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild");
+                    //For now this shit is static - Wil need dynamic
                     break;
             }
             

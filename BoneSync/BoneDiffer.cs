@@ -19,7 +19,11 @@ namespace BoneSync
             XDocument XBone = XDocument.Load(Bone);
             Console.WriteLine("Comparing Skeleton Project to targer SoundBone: " + Bone);
             BoneDiffer.DiffBone(XSkeleton, XBone, BoneName);
-            //BoneDiffer.PatchCompare("TEMP","TEMP2");
+            //------------------------------------------
+            string BoneFolder = Path.GetFileNameWithoutExtension(BoneName);
+            BoneDiffer.PatchCompare(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\" + BoneFolder, @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\MainDiffData.txt");
+            Console.WriteLine("FoundAllMatches, proceeding...");
+            Console.ReadKey();
         }
 
         public static void DiffBone(XDocument SoundSkeleton, XDocument SoundBone, String BoneID)
@@ -39,13 +43,6 @@ namespace BoneSync
             for (int i = 0; i < Patch.Count; i++)
             {
                 BoneDiffer.PatchPrinter(Patch[i], BoneID, i);
-                //THIS WILL RETURN:
-                //@@ -37,17 +37,17 @@      --- Change's Coordinates in A,B - C,D format: STILL TO BE DECIPHERED
-
-                //d % 3e % 7b6660b         --- d>{6660b is the chunk of text (8 character) that preceeds the changed data - Special Characters encoded in Hex
-                //   - 1                   --- Removed 1 from the old file
-                //   + 2                   --- Added 2 to the old file
-                //71-01ae-                 --- 71-01ae- is the chunk of text (8 character) that follows the changed data
             }
         }
 
@@ -66,46 +63,52 @@ namespace BoneSync
             files.ToList().ForEach(s => Console.WriteLine(s));
             Console.WriteLine("Diff Ended Successfully.");
         }
-        public static void PatchCompare(string BonePatchFilePath, string SkeletonPatchFilePath)
+        public static void PatchCompare(string BonePatchFilePath, string SkeletonPatchFilePath) //INPUT Soundbones Patch parts Directory + Skeleton Patch file
         {
 
             string MainDiffData = File.ReadAllText(SkeletonPatchFilePath);
             //---------------------------------------------------------------------------
             //Searches for matching patterns between the main changelist and the bone diff results
-            var files = Directory.GetFiles(BonePatchFilePath, "*.txt", SearchOption.TopDirectoryOnly);
+            var files = Directory.GetFiles(BonePatchFilePath, "*.txt", SearchOption.TopDirectoryOnly); //will get all txt files in patch directory
             Console.WriteLine("Comparing Diff results with Parent Patch");
             foreach (string file in files)
             {
                 Console.WriteLine("Parsing PatchPart -  "+file);
+                Console.WriteLine("Matches found will be printed on screen");
                 string BonePatchData = File.ReadAllText(file);
-                if (BoneDiffer.FindMatch(BonePatchData, MainDiffData) = true)
+                if (BoneDiffer.FindMatch(BonePatchData, MainDiffData) == true)
                 {
-
+                    ConsoleColor newForeColor = ConsoleColor.Green;
+                    Console.WriteLine("Match found for " + file);
+                    Console.WriteLine(BonePatchData);
+                    Console.ReadLine();
                 }
-               // {
-              //  }
+                else;
+                {
+                    Console.WriteLine("No Match found for" + BonePatchData);
+                }
 
             }
 
         }
-        public bool FindMatch(string SkeletonPatchFilePathIN, string BonePatchDataIN)
+        public static bool FindMatch(string SkeletonPatchFilePathIN, string BonePatchDataIN)
         {
             diff_match_patch MatchTest = new diff_match_patch();
-            double x = 0.25;
-            x = MatchTest.Match_Threshold;
-            int MatchValue = 1;
-            MatchValue = MatchTest.Match_Distance;
-            int FoundMatch = MatchTest.match_main(SkeletonPatchFilePathIN, BonePatchDataIN, 100);
+            MatchTest.Match_Threshold = 0.01f;
+            Console.WriteLine(MatchTest.Match_Threshold);
+            MatchTest.Match_Distance = 1;
+            var FoundMatch = MatchTest.match_main(SkeletonPatchFilePathIN, BonePatchDataIN, -1); //the matching algorythm isn't really working right now - WHY?
             
-            if  (FoundMatch > 0) //match found
+            if  (FoundMatch != -1) //match found
             {
                 Console.WriteLine("Match found, Patch part is valid");
+                Console.WriteLine(FoundMatch);
                 return true;
             }
             else
             {
                 return false;
-            }   
+            }       
         }
     }
 }

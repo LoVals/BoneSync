@@ -17,7 +17,7 @@ namespace BoneSync
         {
 
             XDocument XProject = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml");
-            XDocument XCache = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A_Child.xml");
+            XDocument XCache = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
             Console.Clear();
             Console.WriteLine("Parsing Files...");
             XMLParse.DiffMain(XProject, XCache);
