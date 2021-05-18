@@ -80,25 +80,85 @@ namespace BoneSync
                 Console.WriteLine("Matches found will be printed on screen");
                 FileInfo fi = new FileInfo(file);
                 long FilterBySize = fi.Length;
-                switch (FilterBySize)
+                int Filtervalue = BoneDiffer.FilterResult(FilterBySize);
+                switch (Filtervalue)
                 {
-                    case 0:
+                    case 0:     //Change detected by size is less than 1kb - it's likely a legit change
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            string BonePatchData = File.ReadAllText(file);
+                            if (BoneDiffer.FindMatch(MainDiffData, BonePatchData) == true)
+                            {
+                                Console.WriteLine();
+                                Console.WriteLine("Match found for " + file);
+                                //Console.WriteLine(BonePatchData);
+                                Console.ReadLine();
+                            }
+
+                        }
                         break;
-                    case 1:
+                    case 1:     //Change detected by size is between 1kb and 4kb - it could be a legit change - needs manual confirmation
+                        {
+                            string BonePatchData = File.ReadAllText(file);
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            bool ConfirmValid = false;
+                            int Confirm;
+                            Console.WriteLine("!!! WARNING - PATCH SIZE IS OVER 3KB !!!");
+                            Console.WriteLine("The data is likely a large change, or it could contain a chunk of data that shouldn't be there");
+                            Console.WriteLine("the data included in the patch is:");
+                            Console.WriteLine("");
+                            Console.WriteLine(BonePatchData);
+                            Console.WriteLine("");
+                            do
+                            {
+                                Console.WriteLine("Would you still like to commit this change? - 1 = yes; 0 = no");
+                                string input = Console.ReadLine();
+                                Int32.TryParse(input, out Confirm);
+                                if (Confirm == 0 || Confirm == 1)
+                                {
+                                    ConfirmValid = true;
+                                }
+                                else 
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("ERROR - INPUT INVALID - Try Again");
+                                    Console.WriteLine("");
+                                }
+
+                            }
+                            while (ConfirmValid == false);
+
+                                switch (Confirm)
+                                {
+                                case 0:
+                                    break;
+                                case 1:
+                                    {
+                                        if (BoneDiffer.FindMatch(MainDiffData, BonePatchData) == true)
+                                        {
+                                            Console.WriteLine();
+                                            Console.WriteLine("Match found for " + file);
+                                            //Console.WriteLine(BonePatchData);
+                                            Console.ReadLine();
+                                        }
+                                    }
+                                    break;
+                                }
+
+                               
+
+                        }
                         break;
-                    case 2:
+                    case 2:     // change is larger than 4kb - this is likely data related to something else...
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("SEVERE WARNING - PATCH DATA EXCEEDS EXPECTED NUGGET SIZE");
+                            Console.WriteLine("Data is invalid: Automatically discarded");
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
                         break;
 
                 //Finish this fucking Filter
-                }
-
-                string BonePatchData = File.ReadAllText(file);
-                if (BoneDiffer.FindMatch(MainDiffData, BonePatchData) == true)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Match found for " + file);
-                    //Console.WriteLine(BonePatchData);
-                    Console.ReadLine();
                 }
             }
         }
@@ -132,6 +192,26 @@ namespace BoneSync
             {
                 File.Delete(filePath);
             }
+        }
+
+        public static int FilterResult(long DataInput)
+        {
+            if(DataInput<1024)
+            {
+                return 0;
+            }
+            if(DataInput>1024)
+            {
+                if (DataInput < 3072)
+                {
+                    return 1;
+                }
+                else if (DataInput > 3072)
+                {
+                    return 2;
+                }
+            }
+            return 1;
         }
 
     }
