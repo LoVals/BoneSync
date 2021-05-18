@@ -196,11 +196,11 @@ namespace BoneSync
 
         public static int FilterResult(long DataInput)
         {
-            if(DataInput<1024)
+            if(DataInput<400)
             {
                 return 0;
             }
-            if(DataInput>1024)
+            if(DataInput>400)
             {
                 if (DataInput < 3072)
                 {
