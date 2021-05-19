@@ -1,6 +1,6 @@
 <project>
 <name>frpg_c1000</name>
-<guid>{6660b271-01ae-48da-9a9b-b2104996aa85}</guid>
+<guid>{6660b171-01ae-48da-9a9b-b2104996aa85}</guid>
 <version>4</version>
 <eventgroup_nextid>0</eventgroup_nextid>
 <soundbank_nextid>0</soundbank_nextid>
@@ -12,7 +12,7 @@
 <build_applytemplate>0</build_applytemplate>
 <currentbank>frpg_c1000</currentbank>
 <currentlanguage>default</currentlanguage>
-<primarylanguage>default</primarylanguage>
+<primarylanguage>TESTCHANGE</primarylanguage>
 <language>default</language>
 <templatefilename></templatefilename>
 <templatefileopen>1</templatefileopen>
@@ -312,7 +312,7 @@
 </eventgroup>
 <default_soundbank_props>
 <name>default_soundbank_props</name>
-<guid>{c90be848-b597-46c5-9a24-883b64d25d46}</guid>
+<guid>{c90be848-b597-46c5-9a24-88eeg4d25d46}</guid>
 <load_into_rsx>0</load_into_rsx>
 <disable_seeking>0</disable_seeking>
 <enable_syncpoints>1</enable_syncpoints>
