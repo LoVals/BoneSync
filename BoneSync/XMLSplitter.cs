@@ -17,16 +17,43 @@ namespace BoneSync
         //This shit needs testing
         public static void SkeletonSplit(string SoundSoulsXML)
         {
-            var xDoc = XDocument.Parse(SoundSoulsXML); // loading source xml
-            var xmls = xDoc.Root.Elements().ToArray(); // split into elements
-
-            for (int i = 0; i < xmls.Length; i++)
+            XMLSplitter.WipeOldNuggets();
+            XDocument SkeletonFile = XDocument.Load(SoundSoulsXML);
+            var EventCategoryNugget = SkeletonFile.Descendants("eventcategory").Select(d => new XDocument(new XElement("project", d)));
+            int EvCounter = 0;
+            foreach (var TargetNugget in EventCategoryNugget)
             {
-                // write each element into different file
-                using (var file = File.CreateText(string.Format("SounSouls_Split_{0}.xml", i + 1)))
-                {
-                    file.Write(xmls[i].ToString());
-                }
+                EvCounter = EvCounter + 1;
+                TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventCategoryNugget_0" + EvCounter + ".xml");
+            }
+            var SoundDefFolderNugget = SkeletonFile.Descendants("sounddeffolder").Select(d => new XDocument(new XElement("project", d)));
+            int SDFCounter = 0;
+            foreach (var TargetNugget in SoundDefFolderNugget)
+            {
+                SDFCounter = SDFCounter + 1;
+                TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundDefFolderNugget_0" + SDFCounter + ".xml");
+            }
+            var EventGroupNugget = SkeletonFile.Descendants("eventgroup").Select(d => new XDocument(new XElement("project", d)));
+            int EGCounter = 0;
+            foreach (var TargetNugget in EventGroupNugget)
+            {
+                EGCounter = EGCounter + 1;
+                TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventGroupNugget_0" + EGCounter + ".xml");
+            }
+            var SoundbankNugget = SkeletonFile.Descendants("soundbank").Select(d => new XDocument(new XElement("project", d)));
+            int SBCounter = 0;
+            foreach (var TargetNugget in SoundbankNugget)
+            {
+                SBCounter = SBCounter + 1;
+                TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundbankNugget_0" + SBCounter + ".xml");
+            }
+        }
+        public static void WipeOldNuggets()
+        {
+            string[] filePaths = Directory.GetFiles(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\");
+            foreach (string filePath in filePaths)
+            {
+                File.Delete(filePath);
             }
         }
     }

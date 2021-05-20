@@ -37,7 +37,7 @@ namespace BoneSync
             //Diffs bones with the Skeleton
             Console.WriteLine("Diff Skeleton with " + BoneID);
             diff_match_patch BonePatch = new diff_match_patch();
-            BonePatch.Diff_Timeout = 0;                                                        //Timing out fucks up large files comparison
+            BonePatch.Diff_Timeout = 1;                                                        //Timing out fucks up large files comparison
                                                                                                //I would need to figure out a way to speed this shit up = is the issue file-size?
                                                                                                // The issue is complexity - what if I were to split the fucking file?
             List<Patch> Patch = BonePatch.patch_make(BoneString, SkeletonString);

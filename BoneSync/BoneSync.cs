@@ -54,6 +54,10 @@ namespace BoneSync
                     Console.WriteLine("Skipping XML preconversion");
                     BoneSync.ParseXML();
                     Console.WriteLine("Moving on to children comparison");
+                    Console.WriteLine("Attempting Split");
+                    XMLSplitter.SkeletonSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
+                    Console.WriteLine("BREAK HERE - PRESS ENTER");
+                    Console.ReadLine();
                     BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild"); 
                     //For now this shit is static - Wil need dynamic
                     break;
@@ -124,8 +128,6 @@ namespace BoneSync
         public static void WipeOldFiles()
         {
             //Wipes any leftover file in the XML dir
-
-
             string[] filePaths = Directory.GetFiles(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs");
             //File.Delete(filePaths + @"\PreviousVersion\SoundSoulsCache.xml");
             foreach (string filePath in filePaths)
