@@ -58,7 +58,8 @@ namespace BoneSync
                     XMLSplitter.SkeletonSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
                     Console.WriteLine("BREAK HERE - PRESS ENTER");
                     Console.ReadLine();
-                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild"); 
+                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild");
+                    XMLSplitter.WipeOldNuggets();
                     //For now this shit is static - Wil need dynamic
                     break;
                 default:
