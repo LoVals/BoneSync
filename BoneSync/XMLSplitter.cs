@@ -18,20 +18,40 @@ namespace BoneSync
         public static void SkeletonSplit(string SoundSoulsXML)
         {
             XMLSplitter.WipeOldNuggets();
-            XDocument SkeletonFile = XDocument.Load(SoundSoulsXML);
+            string BackupFileLocation = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSouls.xml";
+            File.Copy(SoundSoulsXML, BackupFileLocation);
+            XDocument SkeletonFile = XDocument.Load(BackupFileLocation);
+            
             var EventCategoryNugget = SkeletonFile.Descendants("eventcategory").Select(d => new XDocument(new XElement("eventcategory", d)));
             int EvCounter = 0;
-            foreach (var TargetNugget in EventCategoryNugget)
+            do
             {
-                EvCounter = EvCounter + 1;
-                TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventCategoryNugget_0" + EvCounter + ".xml");
+                try
+                {
+                    foreach (var TargetNugget in EventCategoryNugget)
+                    {
+
+                        EvCounter = EvCounter + 1;
+                        Console.WriteLine("Nugget for Event Category 1");
+                        TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventCategoryNugget_0" + EvCounter + ".xml");
+                        TargetNugget.Remove(); //When parent is deleted, shit happens
+                        EventCategoryNugget = SkeletonFile.Descendants("eventcategory").Select(d => new XDocument(new XElement("eventcategory", d)));
+                    }
+                }
+                catch (System.InvalidOperationException); //ALL THIS NEEDS REWORK
+                                                          // IDEA - SXPORT THE 1300 files but cull the ones too small. They belong to children which can be considered useless data
             }
-            var SoundDefFolderNugget = SkeletonFile.Descendants("sounddeffolder").Select(d => new XDocument(new XElement("sounddeffolder", d)));
-            int SDFCounter = 0;
+
+            while ();
+
+                //----------------------------------------------------------------------------------------------------------------------------------------------------------------
+                var SoundDefFolderNugget = SkeletonFile.Descendants("sounddeffolder").Select(d => new XDocument(new XElement("sounddeffolder", d)));
+                int SDFCounter = 0;
             foreach (var TargetNugget in SoundDefFolderNugget)
             {
                 SDFCounter = SDFCounter + 1;
                 TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundDefFolderNugget_0" + SDFCounter + ".xml");
+                TargetNugget.Remove();
             }
             var EventGroupNugget = SkeletonFile.Descendants("eventgroup").Select(d => new XDocument(new XElement("eventgroup", d)));
             int EGCounter = 0;
@@ -39,6 +59,7 @@ namespace BoneSync
             {
                 EGCounter = EGCounter + 1;
                 TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventGroupNugget_0" + EGCounter + ".xml");
+                TargetNugget.Remove(); TargetNugget.Remove();
             }
             var SoundbankNugget = SkeletonFile.Descendants("soundbank").Select(d => new XDocument(new XElement("soundbank", d)));
             int SBCounter = 0;
@@ -46,6 +67,7 @@ namespace BoneSync
             {
                 SBCounter = SBCounter + 1;
                 TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundbankNugget_0" + SBCounter + ".xml");
+                TargetNugget.Remove();
             }
         }
         public static void WipeOldNuggets()
@@ -54,6 +76,20 @@ namespace BoneSync
             foreach (string filePath in filePaths)
             {
                 File.Delete(filePath);
+            }
+        }
+
+        public static bool ElementExists(XDocument DocumentName, string ValueName)
+        {
+            var TestNugget = DocumentName.Elements(ValueName);
+            if (TestNugget == null)
+            {
+                return false;
+            }
+            //var EventName = DocumentName.SelectSingleNode//Descendants("eventcategory").Select(d => new XDocument(new XElement("eventcategory", d)));
+            else
+            {
+                return true;
             }
         }
     }
