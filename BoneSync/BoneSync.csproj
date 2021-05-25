@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="BoneSync.cs" />
     <Compile Include="BoneDiffer.cs" />
+    <Compile Include="ChildParentComp.cs" />
     <Compile Include="XMLSplitter.cs" />
     <Compile Include="XMLParse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

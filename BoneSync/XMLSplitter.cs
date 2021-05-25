@@ -18,7 +18,7 @@ namespace BoneSync
         public static void SkeletonSplit(string SoundSoulsXML)
         {
             XMLSplitter.WipeOldNuggets();
-            string BackupFileLocation = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSouls.xml";
+            string BackupFileLocation = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSoulsSplitCache.xml";
             File.Copy(SoundSoulsXML, BackupFileLocation);
             XDocument SkeletonFile = XDocument.Load(BackupFileLocation);
 
@@ -89,7 +89,7 @@ namespace BoneSync
             DeletingCache.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSouls.xml");
 
             //----------------------------------------------------------------------------------------------------------------------------------------
-            //SOUNDBANK
+            //SOUNDBANKS
             //----------------------------------------------------------------------------------------------------------------------------------------
 
             var SoundbankNugget = SkeletonFile.Descendants("soundbank").Select(d => new XDocument(new XElement("soundbank", d)));
@@ -97,15 +97,22 @@ namespace BoneSync
             foreach (var TargetNugget in SoundbankNugget)
             {
                 SBCounter = SBCounter + 1;
-                TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundbankNugget_0" + SBCounter + ".xml");
-                break;
-            }
-            DeletingCache = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSouls.xml");
-            DeleteME = DeletingCache.Element("soundbank");
-            DeleteME.Remove();
-            DeletingCache.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSouls.xml");
+                if (SBCounter == 1)
+                {
+                    TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\Soundbanks.xml");
+                }
+                else
+                {
+                    TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundbankNugget_0" + SBCounter + ".xml");
+                    string NuggetToMerge = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundbankNugget_0" + SBCounter + ".xml";
+                    XMLSplitter.MergeNuggets(NuggetToMerge);
+                }                
+                DeletingCache = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSouls.xml");
+                DeleteME = DeletingCache.Element("soundbank");
+                DeleteME.Remove();
+                DeletingCache.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSouls.xml");
+            } 
         }
-
         //----------------------------------------------------------------------------------------------------------------------------------------
         //This is likely very inefficient - I am sure there are better ways to do this shit
         //----------------------------------------------------------------------------------------------------------------------------------------
@@ -131,6 +138,19 @@ namespace BoneSync
             {
                 return true;
             }
+        }
+
+        public static void MergeNuggets(string NuggetName)
+        {
+            var FullDoc = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\Soundbanks.xml");
+            var Nugget = XDocument.Load(NuggetName);
+            var combinedWithDups = FullDoc.Descendants("AllNodes").Concat(Nugget.Descendants("AllNodes"));
+            //HOW THE FUCK DO I SAVE THIS SHIT!?
+        }
+
+        public static void ChildSplit(string ChildName, string BoneTarget)
+        {
+            //COPY SPLITCODE BASICALLY but with tweaks for the children
         }
     }
 }
