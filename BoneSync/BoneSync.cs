@@ -53,13 +53,14 @@ namespace BoneSync
                 case 1:
                     Console.WriteLine("Skipping XML preconversion");
                     BoneSync.ParseXML();
+                    Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("Moving on to children comparison");
-                    Console.WriteLine("Attempting Split");
+                    Console.WriteLine("Splitting XML into readable nuggets");
                     XMLSplitter.SkeletonSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
-                    Console.WriteLine("BREAK HERE - PRESS ENTER");
-                    Console.ReadLine();
-                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild");
-                    XMLSplitter.WipeOldNuggets();
+                    XMLSplitter.ChildSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TEST_B_Child");
+                    Console.WriteLine("Testing Diff algoruthm for bones");
+                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild"); //this algorithm works but only for small files
+                    //XMLSplitter.WipeOldNuggets();
                     //For now this shit is static - Wil need dynamic
                     break;
                 default:
