@@ -207,7 +207,7 @@ namespace BoneSync
             var EventGroupNugget = ChildFile.Descendants("eventgroup").Select(d => new XDocument(new XElement("eventgroup", d)));
             foreach (var TargetNugget in EventGroupNugget)
             {
-                TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + ChildName + "EventGroupNugget.xml");
+                TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + ChildName + "_EventGroupNugget.xml");
                 break;
             }
             DeletingCache = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\ChildData" + ChildName + "_Bkp.xml");
@@ -227,12 +227,12 @@ namespace BoneSync
                 SBCounter = SBCounter + 1;
                 if (SBCounter == 1)
                 {
-                    TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + ChildName + "SoundbanksNugget.xml");
+                    TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + ChildName + "_SoundbanksNugget.xml");
                 }
                 else
                 {
-                    TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\"+ ChildName+@"\SoundbankNugget_0" + SBCounter + ".xml");
-                    string NuggetToMerge = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\"+ ChildName+@"\SoundbankNugget_0" + SBCounter + ".xml";
+                    TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\"+ ChildName+"_SoundbankNugget_0" + SBCounter + ".xml");
+                    string NuggetToMerge = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\"+ ChildName+"_SoundbankNugget_0" + SBCounter + ".xml";
                     //XMLSplitter.MergeNuggets(NuggetToMerge);
                 }
                 DeletingCache = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\ChildData" + ChildName + "_Bkp.xml");
@@ -240,6 +240,6 @@ namespace BoneSync
                 DeleteME.Remove();
                 DeletingCache.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\ChildData" + ChildName + "_Bkp.xml");
             }
-        }
+        } //This whole function might be useless - I could just diff the nuggets to the child
     }
 }

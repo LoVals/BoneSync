@@ -16,10 +16,9 @@ namespace BoneSync
     class BoneSync
     {
         static void Main()
-        {                                                                                          //Shall I actually give users custom Folders? I am thinking Fuck no
-            string CurrentDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls";                                               //Replace this with Directory.GetCurrentDirectory
+        {                                                                                                                       //Shall I actually give users custom Folders? I am thinking Fuck no                                               //Replace this with Directory.GetCurrentDirectory
             string rootPath = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones";                                      //Replace this with Current Directory + \Soundbones as the script resides in the same folder as pre build sync
-            string path = Directory.GetCurrentDirectory();
+            string CurrentDir = Directory.GetCurrentDirectory();
             Console.ForegroundColor = ConsoleColor.Green;
             // will likely change to the SOUNDSOUL root
             Console.WriteLine(" _________________________");
@@ -27,7 +26,7 @@ namespace BoneSync
             Console.WriteLine("¦       Bonesync 1.0      ¦");
             Console.WriteLine("¦_________________________¦");
             Console.WriteLine("");
-            Console.WriteLine("The current directory is {0}", path);
+            Console.WriteLine("The current directory is {0}", CurrentDir);
             Console.WriteLine("Preparing to syncronize...");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Would You like to skip the XML conversion? TEST ONLY! 1 = yes 0 = no");
@@ -42,11 +41,11 @@ namespace BoneSync
                     BoneSync.XMLMake(rootPath);
                     BoneSync.MainProjectCopy("SoundSouls.xml", "SoundSoulsCache.xml");
                     BoneSync.ParseXML();
-                    Console.WriteLine("I STILL NEED TO WRITE THE SYNC TOOL - THUS THAT's IT YA CUNT!");
-                    BoneSync.ParseXML();
                     Console.WriteLine("Press any key to continue with children comparison");
                     Console.ReadKey();
-                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild");
+                    XMLSplitter.SkeletonSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
+                    XMLSplitter.ChildSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TEST_B_Child");
+                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild");
                     //For now this shit is static - Wil need dynamic
 
                     break;
@@ -59,7 +58,8 @@ namespace BoneSync
                     XMLSplitter.SkeletonSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
                     XMLSplitter.ChildSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TEST_B_Child");
                     Console.WriteLine("Testing Diff algoruthm for bones");
-                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild"); //this algorithm works but only for small files
+                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild"); //this algorithm works but only for small files
+                    
                     //XMLSplitter.WipeOldNuggets();
                     //For now this shit is static - Wil need dynamic
                     break;
@@ -73,7 +73,7 @@ namespace BoneSync
                     BoneSync.ParseXML();
                     Console.WriteLine("Press any key to continue with children comparison");
                     Console.ReadKey();
-                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_A.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild");
+                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild");
                     //For now this shit is static - Wil need dynamic
                     break;
             }

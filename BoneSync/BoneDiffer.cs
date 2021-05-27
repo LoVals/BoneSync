@@ -13,11 +13,10 @@ namespace BoneSync
 {
     class BoneDiffer    
     {
-        public static void SkeletonToBone(string Skeleton, string Bone, String BoneName)
+        public static void SkeletonToBone(string Bone, String BoneName)
         {
             // this ONE needs massive rework
-            XDocument XSkeleton = XDocument.Load(Skeleton);
-            XDocument XBone = XDocument.Load(Bone);
+
             Console.WriteLine("Comparing Skeleton Project to target SoundBone: " + Bone);
             //need to add file cleanup  
             BoneDiffer.WipeOldFiles(BoneName);
@@ -30,8 +29,8 @@ namespace BoneSync
                         //------------------------------------------------------------------------------------------------------------------------------------
                         // EVENTCATEGORY
                         //------------------------------------------------------------------------------------------------------------------------------------
-                        var XParentNugget = XDocument.Load(Skeleton);//NOT GOOD NEEDS TO LOAD NUGGETS
-                        var XChildNugget = XDocument.Load(Skeleton); //NOT GOOD NEEDS TO LOAD NUGGETS
+                        var XParentNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventCategoryNuggets.xml");//NOT GOOD NEEDS TO LOAD NUGGETS
+                        var XChildNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + BoneName + "_EventCategoryNuggets.xml"); //NOT GOOD NEEDS TO LOAD NUGGETS
                         BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
                         SwitchValue = SwitchValue + 1;
                         break;
@@ -39,18 +38,27 @@ namespace BoneSync
                         //------------------------------------------------------------------------------------------------------------------------------------
                         // SOUNDDEFFOLDER
                         //------------------------------------------------------------------------------------------------------------------------------------
+                        XParentNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundDefFolderNugget.xml");//NOT GOOD NEEDS TO LOAD NUGGETS
+                        XChildNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + BoneName + "_SoundDefFolderNugget.xml"); //NOT GOOD NEEDS TO LOAD NUGGETS
+                        BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
                         SwitchValue = SwitchValue + 1;
                         break;
                     case 2:
                         //------------------------------------------------------------------------------------------------------------------------------------
                         // EVENTGROUP
                         //------------------------------------------------------------------------------------------------------------------------------------
+                        XParentNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventGroupNugget.xml");//NOT GOOD NEEDS TO LOAD NUGGETS
+                        XChildNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + BoneName + "_EventGroupNugget.xml"); //NOT GOOD NEEDS TO LOAD NUGGETS
+                        BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
                         SwitchValue = SwitchValue + 1;
                         break;
                     case 3:
                         //------------------------------------------------------------------------------------------------------------------------------------
                         // SOUNDBANKS
                         //------------------------------------------------------------------------------------------------------------------------------------
+                        XParentNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundbanksNugget.xml");//NOT GOOD NEEDS TO LOAD NUGGETS
+                        XChildNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + BoneName + "_SoundbanksNugget.xml"); //NOT GOOD NEEDS TO LOAD NUGGETS
+                        BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
                         SwitchValue = SwitchValue + 1;
                         break;
                     default:
@@ -61,11 +69,6 @@ namespace BoneSync
             {
                 goto SwithNugget;
             }
-
-
-
-
-            BoneDiffer.DiffBone(XSkeleton, XBone, BoneName); //this shit diffs the main files - this is a no no. I need to diff the nuggets now
             //------------------------------------------
             string BoneFolder = Path.GetFileNameWithoutExtension(BoneName);
             BoneDiffer.PatchCompare(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\" + BoneFolder, @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\MainDiffData.txt");
