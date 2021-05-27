@@ -45,7 +45,7 @@ namespace BoneSync
                     Console.ReadKey();
                     XMLSplitter.SkeletonSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
                     XMLSplitter.ChildSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TEST_B_Child");
-                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild");
+                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TEST_B_Child");
                     //For now this shit is static - Wil need dynamic
 
                     break;
@@ -58,7 +58,7 @@ namespace BoneSync
                     XMLSplitter.SkeletonSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B.xml");
                     XMLSplitter.ChildSplit(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TEST_B_Child");
                     Console.WriteLine("Testing Diff algoruthm for bones");
-                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild"); //this algorithm works but only for small files
+                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TEST_B_Child"); //this algorithm works but only for small files
                     
                     //XMLSplitter.WipeOldNuggets();
                     //For now this shit is static - Wil need dynamic
@@ -73,7 +73,7 @@ namespace BoneSync
                     BoneSync.ParseXML();
                     Console.WriteLine("Press any key to continue with children comparison");
                     Console.ReadKey();
-                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TestChild");
+                    BoneDiffer.SkeletonToBone(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\TEST_B_Child.xml", "TEST_B_Child");
                     //For now this shit is static - Wil need dynamic
                     break;
             }

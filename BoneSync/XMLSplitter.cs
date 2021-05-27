@@ -114,7 +114,7 @@ namespace BoneSync
                 {
                     TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundbankNugget_0" + SBCounter + ".xml");
                     string NuggetToMerge = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundbankNugget_0" + SBCounter + ".xml";
-                    XMLSplitter.MergeNuggets(ParentFile, NuggetToMerge);
+                    //XMLSplitter.MergeNuggets(ParentFile, NuggetToMerge);
                 }                
                 DeletingCache = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSoulsSplitCache.xml");
                 DeleteME = DeletingCache.Element("soundbank");

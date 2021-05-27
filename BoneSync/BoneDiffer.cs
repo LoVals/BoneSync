@@ -29,10 +29,11 @@ namespace BoneSync
                         //------------------------------------------------------------------------------------------------------------------------------------
                         // EVENTCATEGORY
                         //------------------------------------------------------------------------------------------------------------------------------------
-                        var XParentNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventCategoryNuggets.xml");//NOT GOOD NEEDS TO LOAD NUGGETS
+                        var XParentNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventCategoryNuggets.xml");
                         var XChildNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + BoneName + "_EventCategoryNuggets.xml"); //NOT GOOD NEEDS TO LOAD NUGGETS
-                        BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
+                        //BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
                         SwitchValue = SwitchValue + 1;
+                        Console.ReadLine();
                         break;
                     case 1:
                         //------------------------------------------------------------------------------------------------------------------------------------
@@ -40,7 +41,7 @@ namespace BoneSync
                         //------------------------------------------------------------------------------------------------------------------------------------
                         XParentNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundDefFolderNugget.xml");//NOT GOOD NEEDS TO LOAD NUGGETS
                         XChildNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + BoneName + "_SoundDefFolderNugget.xml"); //NOT GOOD NEEDS TO LOAD NUGGETS
-                        BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
+                        //BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
                         SwitchValue = SwitchValue + 1;
                         break;
                     case 2:
@@ -49,7 +50,7 @@ namespace BoneSync
                         //------------------------------------------------------------------------------------------------------------------------------------
                         XParentNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventGroupNugget.xml");//NOT GOOD NEEDS TO LOAD NUGGETS
                         XChildNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + BoneName + "_EventGroupNugget.xml"); //NOT GOOD NEEDS TO LOAD NUGGETS
-                        BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
+                        //BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
                         SwitchValue = SwitchValue + 1;
                         break;
                     case 3:
@@ -58,7 +59,7 @@ namespace BoneSync
                         //------------------------------------------------------------------------------------------------------------------------------------
                         XParentNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundbanksNugget.xml");//NOT GOOD NEEDS TO LOAD NUGGETS
                         XChildNugget = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\ChildData\" + BoneName + "_SoundbanksNugget.xml"); //NOT GOOD NEEDS TO LOAD NUGGETS
-                        BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
+                        //BoneDiffer.DiffBone(XParentNugget, XChildNugget, BoneName);
                         SwitchValue = SwitchValue + 1;
                         break;
                     default:
