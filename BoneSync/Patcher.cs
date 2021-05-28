@@ -12,10 +12,18 @@ namespace BoneSync
 {
     class Patcher
     {
-        //CODE FOR APPLYING PATCH GOES HERE
-        public static void Apply(XDocument XSkeletonNugget, XDocument XBone)
+        public static void Apply(XDocument PatchData, XDocument XBone)                                  //Input = Patchdata = result of ChildDiff + ParentDiff filter // XBone = SoundBone XML File
         {
-            //I may not need to split the child project after all
+            string PatchToText = PatchData.Document.ToString(SaveOptions.DisableFormatting);
+            diff_match_patch PatchList = new diff_match_patch();
+            List<Patch> Yolo = PatchList.patch_fromText(PatchToText);                                   //converts text log to patch data
+            string BoneToPatch = XBone.Document.ToString(SaveOptions.DisableFormatting);
+            diff_match_patch ApplyPatch = new diff_match_patch();
+            ApplyPatch.patch_apply(Yolo, BoneToPatch);
+            Console.WriteLine(ApplyPatch);
+            Console.ReadLine();
+
+            //CODE FOR APPLYING PATCH TO THE SOUNDBONES
         }
     }
 }

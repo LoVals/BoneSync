@@ -125,7 +125,7 @@ namespace BoneSync
                 Console.WriteLine(dirNotFound.Message);
             }
 
-            BoneSync.ChangeBoneExtension(".fdp", ".xml");
+            BoneSync.ChangeBoneExtension(".fdp", ".xml", @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs");
         }
         public static void WipeOldFiles()
         {
@@ -138,10 +138,10 @@ namespace BoneSync
             }
         }                                                                                    
         //WIPES OLD FILES FROM THE DRIVE - happens before XML conversion of FDPS
-        public static void ChangeBoneExtension(string OldExt, string NewExt)                                                    
+        public static void ChangeBoneExtension(string OldExt, string NewExt, string Dir)                                                    
         
         {
-            string XMLDIR = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs";
+            string XMLDIR = Dir;
             var FDPFILE = Directory.GetFiles(XMLDIR, "*", SearchOption.TopDirectoryOnly);
 
             foreach (string file in FDPFILE)
@@ -177,5 +177,65 @@ namespace BoneSync
             XMLParse.ParseXML();
         }
         //Executes diff protocol
+
+        public static void WipeOldSoundBones()
+        {
+            string[] filePaths = Directory.GetFiles(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones");
+            string[] BackupPath = Directory.GetFiles(@"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones");
+            foreach(string filePath in BackupPath)
+            {
+                File.Delete(filePath);
+            }
+            foreach (string filePath in filePaths)
+            {
+                File.Move(filePath, @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones\Backup");
+            }
+            
+        }
+        //Deletes old soundbones
+
+        public static void FDPRestore()
+        {
+            string sourceDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\XMLs";
+            string RestoreDir = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones";
+            //should change this if the user decides to select another directory
+            Console.WriteLine("XML conversion is starting");
+            Console.WriteLine("Fetching SoundBones...");
+            var files = Directory.GetFiles(sourceDir, "*.xml", SearchOption.TopDirectoryOnly);
+
+            foreach (string file in files)
+            {
+                Console.WriteLine(file);
+            }                                                                                                                    //spits out the file list
+            Console.WriteLine("XML Files have been Fetched, Restoring to FDP...");
+            try
+            {
+                string[] BoneList = Directory.GetFiles(sourceDir, "*.xml");
+                foreach (string f in BoneList)
+                {
+                    // Remove path from the file name.
+                    string fName = f.Substring(sourceDir.Length + 1);
+                    try
+                    {
+                        // Will not overwrite if the destination file already exists.
+                        File.Copy(Path.Combine(sourceDir, fName), Path.Combine(RestoreDir, fName));
+                        Console.WriteLine(fName + " copied successfully");
+                    }
+
+                    // Catch exception if the file was already copied.
+                    catch (IOException copyError)
+                    {
+                        Console.WriteLine(copyError.Message);
+                    }
+
+                }
+            }
+            catch (DirectoryNotFoundException dirNotFound)
+            {
+                Console.WriteLine(dirNotFound.Message);
+            }
+            BoneSync.ChangeBoneExtension(".xml", ".fdp", @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones");
+        }
+
     }
 }
