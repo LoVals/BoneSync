@@ -27,10 +27,9 @@ namespace BoneSync
             //EVENTCATEGORYSPLIT -- MULTIPLE_ MERGED
             //----------------------------------------------------------------------------------------------------------------------------------------
 
-            var EventCategoryNugget = SkeletonFile.Descendants("eventcategory").Select(d => new XDocument(new XElement("eventcategory", d)));
+            var EventCategoryNugget = SkeletonFile.Elements().Select(d => new XDocument(new XElement("eventcategory", d)));
             int EvCounter = 0;
             ParentFile = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventCategoryNuggets.xml";
-        EventNuggetStart:
             foreach (var TargetNugget in EventCategoryNugget)
             {
                 EvCounter = EvCounter + 1;
@@ -44,63 +43,35 @@ namespace BoneSync
                     string NuggetToMerge = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventCategoryNugget_0" + EvCounter + ".xml";
                     XMLSplitter.MergeNuggets(ParentFile, NuggetToMerge);
                 }
-                
-                break;
-            }
-            XElement DeletingCache = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSoulsSplitCache.xml");
-            XElement DeleteME = DeletingCache.Element("eventcategory");
-            DeleteME.Remove();
-            DeletingCache.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSoulsSplitCache.xml");
-            //Overwriting the file is the key to get only what you need
-            SkeletonFile = XDocument.Load(BackupFileLocation);
-            EventCategoryNugget = SkeletonFile.Descendants("eventcategory").Select(d => new XDocument(new XElement("eventcategory", d)));
-            if (EvCounter != 5)
-            {
-                goto EventNuggetStart;
             }
 
             //----------------------------------------------------------------------------------------------------------------------------------------
             //SOUNDDEFFOLDER -- THERE'S ALWAYS GONNA BE ONE
             //----------------------------------------------------------------------------------------------------------------------------------------
 
-            var SoundDefFolderNugget = SkeletonFile.Descendants("sounddeffolder").Select(d => new XDocument(new XElement("sounddeffolder", d)));
-            int SDFCounter = 0;
+            var SoundDefFolderNugget = SkeletonFile.Elements().Select(d => new XDocument(new XElement("sounddeffolder", d)));
             foreach (var TargetNugget in SoundDefFolderNugget)
             {
-                SDFCounter = SDFCounter + 1;
                 TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundDefFolderNugget.xml");
                 break;
             }
-            DeletingCache = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSoulsSplitCache.xml");
-            DeleteME = DeletingCache.Element("sounddeffolder");
-            DeleteME.Remove();
-            DeletingCache.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSoulsSplitCache.xml");
-            //Overwriting the file is the key to get only what you need
-            SkeletonFile = XDocument.Load(BackupFileLocation);
-            EventCategoryNugget = SkeletonFile.Descendants("sounddeffolder").Select(d => new XDocument(new XElement("sounddeffolder", d)));
 
             //----------------------------------------------------------------------------------------------------------------------------------------
             //EVENTGROUP -- THERE'S ALWAYS GONNA BE ONE
             //----------------------------------------------------------------------------------------------------------------------------------------
 
-            var EventGroupNugget = SkeletonFile.Descendants("eventgroup").Select(d => new XDocument(new XElement("eventgroup", d)));
-            int EGCounter = 0;
+            var EventGroupNugget = SkeletonFile.Elements().Select(d => new XDocument(new XElement("eventgroup", d)));
             foreach (var TargetNugget in EventGroupNugget)
             {
-                EGCounter = EGCounter + 1;
                 TargetNugget.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\EventGroupNugget.xml");
                 break;
             }
-            DeletingCache = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSoulsSplitCache.xml");
-            DeleteME = DeletingCache.Element("eventgroup");
-            DeleteME.Remove();
-            DeletingCache.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSoulsSplitCache.xml");
 
             //----------------------------------------------------------------------------------------------------------------------------------------
             //SOUNDBANKS -- MULTIPLE _ MERGED
             //----------------------------------------------------------------------------------------------------------------------------------------
 
-            var SoundbankNugget = SkeletonFile.Descendants("soundbank").Select(d => new XDocument(new XElement("soundbank", d)));
+            var SoundbankNugget = SkeletonFile.Elements().Select(d => new XDocument(new XElement("soundbank", d)));
             int SBCounter = 0;
             ParentFile = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundbanksNugget.xml";
             foreach (var TargetNugget in SoundbankNugget)
@@ -116,10 +87,6 @@ namespace BoneSync
                     string NuggetToMerge = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\Nuggets\SoundbankNugget_0" + SBCounter + ".xml";
                     //XMLSplitter.MergeNuggets(ParentFile, NuggetToMerge);
                 }                
-                DeletingCache = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSoulsSplitCache.xml");
-                DeleteME = DeletingCache.Element("soundbank");
-                DeleteME.Remove();
-                DeletingCache.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\PatchData\SoundSoulsSplitCache.xml");
             }
             // HACKY AF BUT IT WORKS
         }
