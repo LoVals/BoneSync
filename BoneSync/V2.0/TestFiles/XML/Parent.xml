@@ -43,7 +43,7 @@
 <maxplaybacks>0</maxplaybacks>
 <maxplaybacks_behavior>Steal_oldest</maxplaybacks_behavior>
 <notes></notes>
-<open>1</open>
+<open>0</open>
 </eventcategory>
 <eventcategory>
 <name>DummyCategory</name>
@@ -53,7 +53,7 @@
 <maxplaybacks>0</maxplaybacks>
 <maxplaybacks_behavior>Steal_oldest</maxplaybacks_behavior>
 <notes></notes>
-<open>1</open>
+<open>0</open>
 </eventcategory>
 </eventcategory>
 <sounddeffolder>
@@ -292,6 +292,22 @@
 <soundlock>0</soundlock>
 <envlock>0</envlock>
 <priority>-1</priority>
+<sound>
+<name>/ParentDefFolder/Child 2/DummyDef</name>
+<x>0</x>
+<width>1</width>
+<startmode>0</startmode>
+<loopmode>1</loopmode>
+<loopcount2>-1</loopcount2>
+<autopitchenabled>0</autopitchenabled>
+<autopitchparameter>0</autopitchparameter>
+<autopitchreference>0</autopitchreference>
+<autopitchatzero>0</autopitchatzero>
+<finetune>0</finetune>
+<volume>1</volume>
+<fadeintype>2</fadeintype>
+<fadeouttype>2</fadeouttype>
+</sound>
 <_PC_enable>1</_PC_enable>
 <_XBOX_enable>1</_XBOX_enable>
 <_XBOX360_enable>1</_XBOX360_enable>

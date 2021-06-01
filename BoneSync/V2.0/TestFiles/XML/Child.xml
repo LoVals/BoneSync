@@ -1,5 +1,5 @@
 <project>
-<name>Parent</name>
+<name>Child1</name>
 <guid>{462955e4-40e4-4af6-87f9-cef06d68dd0e}</guid>
 <version>4</version>
 <eventgroup_nextid>0</eventgroup_nextid>
