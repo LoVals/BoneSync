@@ -23,16 +23,14 @@ namespace BoneSync_02
 
             //------------------------------------------------------------------------------
             // LOAD PARENT FILE INTO MEMORY
-            var XParent = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.Xml");
-            string BoneName = "Child1";//Path.GetFileNameWithoutExtension(file);
-            IEnumerable<XElement> EventGroup = from el in XParent.Elements("eventgroup") where (string)el.Element("name") == BoneName select el;
-            foreach (XElement el in EventGroup)
-            {
-                Console.WriteLine(el);
-            }
+            var XParent = XElement.Load(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.xml");
+            string BoneName = "Child1";
+            var EventGroupNugget = XParent.Element("sounddeffolder");//Selects the first element with this value - works for eventcategory but not for others. WHY?
+            Console.WriteLine(EventGroupNugget);
+            Console.ReadLine();
 
             // LOAD ALL CHILDREN NAMES
-            string SoundBonesDir = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\FDP\Children";
+            string SoundBonesDir = @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\FDP\Children";
             var FDPFILE = Directory.GetFiles(SoundBonesDir, "*", SearchOption.TopDirectoryOnly);
 
             foreach (string file in FDPFILE)
