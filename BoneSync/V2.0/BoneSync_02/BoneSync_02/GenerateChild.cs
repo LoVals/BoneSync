@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Data;
 using System.Xml;
 using System.Xml.Linq;
+using DiffMatchPatch;
 
 namespace BoneSync_02
 {
@@ -33,9 +34,13 @@ namespace BoneSync_02
             {
                 Console.WriteLine("Chicking if this element belongs to current Bone...");
                 Console.WriteLine();
-                Console.WriteLine(ChildElement.Descendants("name").FirstOrDefault());
-                var TestBelonging = ChildElement.Descendants("name").FirstOrDefault();
-                IsChildValid(TestBelonging);
+                Console.WriteLine(ChildElement.Descendants("name").FirstOrDefault().Value);
+                var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
+                if (IsChildValid(TestBelonging) == true)
+                {
+                    Console.WriteLine("SoundBone" + BoneName + " :content has been found");
+                    break;
+                }
                 Console.ReadLine();
             }
 
@@ -61,11 +66,12 @@ namespace BoneSync_02
 
         }
 
-        public static bool IsChildValid(XElement TestedElement)
+        public static bool IsChildValid(string TestedElement)
         {
 
             //Boolean to determine if the child is the one we're trying to generate
             //if it is - then return true - this will cause the loop to break
+            //This will likely use the matching system of the diffmatchpatch API to determine if the entry is a match
 
             //if ()
             // {
