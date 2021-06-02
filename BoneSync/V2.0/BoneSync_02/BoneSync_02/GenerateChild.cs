@@ -23,12 +23,23 @@ namespace BoneSync_02
 
             //------------------------------------------------------------------------------
             // LOAD PARENT FILE INTO MEMORY
-            var XParent = XElement.Load(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.xml");
+            var XParent = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.xml");
+            var ParentFile = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.xml");
             string BoneName = "Child1";
-            var EventGroupNugget = XParent.Element("sounddeffolder");//Selects the first element with this value - works for eventcategory but not for others. WHY?
-            Console.WriteLine(EventGroupNugget);
-            Console.ReadLine();
+            //var EventGroupNugget = XParent.Element("sounddeffolder");//Selects the first element with this value - works for eventcategory but not for others. WHY?
+            //XAttribute TargetElement = EventGroupNugget.Attribute(BoneName);//XParent.Elements("sounddeffolder").Where(child => child.Attribute("name").Value == BoneName).First();
+            var SounddefFolderAll = ParentFile.Descendants("sounddeffolder");
+            foreach (var ChildElement in SounddefFolderAll)
+            {
+                Console.WriteLine("Chicking if this element belongs to current Bone...");
+                Console.WriteLine();
+                Console.WriteLine(ChildElement.Descendants("name").FirstOrDefault());
+                var TestBelonging = ChildElement.Descendants("name").FirstOrDefault();
+                IsChildValid(TestBelonging);
+                Console.ReadLine();
+            }
 
+            //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
             // LOAD ALL CHILDREN NAMES
             string SoundBonesDir = @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\FDP\Children";
             var FDPFILE = Directory.GetFiles(SoundBonesDir, "*", SearchOption.TopDirectoryOnly);
@@ -48,6 +59,19 @@ namespace BoneSync_02
               //  Console.ReadLine();
             }
 
+        }
+
+        public static bool IsChildValid(XElement TestedElement)
+        {
+
+            //Boolean to determine if the child is the one we're trying to generate
+            //if it is - then return true - this will cause the loop to break
+
+            //if ()
+            // {
+            //   return true;
+            //}
+            return false;
         }
     }
 }
