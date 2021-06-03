@@ -295,7 +295,7 @@
 <_WII_maxstreams>10</_WII_maxstreams>
 </default_soundbank_props>
 <soundbank>
-<name>ChildBank1</name>
+<name>Child1</name>
 <guid>{02b58d73-b847-481f-af02-5a7bd7152db1}</guid>
 <load_into_rsx>0</load_into_rsx>
 <disable_seeking>0</disable_seeking>

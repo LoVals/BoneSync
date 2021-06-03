@@ -66,7 +66,7 @@
 <open>1</open>
 <sounddeffolder>
 <name>Child1</name>
-<guid>{53fb9b13-f0bf-4168-90ac-dee210dac47d}</guid>
+<guid>{PORCODDIO IT WORKS!}</guid>
 <open>0</open>
 <sounddef>
 <name>/ParentDefFolder/Child1/TestDefinition</name>
@@ -97,7 +97,7 @@
 </sounddeffolder>
 <sounddeffolder>
 <name>Child 2</name>
-<guid>{5cc51096-7fa1-4372-b46e-188e014589c2}</guid>
+<guid>{TEST _ SE VEDI QUESTO HAI FATTO CASINO}</guid>
 <open>0</open>
 <sounddef>
 <name>/ParentDefFolder/Child 2/DummyDef</name>
@@ -467,7 +467,7 @@
 <_WII_maxstreams>10</_WII_maxstreams>
 </default_soundbank_props>
 <soundbank>
-<name>ChildBank1</name>
+<name>Child1</name>
 <guid>{02b58d73-b847-481f-af02-5a7bd7152db1}</guid>
 <load_into_rsx>0</load_into_rsx>
 <disable_seeking>0</disable_seeking>
@@ -525,7 +525,7 @@
 <_WII_maxstreams>10</_WII_maxstreams>
 </soundbank>
 <soundbank>
-<name>ChildBank2</name>
+<name>Child2</name>
 <guid>{eb930a89-8ce9-4ad4-a2c9-f3537c5406bb}</guid>
 <load_into_rsx>0</load_into_rsx>
 <disable_seeking>0</disable_seeking>
