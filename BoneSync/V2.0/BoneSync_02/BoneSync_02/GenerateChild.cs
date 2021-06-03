@@ -27,24 +27,42 @@ namespace BoneSync_02
             var XParent = XElement.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.xml");
             var ParentFile = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.xml");
             string BoneName = "Child1";
-            //var EventGroupNugget = XParent.Element("sounddeffolder");//Selects the first element with this value - works for eventcategory but not for others. WHY?
-            //XAttribute TargetElement = EventGroupNugget.Attribute(BoneName);//XParent.Elements("sounddeffolder").Where(child => child.Attribute("name").Value == BoneName).First();
-            var SounddefFolderAll = ParentFile.Descendants("sounddeffolder");
+
+            //-------------------------------------------------------------------------------
+            //                             Event Category
+            //-------------------------------------------------------------------------------
+
+            var EventCategoryFolderAll = ParentFile.Descendants("eventcategory");
+            var MusicCategory = EventCategoryFolderAll.Descendants("name");
+            foreach (var ChildElement in MusicCategory)
+            {
+                string TestMatch = ChildElement.Descendants("name").FirstOrDefault().Value;
+                if (IsMusic(TestMatch) == true)
+                {
+                    Console.WriteLine("music folder found");
+                    break;
+                }
+            }
+                //-------------------------------------------------------------------------------
+                //                             Sound Def Folder
+                //-------------------------------------------------------------------------------
+
+                var SounddefFolderAll = ParentFile.Descendants("sounddeffolder");
             foreach (var ChildElement in SounddefFolderAll)
             {
                 Console.WriteLine("Chicking if this element belongs to current Bone...");
                 Console.WriteLine();
                 Console.WriteLine(ChildElement.Descendants("name").FirstOrDefault().Value);
                 var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
-                if (IsChildValid(TestBelonging) == true)
+                IsChildValid(TestBelonging, BoneName);
+                if (IsChildValid(TestBelonging, BoneName) == true)
                 {
                     Console.WriteLine("SoundBone" + BoneName + " :content has been found");
                     break;
                 }
-                Console.ReadLine();
             }
 
-            //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //-------------------------------------------------------------------------------
             // LOAD ALL CHILDREN NAMES
             string SoundBonesDir = @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\FDP\Children";
             var FDPFILE = Directory.GetFiles(SoundBonesDir, "*", SearchOption.TopDirectoryOnly);
@@ -66,18 +84,36 @@ namespace BoneSync_02
 
         }
 
-        public static bool IsChildValid(string TestedElement)
+        public static bool IsChildValid(string TestedElement, string BoneName)
         {
+            diff_match_patch MatchTest = new diff_match_patch();
+            MatchTest.Match_Threshold = 0.03f;
+            MatchTest.Match_Distance = 1;
+            var Match = MatchTest.match_main(TestedElement, BoneName, 0);
+            if (Match == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-            //Boolean to determine if the child is the one we're trying to generate
-            //if it is - then return true - this will cause the loop to break
-            //This will likely use the matching system of the diffmatchpatch API to determine if the entry is a match
-
-            //if ()
-            // {
-            //   return true;
-            //}
-            return false;
+        public static bool IsMusic (string TestedElement)
+        {
+            diff_match_patch MatchTest = new diff_match_patch();
+            MatchTest.Match_Threshold = 0.03f;
+            MatchTest.Match_Distance = 1;
+            var Match = MatchTest.match_main(TestedElement, "music", 0);
+            if (Match == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
