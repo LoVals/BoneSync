@@ -58,11 +58,11 @@
 </eventcategory>
 <sounddeffolder>
 <name>master</name>
-<guid>{testdiocanE!}</guid>
+<guid>{1d641273-44bf-4f1d-9977-82e4a204e6cf!}</guid>
 <open>0</open>
 <sounddeffolder>
-  <name>Child1</name>
-<guid>{53fb9b13-f0bf-4168-90ac-dee210dac47d}</guid>
+<name>Child1</name>
+<guid>{PORCODDIO IT WORKS!}</guid>
 <open>0</open>
 <sounddef>
 <name>/Child1/TestDefinition</name>
