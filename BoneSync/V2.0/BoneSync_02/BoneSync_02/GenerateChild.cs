@@ -307,5 +307,11 @@ namespace BoneSync_02
 ;
         }
 
+        public static void GenerationCleanup()
+        {
+            //Need to remove the XML intro line
+            //Need to remove references to parent elements out of the generated content
+        }
+
     }
 }
