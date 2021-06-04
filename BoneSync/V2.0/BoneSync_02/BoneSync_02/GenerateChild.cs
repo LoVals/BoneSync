@@ -25,7 +25,7 @@ namespace BoneSync_02
 
             //------------------------------------------------------------------------------
             // LOAD PARENT FILE INTO MEMORY
-            var ParentFile = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.xml");
+            var ParentFile = XDocument.Load(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.xml");
             string BoneName = "Child1";
 
             //-------------------------------------------------------------------------------//
@@ -111,7 +111,7 @@ namespace BoneSync_02
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("SoundBone " + BoneName + ": Sound Def content has been found!");
-                    Console.WriteLine();
+                    Console.WriteLine();    
                     RunGenerator(ChildElement, "sounddeffolder", BoneName);
                     break;
                 }
@@ -159,9 +159,9 @@ namespace BoneSync_02
             //-------------------------------------------------------------------------------
             // LOAD ALL CHILDREN NAMES
             string SoundBonesDir = @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\FDP\Children";
-            var FDPFILE = Directory.GetFiles(SoundBonesDir, "*", SearchOption.TopDirectoryOnly);
+            //var FDPFILE = Directory.GetFiles(SoundBonesDir, "*", SearchOption.TopDirectoryOnly);
 
-            foreach (string file in FDPFILE)
+            //foreach (string file in FDPFILE)
             {
                 //string BoneName = "Child1";//Path.GetFileNameWithoutExtension(file);
                 //EVENTGROUP
@@ -284,12 +284,27 @@ namespace BoneSync_02
 
         {
             // select node from one doc
-            XDocument SoundBone = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\"+BoneName+".xml");
-            XElement ToReplace = SoundBone.Descendants(ReplacementTarget).First();
+            XDocument SoundBone = XDocument.Load(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName+".xml");
+            var PotentialTarget = SoundBone.Descendants(ReplacementTarget);
+            foreach (var Element in PotentialTarget)
+            {
+                var TestBelonging = PotentialTarget.Descendants("sounddeffolder").FirstOrDefault().Value;
+                Console.WriteLine(TestBelonging);
+                Console.WriteLine("Testbelonging");
+                Console.WriteLine(ParentTargetContent);
+                if (IsChildValid(TestBelonging, BoneName) == true)
+                {
+                    XElement ToReplace = Element.Descendants("sounddeffolder").FirstOrDefault();
+                    Console.WriteLine(ToReplace);
+                    ToReplace.ReplaceWith(ParentTargetContent);
+                    SoundBone.Save(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
+                    break;
+                }
+                Console.WriteLine("no Match Detected - OOF");
+            }
 
             // replace one xml node with another
-            ToReplace.ReplaceWith(ParentTargetContent);
-            SoundBone.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
+;
         }
 
     }

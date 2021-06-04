@@ -61,8 +61,8 @@
 <guid>{testdiocanE!}</guid>
 <open>0</open>
 <sounddeffolder>
-  <name>Child1</name>
-<guid>{53fb9b13-f0bf-4168-90ac-dee210dac47d}</guid>
+<name>Child1</name>
+<guid>{PORCODDIOITWORKS!}</guid>
 <open>0</open>
 <sounddef>
 <name>/Child1/TestDefinition</name>
@@ -100,7 +100,7 @@
 <open>1</open>
 <notes></notes>
 <eventgroup>
-<name>Child 1</name>
+<name>Child1</name>
 <guid>{16be7479-3d84-46be-a037-6f1f4d4598c5}</guid>
 <eventgroup_nextid>0</eventgroup_nextid>
 <event_nextid>0</event_nextid>
@@ -406,60 +406,60 @@
 <postsavecommands></postsavecommands>
 <neweventusetemplate>0</neweventusetemplate>
 <neweventlasttemplatename></neweventlasttemplatename>
-
 <Composition>
-    <AuditionConsoleControlRepository>
-        <AuditionConsoleControl Type="Utility" Xpos="18" Ypos="18">
-            <SimpleRack>
-                <ControlName>Reset</ControlName>
-                <ControlRange>0, 1</ControlRange>
-                <ControlWidget>
-                    <ResetControl/>
-                </ControlWidget>
-                <ControlMapping Type="3" ID="0"/>
-            </SimpleRack>
-        </AuditionConsoleControl>
-    </AuditionConsoleControlRepository>
-    <CompositionUI>
-        <SceneEditor>
-            <SceneEditorItemRepository/>
-        </SceneEditor>
-        <ThemeEditor>
-            <ThemeEditorItemRepository/>
-        </ThemeEditor>
-    </CompositionUI>
-    <CueFactory>
-        <UID>1</UID>
-    </CueFactory>
-    <CueRepository/>
-    <ExtLinkFactory>
-        <UID>1</UID>
-    </ExtLinkFactory>
-    <ExtLinkRepository/>
-    <ExtSegmentFactory>
-        <UID>1</UID>
-    </ExtSegmentFactory>
-    <MusicSettings>
-        <BaseVolume>1</BaseVolume>
-        <BaseReverbLevel>1</BaseReverbLevel>
-    </MusicSettings>
-    <ParameterFactory>
-        <UID>1</UID>
-    </ParameterFactory>
-    <ParameterRepository/>
-    <SceneRepository>
-        <Scene ID="1">
-            <CueSheet></CueSheet>
-        </Scene>
-    </SceneRepository>
-    <SegmentRepository/>
-    <SharedFile/>
-    <ThemeFactory>
-        <UID>1</UID>
-    </ThemeFactory>
-    <ThemeRepository/>
-    <TimelineFactory>
-        <UID>1</UID>
-    </TimelineFactory>
-    <TimelineRepository/>
-</Composition></project>
+<AuditionConsoleControlRepository>
+<AuditionConsoleControlType="Utility"Xpos="18"Ypos="18">
+<SimpleRack>
+<ControlName>Reset</ControlName>
+<ControlRange>0,1</ControlRange>
+<ControlWidget>
+<ResetControl/>
+</ControlWidget>
+<ControlMappingType="3"ID="0"/>
+</SimpleRack>
+</AuditionConsoleControl>
+</AuditionConsoleControlRepository>
+<CompositionUI>
+<SceneEditor>
+<SceneEditorItemRepository/>
+</SceneEditor>
+<ThemeEditor>
+<ThemeEditorItemRepository/>
+</ThemeEditor>
+</CompositionUI>
+<CueFactory>
+<UID>1</UID>
+</CueFactory>
+<CueRepository/>
+<ExtLinkFactory>
+<UID>1</UID>
+</ExtLinkFactory>
+<ExtLinkRepository/>
+<ExtSegmentFactory>
+<UID>1</UID>
+</ExtSegmentFactory>
+<MusicSettings>
+<BaseVolume>1</BaseVolume>
+<BaseReverbLevel>1</BaseReverbLevel>
+</MusicSettings>
+<ParameterFactory>
+<UID>1</UID>
+</ParameterFactory>
+<ParameterRepository/>
+<SceneRepository>
+<SceneID="1">
+<CueSheet></CueSheet>
+</Scene>
+</SceneRepository>
+<SegmentRepository/>
+<SharedFile/>
+<ThemeFactory>
+<UID>1</UID>
+</ThemeFactory>
+<ThemeRepository/>
+<TimelineFactory>
+<UID>1</UID>
+</TimelineFactory>
+<TimelineRepository/>
+</Composition>
+</project>
