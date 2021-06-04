@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BonesyncMain.cs" />
+    <Compile Include="ComplexCleanUp.cs" />
     <Compile Include="XmlToFdp.cs" />
     <Compile Include="GenerateChild.cs" />
     <Compile Include="FdpToXml.cs" />

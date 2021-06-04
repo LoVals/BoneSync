@@ -25,7 +25,7 @@ namespace BoneSync_02
 
             //------------------------------------------------------------------------------
             // LOAD PARENT FILE INTO MEMORY
-            var ParentFile = XDocument.Load(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.xml");
+            var ParentFile = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.xml");
             string BoneName = "Child1";
 
             //-------------------------------------------------------------------------------//
@@ -60,35 +60,35 @@ namespace BoneSync_02
                 }
 
 
-                _Music:
+            _Music:
                 if (IsMusic(TestMatch) == true)
                 {
                     Console.WriteLine("music folder found");
                     Shortcutvalue = 1;
                 }
 
-                _Ghost:
+            _Ghost:
                 if (IsGhost(TestMatch) == true)
                 {
                     Console.WriteLine("Ghost folder found");
                     Shortcutvalue = 2;
                 }
 
-                _SE:
+            _SE:
                 if (IsSE(TestMatch) == true)
                 {
                     Console.WriteLine("SE (Sound Efffects) folder found");
                     Shortcutvalue = 3;
                 }
 
-                _Voice:
+            _Voice:
                 if (IsVoice(TestMatch) == true)
                 {
                     Console.WriteLine("Voice folder found");
                     Shortcutvalue = 4;
                 }
 
-                _Default:
+            _Default:
                 if (IsDefault(TestMatch) == true)
                 {
                     Console.WriteLine("Default folder found");
@@ -111,7 +111,7 @@ namespace BoneSync_02
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("SoundBone " + BoneName + ": Sound Def content has been found!");
-                    Console.WriteLine();    
+                    Console.WriteLine();
                     RunGenerator(ChildElement, "sounddeffolder", BoneName);
                     break;
                 }
@@ -158,24 +158,8 @@ namespace BoneSync_02
 
             //-------------------------------------------------------------------------------
             // LOAD ALL CHILDREN NAMES
-            string SoundBonesDir = @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\FDP\Children";
-            //var FDPFILE = Directory.GetFiles(SoundBonesDir, "*", SearchOption.TopDirectoryOnly);
 
-            //foreach (string file in FDPFILE)
-            {
-                //string BoneName = "Child1";//Path.GetFileNameWithoutExtension(file);
-                //EVENTGROUP
-                //search the eventgroup containing the element with that value
-                //I am assuming the user will not change the Root Folder's name
-  
-                
-
-                //currently not working - unsure why
-               // Console.WriteLine("The Element found is:");
-              //  Console.WriteLine(EventGroupNode);
-              //  Console.ReadLine();
-            }
-
+            GenerationCleanup(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
         }
 
         // BOOLEANS DETERMINE IF THE FOLDER I'M IN IS SPECIFIC AND IF IT BELONGS TO THE CHILD I'M GENERATING
@@ -196,7 +180,7 @@ namespace BoneSync_02
             }
         }
 
-        public static bool IsMusic (string TestedElement)
+        public static bool IsMusic(string TestedElement)
         {
             diff_match_patch MatchTest = new diff_match_patch();
             MatchTest.Match_Threshold = 0.03f;
@@ -280,11 +264,11 @@ namespace BoneSync_02
 
         public static void RunGenerator(XElement ParentTargetContent, string ReplacementTarget, string BoneName)
 
-            //                                  !!!NEEDS TESTING!!!
+        //                                  !!!NEEDS TESTING!!!
 
         {
             // select node from one doc
-            XDocument SoundBone = XDocument.Load(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName+".xml");
+            XDocument SoundBone = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + ".xml");
             var PotentialTarget = SoundBone.Descendants(ReplacementTarget);
             foreach (var Element in PotentialTarget)
             {
@@ -297,7 +281,7 @@ namespace BoneSync_02
                     XElement ToReplace = Element.Descendants("sounddeffolder").FirstOrDefault();
                     Console.WriteLine(ToReplace);
                     ToReplace.ReplaceWith(ParentTargetContent);
-                    SoundBone.Save(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
+                    SoundBone.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
                     break;
                 }
                 Console.WriteLine("no Match Detected - OOF");
@@ -307,11 +291,18 @@ namespace BoneSync_02
 ;
         }
 
-        public static void GenerationCleanup()
+        public static void GenerationCleanup(string fileName)
         {
-            //Need to remove the XML intro line
-            //Need to remove references to parent elements out of the generated content
-        }
+            var lines = File.ReadAllLines(fileName);
+            File.WriteAllLines(fileName, lines.Skip(1).ToArray()); //Removes the declaration from the file
 
+            //-------------------------------------------------------------------------------//
+            //                          Cleanup Sound Def Folder                             //
+            //-------------------------------------------------------------------------------//
+
+            //the issue is mismatching sound Def - Examlpe in the case of fdlc_c3471 the string "/SoundSouls/NPC""
+            //needs to be removed from the <sounddef>/< name > entry
+        }
     }
 }
+
