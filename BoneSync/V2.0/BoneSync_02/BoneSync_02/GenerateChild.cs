@@ -106,13 +106,16 @@ namespace BoneSync_02
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
+
+                // THERE IS AN ISSUE WITH THE VALUE OF THE TESTBELONGING HERE _ INVESTIGATE PLX
+
                 IsChildValid(TestBelonging, BoneName);
                 if (IsChildValid(TestBelonging, BoneName) == true)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("SoundBone " + BoneName + ": Sound Def content has been found!");
                     Console.WriteLine();
-                    RunGenerator(ChildElement, "sounddeffolder", BoneName);
+                    RunGenerator(ChildElement, "sounddeffolder", BoneName, 1);
                     break;
                 }
             }
@@ -122,7 +125,7 @@ namespace BoneSync_02
             //-------------------------------------------------------------------------------//
             //THEORY - NOT NECESSARY
             Console.ForegroundColor = ConsoleColor.Yellow;
-            var EventGroupFolderAll = ParentFile.Descendants("soundbank");
+            var EventGroupFolderAll = ParentFile.Descendants("eventgroup");
             Console.WriteLine("Checking Event Group");
             foreach (var ChildElement in EventGroupFolderAll)
             {
@@ -133,7 +136,17 @@ namespace BoneSync_02
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("SoundBone " + BoneName + " : Event Group content has been found");
+                    Console.ReadLine();
                     Console.WriteLine();
+                    XDocument SoundBone = XDocument.Load(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + ".xml");
+                    var PotentialTarget = SoundBone.Descendants("eventgroup");
+                    foreach (var Element in PotentialTarget)
+                    {
+                        string Y = PotentialTarget.FirstOrDefault().Value;
+                        Console.WriteLine(Y);
+                        Console.ReadLine();            
+                    }
+                    Console.ReadLine();
                     break;
                 }
             }
@@ -152,8 +165,10 @@ namespace BoneSync_02
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("SoundBone " + BoneName + " : SoundBanks content has been found");
-                    RunGenerator(ChildElement, "soundbank", BoneName);
+
+                    RunGenerator(ChildElement, "soundbank", BoneName, 2);
                     break;
+
                 }
             }
 
@@ -264,31 +279,51 @@ namespace BoneSync_02
 
         // CHILD WRITER - Code Responsible for regenerating the soundbones
 
-        public static void RunGenerator(XElement ParentTargetContent, string ReplacementTarget, string BoneName)
-
-        //                                  !!!NEEDS TESTING!!!
-
+        public static void RunGenerator(XElement ParentTargetContent, string ReplacementTarget, string BoneName, int DataType)
+        //DataType: 1 = Sound Def // 2 = SoundBank
         {
             // select node from one doc
             XDocument SoundBone = XDocument.Load(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + ".xml");
             var PotentialTarget = SoundBone.Descendants(ReplacementTarget);
             string ReplaceMe = ReplacementTarget;
-            foreach (var Element in PotentialTarget)
+
+            switch (DataType)
             {
-                var TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
-                Console.WriteLine(TestBelonging);
-                Console.WriteLine("Testbelonging");
-                Console.WriteLine(ParentTargetContent);
-                if (IsChildValid(TestBelonging, BoneName) == true)
-                {
-                    XElement ToReplace = Element.Descendants(ReplaceMe).FirstOrDefault();
-                    Console.WriteLine(ToReplace);
-                    ToReplace.ReplaceWith(ParentTargetContent);
-                    SoundBone.Save(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
+                case 1:
+                    foreach (var Element in PotentialTarget)
+                    //SOUND DEF
+                    {
+                        string TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
+                        if (IsChildValid(TestBelonging, BoneName) == true)
+                        {
+                            XElement ToReplace = Element.Descendants(ReplaceMe).FirstOrDefault();
+                            Console.WriteLine(ToReplace);
+                            ToReplace.ReplaceWith(ParentTargetContent);
+                            SoundBone.Save(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
+                            break;
+                        }
+                        Console.WriteLine("no Match Detected - OOF!");
+                    }
                     break;
-                }
-                Console.WriteLine("no Match Detected - OOF");
-            }
+                case 2:
+                    foreach (var Element in PotentialTarget)
+                    //SOUNDBANKS
+                    {
+                        string TestBelonging = PotentialTarget.FirstOrDefault().Value;
+                        if (IsChildValid(TestBelonging, BoneName) == true)
+                        {
+                            XElement ToReplace = Element;
+                            Console.WriteLine(ToReplace);
+                            Console.WriteLine("In theory replacement has been found");
+                            Console.ReadLine();
+                            ToReplace.ReplaceWith(ParentTargetContent);
+                            SoundBone.Save(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
+                            break;
+                        }
+                        Console.WriteLine("no Match Detected - OOF!");
+                    }
+                    break;
+            } 
         }
 
         public static void GenerationCleanup(string fileName, string BoneName)
