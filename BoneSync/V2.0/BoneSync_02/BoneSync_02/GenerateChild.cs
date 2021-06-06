@@ -25,8 +25,8 @@ namespace BoneSync_02
 
             //------------------------------------------------------------------------------
             // LOAD PARENT FILE INTO MEMORY
-            var ParentFile = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\Parent.xml");
-            string BoneName = "Child1";
+            var ParentFile = XDocument.Load(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\SoundSouls.xml");
+            string BoneName = "fdlc_c3471";
 
             //-------------------------------------------------------------------------------//
             //                             Event Category                                    //
@@ -151,6 +151,7 @@ namespace BoneSync_02
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("SoundBone " + BoneName + " : SoundBanks content has been found");
+                    //RunGenerator(ChildElement, "sounddeffolder", BoneName);
                     break;
                 }
             }
@@ -159,7 +160,7 @@ namespace BoneSync_02
             //-------------------------------------------------------------------------------
             // LOAD ALL CHILDREN NAMES
 
-            GenerationCleanup(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
+            GenerationCleanup(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml", BoneName);
         }
 
         // BOOLEANS DETERMINE IF THE FOLDER I'M IN IS SPECIFIC AND IF IT BELONGS TO THE CHILD I'M GENERATING
@@ -268,30 +269,28 @@ namespace BoneSync_02
 
         {
             // select node from one doc
-            XDocument SoundBone = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + ".xml");
+            XDocument SoundBone = XDocument.Load(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + ".xml");
             var PotentialTarget = SoundBone.Descendants(ReplacementTarget);
+            string ReplaceMe = ReplacementTarget;
             foreach (var Element in PotentialTarget)
             {
-                var TestBelonging = PotentialTarget.Descendants("sounddeffolder").FirstOrDefault().Value;
+                var TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
                 Console.WriteLine(TestBelonging);
                 Console.WriteLine("Testbelonging");
                 Console.WriteLine(ParentTargetContent);
                 if (IsChildValid(TestBelonging, BoneName) == true)
                 {
-                    XElement ToReplace = Element.Descendants("sounddeffolder").FirstOrDefault();
+                    XElement ToReplace = Element.Descendants(ReplaceMe).FirstOrDefault();
                     Console.WriteLine(ToReplace);
                     ToReplace.ReplaceWith(ParentTargetContent);
-                    SoundBone.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
+                    SoundBone.Save(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
                     break;
                 }
                 Console.WriteLine("no Match Detected - OOF");
             }
-
-            // replace one xml node with another
-;
         }
 
-        public static void GenerationCleanup(string fileName)
+        public static void GenerationCleanup(string fileName, string BoneName)
         {
             var lines = File.ReadAllLines(fileName);
             File.WriteAllLines(fileName, lines.Skip(1).ToArray()); //Removes the declaration from the file
@@ -302,6 +301,14 @@ namespace BoneSync_02
 
             //the issue is mismatching sound Def - Examlpe in the case of fdlc_c3471 the string "/SoundSouls/NPC""
             //needs to be removed from the <sounddef>/< name > entry
+            StreamReader reading = File.OpenText(fileName);
+            string str;
+  
+            string text = File.ReadAllText(fileName);
+            text = text.Replace("/SoundSouls/NPC", "");     
+            File.WriteAllText(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\fdlc_c3471gen.fdp", text);
+            Console.WriteLine("YEET");
+
         }
     }
 }
