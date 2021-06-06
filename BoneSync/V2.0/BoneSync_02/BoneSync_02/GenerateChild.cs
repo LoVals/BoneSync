@@ -120,6 +120,7 @@ namespace BoneSync_02
             //-------------------------------------------------------------------------------//
             //                             Event Group                                       //
             //-------------------------------------------------------------------------------//
+            //THEORY - NOT NECESSARY
             Console.ForegroundColor = ConsoleColor.Yellow;
             var EventGroupFolderAll = ParentFile.Descendants("soundbank");
             Console.WriteLine("Checking Event Group");
@@ -151,7 +152,7 @@ namespace BoneSync_02
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("SoundBone " + BoneName + " : SoundBanks content has been found");
-                    //RunGenerator(ChildElement, "sounddeffolder", BoneName);
+                    RunGenerator(ChildElement, "soundbank", BoneName);
                     break;
                 }
             }
@@ -301,13 +302,14 @@ namespace BoneSync_02
 
             //the issue is mismatching sound Def - Examlpe in the case of fdlc_c3471 the string "/SoundSouls/NPC""
             //needs to be removed from the <sounddef>/< name > entry
-            StreamReader reading = File.OpenText(fileName);
-            string str;
-  
-            string text = File.ReadAllText(fileName);
-            text = text.Replace("/SoundSouls/NPC", "");     
-            File.WriteAllText(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\fdlc_c3471gen.fdp", text);
-            Console.WriteLine("YEET");
+            string TextCache = File.ReadAllText(fileName);
+            TextCache = TextCache.Replace("/SoundSouls/NPC", "");
+            File.WriteAllText(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\fdlc_c3471gen.fdp", TextCache);           
+            Console.WriteLine("COMPLETED");
+            //string TextCacheB = File.ReadAllText(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\fdlc_c3471gen.fdp");
+            //TextCacheB = TextCacheB.Replace("/SoundSouls/NPC", "");
+            //TextCacheB = TextCacheB.Replace("/souls sfx/", "../souls sfx/");
+            //File.WriteAllText(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\fdlc_c3471gen.fdp", TextCacheB);
 
         }
     }
