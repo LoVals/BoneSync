@@ -106,10 +106,6 @@ namespace BoneSync_02
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
-
-                // THERE IS AN ISSUE WITH THE VALUE OF THE TESTBELONGING HERE _ INVESTIGATE PLX
-
-                IsChildValid(TestBelonging, BoneName);
                 if (IsChildValid(TestBelonging, BoneName) == true)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -123,7 +119,6 @@ namespace BoneSync_02
             //-------------------------------------------------------------------------------//
             //                             Event Group                                       //
             //-------------------------------------------------------------------------------//
-            //THEORY - NOT NECESSARY
             Console.ForegroundColor = ConsoleColor.Yellow;
             var EventGroupFolderAll = ParentFile.Descendants("eventgroup");
             Console.WriteLine("Checking Event Group");
@@ -131,8 +126,9 @@ namespace BoneSync_02
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
-                IsChildValid(TestBelonging, BoneName);
-                if (IsChildValid(TestBelonging, BoneName) == true)
+                string BoneID = BoneName.Replace("frpg_", "");
+                BoneID = BoneName.Replace("fdlc_", "");
+                if (IsChildValid(TestBelonging, BoneID) == true)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("SoundBone " + BoneName + " : Event Group content has been found");
@@ -143,8 +139,10 @@ namespace BoneSync_02
                     foreach (var Element in PotentialTarget)
                     {
                         string Y = PotentialTarget.FirstOrDefault().Value;
-                        Console.WriteLine(Y);
-                        Console.ReadLine();            
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("SoundBone " + BoneName + " : EventGroup content has been found");
+                        Console.ReadLine();
+                        RunGenerator(ChildElement, "eventgroup", BoneName, 3);
                     }
                     Console.ReadLine();
                     break;
@@ -160,7 +158,6 @@ namespace BoneSync_02
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
-                IsChildValid(TestBelonging, BoneName);
                 if (IsChildValid(TestBelonging, BoneName) == true)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -297,7 +294,6 @@ namespace BoneSync_02
                         if (IsChildValid(TestBelonging, BoneName) == true)
                         {
                             XElement ToReplace = Element.Descendants(ReplaceMe).FirstOrDefault();
-                            Console.WriteLine(ToReplace);
                             ToReplace.ReplaceWith(ParentTargetContent);
                             SoundBone.Save(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
                             break;
@@ -313,11 +309,34 @@ namespace BoneSync_02
                         if (IsChildValid(TestBelonging, BoneName) == true)
                         {
                             XElement ToReplace = Element;
-                            Console.WriteLine(ToReplace);
-                            Console.WriteLine("In theory replacement has been found");
-                            Console.ReadLine();
                             ToReplace.ReplaceWith(ParentTargetContent);
                             SoundBone.Save(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated.xml");
+                            break;
+                        }
+                        Console.WriteLine("no Match Detected - OOF!");
+                    }
+                    break;
+                case 3:
+                    foreach (var Element in PotentialTarget)
+                    //EVENTGROUP
+                    {
+                        string TestBelonging = PotentialTarget.Descendants("name").FirstOrDefault().Value;
+                        string BoneID;
+                        BoneID = BoneName.Replace("frpg_", "");
+                        BoneID = BoneID.Replace("fdlc_", "");
+                        Console.WriteLine(TestBelonging);
+                        Console.ReadLine();
+                        Console.WriteLine(BoneID);
+                        Console.ReadLine();
+                        if (IsChildValid(TestBelonging, BoneID) == true)                            
+                        {
+                            XElement ToReplace = Element;
+                            ToReplace.ReplaceWith(ParentTargetContent);
+                            Console.WriteLine("EVENTGROUP HAS BEEN SAVED");
+
+                            // SOMETHING IS FUCKED - Generation Overwrites itself   will need to overwrite the same file loaded in memory
+                            //CLEANUP FOR THE <CATEGORY> entry will be necessary: if not it's likely FMOD will crash 
+                            SoundBone.Save(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "Generated2.xml");
                             break;
                         }
                         Console.WriteLine("no Match Detected - OOF!");
