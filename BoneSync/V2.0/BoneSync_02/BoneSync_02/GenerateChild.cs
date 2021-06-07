@@ -271,10 +271,15 @@ namespace BoneSync_02
             //-------------------------------------------------------------------------------//
             //                          Cleanup Sound Def Folder                             //
             //-------------------------------------------------------------------------------//
-
+                
             var lines = File.ReadAllLines(fileName);
             string TextCache = File.ReadAllText(fileName);
             TextCache = TextCache.Replace("/SoundSouls/NPC", "");
+            //Need Review by testing
+            TextCache = TextCache.Replace("/SoundSouls/Global", "");
+            TextCache = TextCache.Replace("/SoundSouls/GameEvents", "");
+            TextCache = TextCache.Replace("/fdlc_smain/Player_Carving", "");
+
             //
             //New cleanup entries go here
             //
