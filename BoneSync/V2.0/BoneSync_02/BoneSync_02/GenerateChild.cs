@@ -27,7 +27,7 @@ namespace BoneSync_02
             //------------------------------------------------------------------------------
             // LOAD PARENT FILE INTO MEMORY
             var ParentFile = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\SoundSouls.xml");
-            string BoneName = "fdlc_c3471";
+            string BoneName = "fdlc_p120002";
 
             //-------------------------------------------------------------------------------//
             //                             Sound Def Folder                                  //
