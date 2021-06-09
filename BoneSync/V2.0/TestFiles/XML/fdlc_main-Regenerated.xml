@@ -79,15 +79,15 @@
         <guid>{3ba333fe-8782-4aa2-bdd2-1e4868301472}</guid>
         <open>1</open>
         <sounddeffolder>
-          <name>Player_dlcMain</name>
-          <guid>{608cd267-b077-48b4-b7bd-4ed67ee0ff56}</guid>
-          <open>1</open>
+          <name>Player_Main_Dlc</name>
+          <guid>{98cfacd4-57d5-4e30-a230-7c900192e473}</guid>
+          <open>0</open>
           <sounddeffolder>
             <name>Palyer_Spells</name>
-            <guid>{9d93832d-11fb-4172-8a96-16d9bf63c72c}</guid>
+            <guid>{e9764f9b-48d9-4d01-9d80-673c6ce81fac}</guid>
             <open>0</open>
             <sounddef>
-              <name>/fdlc_main/Player/Player_dlcMain/Palyer_Spells/Sfx_Player_Hex_Channel</name>
+              <name>/SoundSouls/Player/Player_Main_Dlc/Palyer_Spells/Sfx_Player_Hex_Channel</name>
               <guid>{8a9666f8-c46b-4fe9-b8ec-01f262c7dfde}</guid>
               <type>sequential</type>
               <spawntime_min>0</spawntime_min>
@@ -108,14 +108,14 @@
               <position_randomization>0</position_randomization>
               <notes></notes>
               <waveform>
-                <filename>../souls sfx/fdlc_main/Sfx_Player_Hex_Channel.wav</filename>
+                <filename>souls sfx/fdlc_main/Sfx_Player_Hex_Channel.wav</filename>
                 <soundbankname>fdlc_main</soundbankname>
                 <weight>100</weight>
                 <percentagelocked>0</percentagelocked>
               </waveform>
             </sounddef>
             <sounddef>
-              <name>/fdlc_main/Player/Player_dlcMain/Palyer_Spells/Sfx_Player_Hex_Hit</name>
+              <name>/SoundSouls/Player/Player_Main_Dlc/Palyer_Spells/Sfx_Player_Hex_Hit</name>
               <guid>{c84c9bdc-6f42-450d-9448-ef6432958482}</guid>
               <type>sequential</type>
               <spawntime_min>0</spawntime_min>
@@ -136,14 +136,14 @@
               <position_randomization>0</position_randomization>
               <notes></notes>
               <waveform>
-                <filename>../souls sfx/fdlc_main/Sfx_Player_Hex_Hit.wav</filename>
+                <filename>souls sfx/fdlc_main/Sfx_Player_Hex_Hit.wav</filename>
                 <soundbankname>fdlc_main</soundbankname>
                 <weight>100</weight>
                 <percentagelocked>0</percentagelocked>
               </waveform>
             </sounddef>
             <sounddef>
-              <name>/fdlc_main/Player/Player_dlcMain/Palyer_Spells/Sfx_Player_Hex_Projectile</name>
+              <name>/SoundSouls/Player/Player_Main_Dlc/Palyer_Spells/Sfx_Player_Hex_Projectile</name>
               <guid>{23dcfa89-ab04-4d06-8cb5-5ee59b358236}</guid>
               <type>sequential</type>
               <spawntime_min>0</spawntime_min>
@@ -164,7 +164,7 @@
               <position_randomization>0</position_randomization>
               <notes></notes>
               <waveform>
-                <filename>../souls sfx/fdlc_main/Sfx_Player_Hex_Projectile.wav</filename>
+                <filename>souls sfx/fdlc_main/Sfx_Player_Hex_Projectile.wav</filename>
                 <soundbankname>fdlc_main</soundbankname>
                 <weight>100</weight>
                 <percentagelocked>0</percentagelocked>
@@ -173,10 +173,10 @@
           </sounddeffolder>
           <sounddeffolder>
             <name>Player_Actions</name>
-            <guid>{cdbfadef-02a3-4fb9-82fe-f24ccb97915d}</guid>
+            <guid>{ca95d7a7-3005-49d8-8385-e8fc06a5e3da}</guid>
             <open>0</open>
             <sounddef>
-              <name>/fdlc_main/Player/Player_dlcMain/Player_Actions/Sfx_Player_StoneCarvingDrop</name>
+              <name>/SoundSouls/Player/Player_Main_Dlc/Player_Actions/Sfx_Player_StoneCarvingDrop</name>
               <guid>{484504d8-e30f-4f56-8a6b-87201e44b94f}</guid>
               <type>sequential</type>
               <spawntime_min>0</spawntime_min>
@@ -197,7 +197,7 @@
               <position_randomization>0</position_randomization>
               <notes></notes>
               <waveform>
-                <filename>../souls sfx/fdlc_main/Sfx_Player_StoneCarvingDrop.wav</filename>
+                <filename>souls sfx/fdlc_main/Sfx_Player_StoneCarvingDrop.wav</filename>
                 <soundbankname>fdlc_main</soundbankname>
                 <weight>100</weight>
                 <percentagelocked>0</percentagelocked>
@@ -206,10 +206,10 @@
           </sounddeffolder>
           <sounddeffolder>
             <name>Player_Damage</name>
-            <guid>{b19df361-e971-454d-a1be-7164d1dd3174}</guid>
+            <guid>{0882de27-e8c8-49f8-be7a-de6c0b256e3e}</guid>
             <open>0</open>
             <sounddef>
-              <name>/fdlc_main/Player/Player_dlcMain/Player_Damage/Sfx_Player_Damage_Humanity</name>
+              <name>/SoundSouls/Player/Player_Main_Dlc/Player_Damage/Sfx_Player_Damage_Humanity</name>
               <guid>{594d408d-06eb-4f1e-9f49-56066dfce55b}</guid>
               <type>sequential</type>
               <spawntime_min>0</spawntime_min>
@@ -230,7 +230,7 @@
               <position_randomization>0</position_randomization>
               <notes></notes>
               <waveform>
-                <filename>../souls sfx/fdlc_main/Sfx_Player_Damage_Humanity.wav</filename>
+                <filename>souls sfx/fdlc_main/Sfx_Player_Damage_Humanity.wav</filename>
                 <soundbankname>fdlc_main</soundbankname>
                 <weight>100</weight>
                 <percentagelocked>0</percentagelocked>
@@ -264,7 +264,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Palyer_Spells/Sfx_Player_Hex_Projectile</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Palyer_Spells/Sfx_Player_Hex_Projectile</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>
@@ -494,7 +494,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Palyer_Spells/Sfx_Player_Hex_Hit</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Palyer_Spells/Sfx_Player_Hex_Hit</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>
@@ -722,7 +722,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Palyer_Spells/Sfx_Player_Hex_Channel</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Palyer_Spells/Sfx_Player_Hex_Channel</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>
@@ -975,7 +975,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Palyer_Spells/Sfx_Player_Hex_Channel</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Palyer_Spells/Sfx_Player_Hex_Channel</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>
@@ -1228,7 +1228,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Player_Actions/Sfx_Player_StoneCarvingDrop</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Player_Actions/Sfx_Player_StoneCarvingDrop</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>
@@ -1458,7 +1458,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Player_Damage/Sfx_Player_Damage_Humanity</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Player_Damage/Sfx_Player_Damage_Humanity</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>
@@ -1686,7 +1686,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Player_Damage/Sfx_Player_Damage_Humanity</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Player_Damage/Sfx_Player_Damage_Humanity</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>
@@ -1914,7 +1914,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Player_Damage/Sfx_Player_Damage_Humanity</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Player_Damage/Sfx_Player_Damage_Humanity</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>
@@ -2142,7 +2142,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Player_Damage/Sfx_Player_Damage_Humanity</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Player_Damage/Sfx_Player_Damage_Humanity</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>
@@ -2370,7 +2370,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Player_Damage/Sfx_Player_Damage_Humanity</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Player_Damage/Sfx_Player_Damage_Humanity</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>
@@ -2598,7 +2598,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Player_Damage/Sfx_Player_Damage_Humanity</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Player_Damage/Sfx_Player_Damage_Humanity</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>
@@ -2826,7 +2826,7 @@
         <priority>-1</priority>
         <controlparameter>(distance)</controlparameter>
         <sound>
-          <name>/fdlc_main/Player/Player_dlcMain/Player_Damage/Sfx_Player_Damage_Humanity</name>
+          <name>/fdlc_main/Player/Player_Main_Dlc/Player_Damage/Sfx_Player_Damage_Humanity</name>
           <x>0</x>
           <width>1</width>
           <startmode>0</startmode>

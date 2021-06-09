@@ -26,7 +26,7 @@ namespace BoneSync_02
             Console.WriteLine("¦_________________________¦");
             Console.WriteLine("");
             Console.WriteLine("Preparing to syncronize...");
-            FdpToXml.Execute();                                                                                                 //COPIES THE PARENT FILE AS XML FILE
+            //FdpToXml.Execute();                                                                                                 //COPIES THE PARENT FILE AS XML FILE
             GenerateChild.Execute();
             Console.ReadLine();
         }
