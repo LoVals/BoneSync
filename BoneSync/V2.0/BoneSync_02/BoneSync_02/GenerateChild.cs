@@ -27,7 +27,7 @@ namespace BoneSync_02
             //------------------------------------------------------------------------------
             // LOAD PARENT FILE INTO MEMORY
             var ParentFile = XDocument.Load(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\SoundSouls.xml");
-            string BoneName = "fdlc_m12";
+            string BoneName = "fdlc_main";
 
             //-------------------------------------------------------------------------------//
             //                             Sound Def Folder                                  //
@@ -80,7 +80,14 @@ namespace BoneSync_02
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
-                string BoneID = BoneName.Replace("frpg_", "");
+                //Extra bit for DLC conflict solution
+                string BoneID = BoneName;
+                if (ConflictDLC(BoneID) == true)
+                {
+                    BoneID = BoneID + " - DLC";
+                    //Solves DLC Conflicts for some special cases
+                }
+                BoneID = BoneID.Replace("frpg_", "");
                 BoneID = BoneID.Replace("fdlc_", "");
                 if (IsChildValid(TestBelonging, BoneID) == true)
                 {
@@ -335,6 +342,34 @@ namespace BoneSync_02
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Cleanup Complete");
 
+        }
+
+        public static bool ConflictDLC(string BoneName)
+        {
+            diff_match_patch IsDlc = new diff_match_patch();
+            IsDlc.Match_Threshold = 0.03f;
+            IsDlc.Match_Distance = 1;
+            var Match = IsDlc.match_main(BoneName, "fdlc_", 0);
+            if (Match == 0)
+            {
+                //IF it's a dlc file check if the file is M12 or SM12
+                diff_match_patch IsMSM = new diff_match_patch();
+                IsMSM.Match_Threshold = 0.03f;
+                var sm12Confirm = IsMSM.match_main(BoneName, "fdlc_sm12", 1);
+                var m12Confirm = IsMSM.match_main(BoneName, "fdlc_m12", 1);
+                if (m12Confirm == 0|sm12Confirm ==0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }    
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
