@@ -243,7 +243,7 @@
     </sounddeffolder>
   </sounddeffolder>
   <eventgroup>
-    <name>main</name>
+    <name>fdlc_main</name>
     <guid>{94ae1110-fc38-4a7f-885b-a0517d1b89d7}</guid>
     <eventgroup_nextid>0</eventgroup_nextid>
     <event_nextid>0</event_nextid>
