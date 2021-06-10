@@ -27,10 +27,12 @@ namespace BoneSync_02
 
             //------------------------------------------------------------------------------
             // LOAD PARENT FILE INTO MEMORY
-            File.Delete(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\fdlc_main-2.xml");
-            File.Copy(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\fdlc_main.xml", @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\fdlc_main-2.xml");
-            var ParentFile = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\SoundSouls.xml");
-            string BoneName = "fdlc_main";
+            string BoneName = "fdlc_smain";
+            string BuildDir = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\";
+            File.Delete(@BuildDir + BoneName+"-2.xml");
+            File.Copy(BuildDir + BoneName+".xml", BuildDir + BoneName + "-2.xml");
+            var ParentFile = XDocument.Load(BuildDir + "SoundSouls.xml");
+            
 
             //-------------------------------------------------------------------------------//
             //                             Sound Def Folder                                  //
@@ -39,14 +41,17 @@ namespace BoneSync_02
             var SounddefFolderAll = ParentFile.Descendants("sounddeffolder");
             Console.WriteLine("Checking Sound Def Folder");
             string BoneID = BoneName;
-            if (DetectConflicts(BoneName) == 2)
+            switch (DetectConflicts(BoneName))
             {
-                BoneID = "Player_Main_Dlc";
-                ConflictType = 2;
-                //Solves DLC conflicts for fdlc_sm12 and fdlc_m12
+                case 2:
+                    BoneID = "Player_Main_Dlc";
+                    ConflictType = 2;
+                    break;
+                case 3:
+                    BoneID = "Player_Smain_Dlc";
+                    ConflictType = 3;
+                    break;
             }
-            Console.WriteLine(BoneID);
-            Console.ReadLine();
             foreach (var ChildElement in SounddefFolderAll)
             {
                 Console.ForegroundColor = ConsoleColor.White;
@@ -94,40 +99,112 @@ namespace BoneSync_02
             var EventGroupFolderAll = ParentFile.Descendants("eventgroup");
             Console.WriteLine("Checking Event Group");
             //Extra bit for DLC conflict solution
-            if (DetectConflicts(BoneID) == 1)
+            switch (DetectConflicts(BoneID))
             {
-                BoneID = BoneID + " - DLC";
-                ConflictType = 1;
-                //Solves DLC conflicts for fdlc_sm12 and fdlc_m12
+                case 1:
+                    BoneID = BoneID + " - DLC";
+                    ConflictType = 1;
+                    BoneID = BoneID.Replace("frpg_", "");
+                    BoneID = BoneID.Replace("fdlc_", "");
+                    foreach (var ChildElement in EventGroupFolderAll)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
+                        if (IsChildValid(TestBelonging, BoneID) == true)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("SoundBone " + BoneName + " : Event Group content has been found");
+                            Console.WriteLine();
+                            XDocument SoundBone = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + ".xml");
+                            var PotentialTarget = SoundBone.Descendants("eventgroup");
+                            foreach (var Element in PotentialTarget)
+                            {
+                                string Y = PotentialTarget.FirstOrDefault().Value;
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                case 2:
+                    ConflictType = 2;
+                    foreach (var ChildElement in EventGroupFolderAll)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
+                        if (IsChildValid(TestBelonging, BoneID) == true)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("SoundBone " + BoneName + " : Event Group content has been found");
+                            Console.WriteLine();
+                            XDocument SoundBone = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + ".xml");
+                            var PotentialTarget = SoundBone.Descendants("eventgroup");
+                            foreach (var Element in PotentialTarget)
+                            {
+                                string Y = PotentialTarget.FirstOrDefault().Value;
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                case 3:
+                    ConflictType = 3;
+                    foreach (var ChildElement in EventGroupFolderAll)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
+                        if (IsChildValid(TestBelonging, BoneID) == true)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("SoundBone " + BoneName + " : Event Group content has been found");
+                            Console.WriteLine();
+                            XDocument SoundBone = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + ".xml");
+                            var PotentialTarget = SoundBone.Descendants("eventgroup");
+                            foreach (var Element in PotentialTarget)
+                            {
+                                string Y = PotentialTarget.FirstOrDefault().Value;
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                default:
+                    BoneID = BoneID.Replace("frpg_", "");
+                    BoneID = BoneID.Replace("fdlc_", "");
+                    foreach (var ChildElement in EventGroupFolderAll)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
+                        if (IsChildValid(TestBelonging, BoneID) == true)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("SoundBone " + BoneName + " : Event Group content has been found");
+                            Console.WriteLine();
+                            XDocument SoundBone = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + ".xml");
+                            var PotentialTarget = SoundBone.Descendants("eventgroup");
+                            foreach (var Element in PotentialTarget)
+                            {
+                                string Y = PotentialTarget.FirstOrDefault().Value;
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
+                            }
+                            break;
+                        }
+                    }
+                    break;
             }
             //Need another solution for fdlc_main as there are conflicts in the main project folder
             //the easiest solution would be to fix the master project to some degree and separate the events from fdlc_smain and fdlc_smain in the eventgroup section
             //this could also apply to frpg_main and frpg_smain
 
-            BoneID = BoneID.Replace("frpg_", "");
-            BoneID = BoneID.Replace("fdlc_", "");
-            foreach (var ChildElement in EventGroupFolderAll)
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
-                if (IsChildValid(TestBelonging, BoneID) == true)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("SoundBone " + BoneName + " : Event Group content has been found");
-                    Console.WriteLine();
-                    XDocument SoundBone = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + ".xml");
-                    var PotentialTarget = SoundBone.Descendants("eventgroup");
-                    foreach (var Element in PotentialTarget)
-                    {
-                        string Y = PotentialTarget.FirstOrDefault().Value;
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
-                    }
-                    break;
-                }
-            }
+            
             //------------------------------------------------------------------------------
-            GenerationCleanup(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "-2.xml", BoneName);
+            GenerationCleanup(BuildDir + BoneName + "-2.xml", BoneName);
         }
 
         // BOOLEANS DETERMINE IF THE FOLDER I'M IN IS SPECIFIC AND IF IT BELONGS TO THE CHILD I'M GENERATING
@@ -233,8 +310,9 @@ namespace BoneSync_02
         public static void RunGenerator(XElement ParentTargetContent, string ReplacementTarget, string BoneName, int DataType, int Conflict)
         //DataType: 1 = Sound Def // 2 = SoundBank
         {
+            string BuildDir = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\";
             // select node from one doc
-            XDocument SoundBone = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "-2.xml");
+            XDocument SoundBone = XDocument.Load(BuildDir + BoneName + "-2.xml");
             var PotentialTarget = SoundBone.Descendants(ReplacementTarget);
             string ReplaceMe = ReplacementTarget;
             string ReplacementeElement = BoneName;
@@ -254,15 +332,32 @@ namespace BoneSync_02
                                 var master = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault();
                                 var fdlc_main = master.Descendants(ReplaceMe).FirstOrDefault();
                                 TestBelonging = fdlc_main.Descendants(ReplaceMe).FirstOrDefault().Value;
-                                Console.WriteLine("Exception 2 detected:");
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("Exception 2 detected");
+                                Console.ForegroundColor = ConsoleColor.Green;
                                 if (IsChildValid(TestBelonging, ReplacementeElement) == true)
                                 {
                                     XElement LevelA = Element.Descendants(ReplaceMe).FirstOrDefault();
                                     XElement LevelB = LevelA.Descendants(ReplaceMe).FirstOrDefault();
                                     XElement ToReplace = LevelB.Descendants(ReplaceMe).FirstOrDefault();
                                     ToReplace.ReplaceWith(ParentTargetContent);
-                                    SoundBone.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "-2.xml");
+                                    SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     goto LoopOut;
+                                }
+                                Console.WriteLine("no Match Detected - OOF!");
+                                break;
+                            case 3:
+                                ReplacementeElement = "fdlc_smain";                               
+                                TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("Exception 3 detected");
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                if (IsChildValid(TestBelonging, ReplacementeElement) == true)
+                                {
+                                    XElement ToReplace = Element.Descendants(ReplaceMe).FirstOrDefault();
+                                    ToReplace.ReplaceWith(ParentTargetContent);
+                                    SoundBone.Save(BuildDir + BoneName + "-2.xml");
+                                    goto LoopOut;   
                                 }
                                 Console.WriteLine("no Match Detected - OOF!");
                                 break;
@@ -272,7 +367,7 @@ namespace BoneSync_02
                                 {
                                     XElement ToReplace = Element.Descendants(ReplaceMe).FirstOrDefault();
                                     ToReplace.ReplaceWith(ParentTargetContent);
-                                    SoundBone.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "-2.xml");
+                                    SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     break;
                                 }
                                 Console.WriteLine("no Match Detected - OOF!");
@@ -291,7 +386,7 @@ namespace BoneSync_02
                         {
                             XElement ToReplace = Element;
                             ToReplace.ReplaceWith(ParentTargetContent);
-                            SoundBone.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "-2.xml");
+                            SoundBone.Save(BuildDir + BoneName + "-2.xml");
                             break;
                         }
                         Console.WriteLine("no Match Detected - OOF!");
@@ -309,7 +404,7 @@ namespace BoneSync_02
                         {
                             XElement ToReplace = Element;
                             ToReplace.ReplaceWith(ParentTargetContent);
-                            SoundBone.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "-2.xml");
+                            SoundBone.Save(BuildDir + BoneName + "-2.xml");
                             break;
                         }
                         Console.WriteLine("no Match Detected - OOF!");
@@ -320,10 +415,11 @@ namespace BoneSync_02
 
         public static void GenerationCleanup(string fileName, string BoneName)
         {
+            string BuildDir = @"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\";
             //-------------------------------------------------------------------------------//
             //                          Cleanup Sound Def Folder                             //
             //-------------------------------------------------------------------------------//
-                
+
             var lines = File.ReadAllLines(fileName);
             string TextCache = File.ReadAllText(fileName);
             TextCache = TextCache.Replace("/SoundSouls/NPC", "");                                                                               
@@ -340,11 +436,13 @@ namespace BoneSync_02
             //M CLEANUP
             TextCache = TextCache.Replace("Player_dlcMain", "Player_Main_Dlc");
             //FDLC_Main CLEANUP
+            TextCache = TextCache.Replace("/SoundSouls/Player", "");
+            //FDLC SMain CLEANUP
 
             //
             //New cleanup entries go here
             //
-            File.WriteAllText(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\"+BoneName+"cache.xml", TextCache);
+            File.WriteAllText(BuildDir+ BoneName+"cache.xml", TextCache);
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Sound Def Folder Clean-Up Complete");
 
@@ -352,7 +450,7 @@ namespace BoneSync_02
             //                            Cleanup Event Group                                //
             //-------------------------------------------------------------------------------//
 
-            XDocument SoundBone = XDocument.Load(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\"+BoneName+"cache.xml");
+            XDocument SoundBone = XDocument.Load(BuildDir + BoneName+"cache.xml");
             SoundBone.Declaration = null;
             var EventGroupFolderAll = SoundBone.Descendants("eventgroup");
             var Events = EventGroupFolderAll.Descendants("event");
@@ -383,9 +481,9 @@ namespace BoneSync_02
             }
             Console.WriteLine("Event Group Clean-Up Complete");
             Console.WriteLine();
-            SoundBone.Save(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "-Regenerated.xml");
-            var FinalCleanup = File.ReadAllLines(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "-Regenerated.xml");
-            File.WriteAllLines(@"C:\Users\lvalsassina\Documents\GitHub\BoneSync\BoneSync\V2.0\TestFiles\XML\" + BoneName + "-Regenerated.xml", FinalCleanup.Skip(1).ToArray());
+            SoundBone.Save(BuildDir + BoneName + "-Regenerated.xml");
+            var FinalCleanup = File.ReadAllLines(BuildDir + BoneName + "-Regenerated.xml");
+            File.WriteAllLines(BuildDir + BoneName + "-Regenerated.xml", FinalCleanup.Skip(1).ToArray());
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Cleanup Complete");
 
@@ -405,6 +503,7 @@ namespace BoneSync_02
                 var sm12Confirm = IsException.match_main(BoneName, "fdlc_sm12", 1);
                 var m12Confirm = IsException.match_main(BoneName, "fdlc_m12", 1);
                 var mainConfirm = IsException.match_main(BoneName, "fdlc_main", 1);
+                var smainConfirm = IsException.match_main(BoneName, "fdlc_smain", 1);
                 if (m12Confirm == 0|sm12Confirm ==0)
                 {
                     // this exception is either fdlc_sm12 - DLC or fdlc_m12 - DLC
@@ -414,6 +513,11 @@ namespace BoneSync_02
                 {
                     // this exception is fdlc_main
                     return 2;
+                }
+                else if (smainConfirm ==0)
+                {
+                    // this exception is for fdlc_smain
+                    return 3;
                 }
                 else
                 {
