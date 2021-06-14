@@ -47,15 +47,15 @@ namespace BoneSync_02
             switch (DetectConflicts(BoneName))
             {
                 case 2:
-                    BoneID = "Player_Main_Dlc";
+                    BoneID = "Player_Dlc_Main";
                     ConflictType = 2;
                     break;
                 case 3:
-                    BoneID = "Player_Smain_Dlc";
+                    BoneID = "Player_Dlc_Smain";
                     ConflictType = 3;
                     break;
                 case 4:
-                    BoneID = "Player_Main_BaseGame";
+                    BoneID = "Player_Main";
                     ConflictType = 4;
                     break;
             }
