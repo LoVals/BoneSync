@@ -55,9 +55,8 @@ namespace BoneSync_02
                     ConflictType = 3;
                     break;
                 case 4:
-                    BoneID = "Player_Main";
+                    BoneID = "Player_Main_BaseGame";
                     ConflictType = 4;
-                    //there's an issue where main copies it's elements one level too high, cutting a parent: OOF!
                     break;
             }
             foreach (var ChildElement in SounddefFolderAll)
@@ -397,7 +396,8 @@ namespace BoneSync_02
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
                                     if (IsChildValid(TestBelonging, ReplacementeElement) == true)
                                 {
-                                    XElement ToReplace = Element.Descendants(ReplaceMe).FirstOrDefault();
+                                    XElement LevelA = Element.Descendants(ReplaceMe).FirstOrDefault();
+                                    XElement ToReplace = LevelA.Descendants(ReplaceMe).FirstOrDefault();
                                     ToReplace.ReplaceWith(ParentTargetContent);
                                     SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     goto LoopOut;
@@ -501,7 +501,7 @@ namespace BoneSync_02
             //M CLEANUP
             TextCache = TextCache.Replace("Player_dlcMain", "Player_Main_Dlc");
             //FDLC_Main CLEANUP
-            TextCache = TextCache.Replace("/SoundSouls/Player", "");
+            TextCache = TextCache.Replace("/SoundSouls/Player", "frpg_main");
             //FDLC SMain CLEANUP
 
             //
@@ -543,11 +543,12 @@ namespace BoneSync_02
                 {
                     Type.Value = "Default";
                 }
+                
             }
             Console.WriteLine("Event Group Clean-Up Complete");
             Console.WriteLine();
             SoundBone.Save(BuildDir + BoneName + "-Regenerated.xml");
-            var FinalCleanup = File.ReadAllLines(BuildDir + BoneName + "-Regenerated.xml");
+            var FinalCleanup = File.ReadAllLines(BuildDir + BoneName + "-Regenerated.xml"); 
             File.WriteAllLines(BuildDir + BoneName + "-Regenerated.xml", FinalCleanup.Skip(1).ToArray());
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Cleanup Complete");
