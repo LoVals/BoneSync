@@ -27,7 +27,7 @@ namespace BoneSync_02
             string CacheDir = CurrentDirInput + @"\XML\RegeneratedFiles\Cache\";
             string RegenerationDir = CurrentDirInput + @"\XML\RegeneratedFiles\";
             Console.WriteLine("Directories Set");
-            File.Delete(CacheDir + BoneName+" - 2.xml");
+            File.Delete(CacheDir + BoneName + " - 2.xml");
             Console.WriteLine("Deleting old cache...");
             File.Copy(BuildDir + BoneName+".xml", CacheDir + BoneName + "-2.xml");
             Console.WriteLine("Generating cache file...");
