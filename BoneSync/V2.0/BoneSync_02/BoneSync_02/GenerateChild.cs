@@ -27,7 +27,7 @@ namespace BoneSync_02
 
             //------------------------------------------------------------------------------
             // LOAD PARENT FILE INTO MEMORY
-            string BoneName = "frpg_main";
+            string BoneName = "fdlc_main";
             string BuildDir = @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\";
             File.Delete(BuildDir + BoneName+"-2.xml");
             File.Copy(BuildDir + BoneName+".xml", BuildDir + BoneName + "-2.xml");
@@ -57,6 +57,10 @@ namespace BoneSync_02
                 case 4:
                     BoneID = "Player_Main";
                     ConflictType = 4;
+                    break;
+                case 5:
+                    BoneID = "Player_Smain";
+                    ConflictType = 5;
                     break;
             }
             foreach (var ChildElement in SounddefFolderAll)
@@ -204,6 +208,30 @@ namespace BoneSync_02
                         }
                     }
                     break;
+                case 5:
+                    ConflictType = 5;
+                    BoneID = "frpg_smain";
+                    foreach (var ChildElement in EventGroupFolderAll)
+                    {
+                        Console.ForegroundColor = ConsoleColor.White;
+                        var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
+                        if (IsChildValid(TestBelonging, BoneID) == true)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("SoundBone " + BoneName + " : Event Group content has been found");
+                            Console.WriteLine();
+                            XDocument SoundBone = XDocument.Load(BuildDir + BoneName + ".xml");
+                            var PotentialTarget = SoundBone.Descendants("eventgroup");
+                            foreach (var Element in PotentialTarget)
+                            {
+                                string Y = PotentialTarget.FirstOrDefault().Value;
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
+                            }
+                            break;
+                        }
+                    }
+                    break;
                 default:
                     BoneID = BoneID.Replace("frpg_", "");
                     BoneID = BoneID.Replace("fdlc_", "");
@@ -235,7 +263,7 @@ namespace BoneSync_02
 
             
             //------------------------------------------------------------------------------
-            GenerationCleanup(BuildDir + BoneName + "-2.xml", BoneName);
+            GenerationCleanup(BuildDir + BoneName + "-2.xml", BoneName, ConflictType);
         }
 
         // BOOLEANS DETERMINE IF THE FOLDER I'M IN IS SPECIFIC AND IF IT BELONGS TO THE CHILD I'M GENERATING
@@ -377,7 +405,7 @@ namespace BoneSync_02
                                 }
                                 Console.WriteLine("no Match Detected - OOF!");
                                 break;
-                            case 3:
+                            case 3: //fdlc_smain
                                 ReplacementeElement = "fdlc_smain";                               
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
                                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -395,6 +423,18 @@ namespace BoneSync_02
                             case 4:
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
                                     if (IsChildValid(TestBelonging, ReplacementeElement) == true)
+                                {
+                                    XElement LevelA = Element.Descendants(ReplaceMe).FirstOrDefault();
+                                    XElement ToReplace = LevelA.Descendants(ReplaceMe).FirstOrDefault();
+                                    ToReplace.ReplaceWith(ParentTargetContent);
+                                    SoundBone.Save(BuildDir + BoneName + "-2.xml");
+                                    goto LoopOut;
+                                }
+                                Console.WriteLine("no Match Detected - OOF!");
+                                break;
+                            case 5:
+                                TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
+                                if (IsChildValid(TestBelonging, ReplacementeElement) == true)
                                 {
                                     XElement LevelA = Element.Descendants(ReplaceMe).FirstOrDefault();
                                     XElement ToReplace = LevelA.Descendants(ReplaceMe).FirstOrDefault();
@@ -438,7 +478,7 @@ namespace BoneSync_02
                 case 3:
                     switch (Conflict)
                     {
-                        case 4:
+                        case 4|5:
                             foreach (var Element in PotentialTarget)
                     //EVENTGROUP FRPG_MAIN
                     {
@@ -478,7 +518,7 @@ namespace BoneSync_02
             } 
         }
 
-        public static void GenerationCleanup(string fileName, string BoneName)
+        public static void GenerationCleanup(string fileName, string BoneName, int exceptiontype)
         {
             string BuildDir = @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\";
             //-------------------------------------------------------------------------------//
@@ -501,7 +541,16 @@ namespace BoneSync_02
             //M CLEANUP
             TextCache = TextCache.Replace("Player_dlcMain", "Player_Main_Dlc");
             //FDLC_Main CLEANUP
-            TextCache = TextCache.Replace("/SoundSouls/Player", "frpg_main");
+            switch (exceptiontype)
+            {
+                case 2:
+                    TextCache = TextCache.Replace("/SoundSouls/Player", "fdlc_main");
+                    break;
+                case 4:
+                    TextCache = TextCache.Replace("/SoundSouls/Player", "frpg_main");
+                    break;
+            }
+            
             //FDLC SMain CLEANUP
 
             //
@@ -595,9 +644,14 @@ namespace BoneSync_02
                 diff_match_patch IsException = new diff_match_patch();
                 IsException.Match_Threshold = 0.03f;
                 var mainConfirm = IsException.match_main(BoneName, "frpg_main", 1);
+                var smainConfirm = IsException.match_main(BoneName, "frpg_smain", 1);
                 if (mainConfirm == 0)
                 {
                     return 4;
+                }
+                else if(smainConfirm == 0)
+                {
+                    return 5;
                 }
                 else
                 {
