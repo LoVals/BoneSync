@@ -15,22 +15,27 @@ namespace BoneSync_02
 {
     class GenerateChild
     {
-        public static void Execute()
+        public static void Execute(string BoneInput, string CurrentDirInput)
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine();
             int ConflictType = 0;
             //------------------------------------------------------------------------------
             // LOAD PARENT FILE INTO MEMORY
-            string BoneName = "frpg_sm12";
-            string BuildDir = @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\";
-            File.Delete(BuildDir + BoneName+"-2.xml");
-            File.Copy(BuildDir + BoneName+".xml", BuildDir + BoneName + "-2.xml");
-            XDocument Backup = XDocument.Load(BuildDir + BoneName + "-2.xml");
-            Backup.Save(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\BoneBackup.xml");
+            string BoneName = BoneInput;
+            string BuildDir = CurrentDirInput+ @"\XML\Bones\";
+            string CacheDir = CurrentDirInput + @"\XML\RegeneratedFiles\Cache\";
+            string RegenerationDir = CurrentDirInput + @"\XML\RegeneratedFiles\";
+            Console.WriteLine("Directories Set");
+            File.Delete(CacheDir + BoneName+" - 2.xml");
+            Console.WriteLine("Deleting old cache...");
+            File.Copy(BuildDir + BoneName+".xml", CacheDir + BoneName + "-2.xml");
+            Console.WriteLine("Generating cache file...");
+            //XDocument Backup = XDocument.Load(BuildDir + BoneName + "-2.xml");
+            //Backup.Save(CacheDir + "BoneBackup.xml");
+            var ParentFile = XDocument.Load(CurrentDirInput + @"\XML\SoundSouls.xml");
+            Console.WriteLine("Soundsouls Loaded into memory...");
 
-            var ParentFile = XDocument.Load(BuildDir + "SoundSouls.xml");
-            
 
             //-------------------------------------------------------------------------------//
             //                             Sound Def Folder                                  //
@@ -67,7 +72,7 @@ namespace BoneSync_02
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("SoundBone " + BoneName + ": Sound Def content has been found!");
                     Console.WriteLine();
-                    RunGenerator(ChildElement, "sounddeffolder", BoneName, 1, ConflictType);
+                    RunGenerator(ChildElement, "sounddeffolder", BoneName, 1, ConflictType, CacheDir);
                     break;
                 }
             }
@@ -92,7 +97,7 @@ namespace BoneSync_02
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("SoundBone " + BoneName + " : SoundBanks content has been found");
                     Console.WriteLine();
-                    RunGenerator(ChildElement, "soundbank", BoneName, 2, ConflictType);
+                    RunGenerator(ChildElement, "soundbank", BoneName, 2, ConflictType, CacheDir);
                     break;
 
                 }
@@ -127,7 +132,7 @@ namespace BoneSync_02
                             {
                                 string Y = PotentialTarget.FirstOrDefault().Value;
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
+                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType, CacheDir);
                             }
                             break;
                         }
@@ -151,7 +156,7 @@ namespace BoneSync_02
                             {
                                 string Y = PotentialTarget.FirstOrDefault().Value;
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
+                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType, CacheDir);
                             }
                             break;
                         }
@@ -174,7 +179,7 @@ namespace BoneSync_02
                             {
                                 string Y = PotentialTarget.FirstOrDefault().Value;
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
+                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType, CacheDir);
                             }
                             break;
                         }
@@ -198,7 +203,7 @@ namespace BoneSync_02
                             {
                                 string Y = PotentialTarget.FirstOrDefault().Value;
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
+                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType, CacheDir);
                             }
                             break;
                         }
@@ -223,7 +228,7 @@ namespace BoneSync_02
                             {
                                 string Y = PotentialTarget.FirstOrDefault().Value;
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
+                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType, CacheDir);
                             }
                             break;
                         }
@@ -247,7 +252,7 @@ namespace BoneSync_02
                             {
                                 string Y = PotentialTarget.FirstOrDefault().Value;
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType);
+                                RunGenerator(ChildElement, "eventgroup", BoneName, 3, ConflictType, CacheDir);
                             }
                             break;
                         }
@@ -260,7 +265,7 @@ namespace BoneSync_02
 
             
             //------------------------------------------------------------------------------
-            GenerationCleanup(BuildDir + BoneName + "-2.xml", BoneName, ConflictType);
+            GenerationCleanup(BuildDir + BoneName + "-2.xml", BoneName, ConflictType, CacheDir, RegenerationDir);
         }
 
         // BOOLEANS DETERMINE IF THE FOLDER I'M IN IS SPECIFIC AND IF IT BELONGS TO THE CHILD I'M GENERATING
@@ -363,10 +368,10 @@ namespace BoneSync_02
 
         // CHILD WRITER - Code Responsible for regenerating the soundbones
 
-        public static void RunGenerator(XElement ParentTargetContent, string ReplacementTarget, string BoneName, int DataType, int Conflict)
+        public static void RunGenerator(XElement ParentTargetContent, string ReplacementTarget, string BoneName, int DataType, int Conflict, string CacheDirInput)
         //DataType: 1 = Sound Def // 2 = SoundBank
         {
-            string BuildDir = @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\";
+            string BuildDir = CacheDirInput;
             // select node from one doc
             XDocument SoundBone = XDocument.Load(BuildDir + BoneName + "-2.xml");
             var PotentialTarget = SoundBone.Descendants(ReplacementTarget);
@@ -532,9 +537,10 @@ namespace BoneSync_02
             } 
         }
 
-        public static void GenerationCleanup(string fileName, string BoneName, int exceptiontype)
+        public static void GenerationCleanup(string fileName, string BoneName, int exceptiontype, string CacheDirInput, string RegeneratedDirInput)
         {
-            string BuildDir = @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\";
+            string BuildDir = CacheDirInput;
+            string RegenDir = RegeneratedDirInput;
             //-------------------------------------------------------------------------------//
             //                          Cleanup Sound Def Folder                             //
             //-------------------------------------------------------------------------------//

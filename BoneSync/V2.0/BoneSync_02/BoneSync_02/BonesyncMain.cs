@@ -16,18 +16,21 @@ namespace BoneSync_02
     {
         static void Main(string[] args)
         {
-            string rootPath = @"D:\Programs\Static\Dark_Souls_Mods\SoundSouls\SoundBones";                                      //Replace this with Current Directory + \Soundbones as the script resides in the same folder as pre build sync
             string CurrentDir = Directory.GetCurrentDirectory();
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.White;
             // will likely change to the SOUNDSOUL root
             Console.WriteLine(" _________________________");
             Console.WriteLine("¦                         ¦");
-            Console.WriteLine("¦       Bonesync 0.2      ¦");
+            Console.WriteLine("¦       Bonesync 0.3      ¦");
             Console.WriteLine("¦_________________________¦");
             Console.WriteLine("");
             Console.WriteLine("Preparing to syncronize...");
-            //FdpToXml.Execute();                                                                                                 //COPIES THE PARENT FILE AS XML FILE
-            GenerateChild.Execute();
+            FdpToXml.Execute(CurrentDir);
+            //COPIES THE PARENT FILE AS XML FILE
+            Console.WriteLine("TEST - REGENERATION OF FDLC_C3471");
+            GenerateChild.Execute("fdlc_c3471", CurrentDir);
+            //EXECUTES SOUNDBONES REGENERATION
+            //Returns an exception
             Console.ReadLine();
         }
     }
