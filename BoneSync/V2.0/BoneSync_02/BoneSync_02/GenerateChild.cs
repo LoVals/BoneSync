@@ -20,14 +20,9 @@ namespace BoneSync_02
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine();
             int ConflictType = 0;
-            //What needs to be done:
-
-            //>>    Detect what has changed
-            //>>    Regenerate the XML File
-
             //------------------------------------------------------------------------------
             // LOAD PARENT FILE INTO MEMORY
-            string BoneName = "fdlc_main";
+            string BoneName = "frpg_sm12";
             string BuildDir = @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\";
             File.Delete(BuildDir + BoneName+"-2.xml");
             File.Copy(BuildDir + BoneName+".xml", BuildDir + BoneName + "-2.xml");
@@ -144,6 +139,7 @@ namespace BoneSync_02
                     {
                         Console.ForegroundColor = ConsoleColor.White;
                         var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
+                        Console.WriteLine(TestBelonging);
                         if (IsChildValid(TestBelonging, BoneID) == true)
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
@@ -215,6 +211,7 @@ namespace BoneSync_02
                     {
                         Console.ForegroundColor = ConsoleColor.White;
                         var TestBelonging = ChildElement.Descendants("name").FirstOrDefault().Value;
+                        Console.WriteLine(TestBelonging);
                         if (IsChildValid(TestBelonging, BoneID) == true)
                         {
                             Console.ForegroundColor = ConsoleColor.Green;
@@ -478,6 +475,23 @@ namespace BoneSync_02
                 case 3:
                     switch (Conflict)
                     {
+                        case 2|3:
+                            foreach (var Element in PotentialTarget)
+                            //EVENTGROUP FRPG_MAIN
+                            {
+                                string TestBelonging = PotentialTarget.Descendants("name").FirstOrDefault().Value;
+                                string BoneID;
+                                BoneID = BoneName;
+                                if (IsChildValid(TestBelonging, BoneID) == true)
+                                {
+                                    XElement ToReplace = Element;
+                                    ToReplace.ReplaceWith(ParentTargetContent);
+                                    SoundBone.Save(BuildDir + BoneName + "-2.xml");
+                                    break;
+                                }
+                                Console.WriteLine("no Match Detected - OOF!");
+                            }
+                            break;
                         case 4|5:
                             foreach (var Element in PotentialTarget)
                     //EVENTGROUP FRPG_MAIN
