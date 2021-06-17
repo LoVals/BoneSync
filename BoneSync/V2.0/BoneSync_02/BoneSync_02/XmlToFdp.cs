@@ -26,7 +26,6 @@ namespace BoneSync_02
             }
             var XMLtoConvert = Directory.GetFiles(XMLRegenDir, "*.xml", SearchOption.TopDirectoryOnly);
             Console.WriteLine("Converting XML files to FDP");
-            Console.ReadLine();
             foreach (var file in XMLtoConvert)
             {
                 string filename = Path.GetFileNameWithoutExtension(file);

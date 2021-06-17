@@ -578,6 +578,11 @@ namespace BoneSync_02
                         }
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                Console.ReadLine();
+                                Console.WriteLine(BoneID);
+                                Console.ReadLine();
+                                Console.WriteLine(TestBelonging);
+                                Console.ReadLine();
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on EventGroup");
                             }
                             break;
