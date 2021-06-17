@@ -562,7 +562,7 @@ namespace BoneSync_02
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on SoundBanks");
                             }
                             break;
-                        case 4|5:
+                        case 4:
                             foreach (var Element in PotentialTarget)
                     //EVENTGROUP FRPG_MAIN
                     {
@@ -586,6 +586,31 @@ namespace BoneSync_02
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on EventGroup");
                             }
                             break;
+                        case 5:
+                            foreach (var Element in PotentialTarget)
+                            //EVENTGROUP FRPG_SMAIN
+                            {
+                                string TestBelonging = PotentialTarget.Descendants("name").FirstOrDefault().Value;
+                                string BoneID;
+                                BoneID = BoneName;
+                                if (IsChildValid(TestBelonging, BoneID) == true)
+                                {
+                                    XElement ToReplace = Element;
+                                    ToReplace.ReplaceWith(ParentTargetContent);
+                                    SoundBone.Save(BuildDir + BoneName + "-2.xml");
+                                    break;
+                                }
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                Console.ReadLine();
+                                Console.WriteLine(BoneID);
+                                Console.ReadLine();
+                                Console.WriteLine(TestBelonging);
+                                Console.ReadLine();
+                                LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on EventGroup");
+                            }
+                            break;
+
                         default:
                             foreach (var Element in PotentialTarget)
                             //EVENTGROUP_DEFAULT
