@@ -373,7 +373,7 @@ namespace BoneSync_02
         // CHILD WRITER - Code Responsible for regenerating the soundbones
 
         public static void RunGenerator(XElement ParentTargetContent, string ReplacementTarget, string BoneName, int DataType, int Conflict, string CacheDirInput)
-        //DataType: 1 = Sound Def // 2 = SoundBank
+        //DataType: 1 = Sound Def // 2 = SoundBank // 3 = Eventgroup
         {
             string BuildDir = CacheDirInput;
             // select node from one doc
@@ -393,14 +393,14 @@ namespace BoneSync_02
                         switch (Conflict)
                         {
                             case 2: //fdlc_main
-                                ReplacementeElement = "Player_dlcMain";
+                                ReplacementeElement = "fdlc_main";
                                 var master = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault();
                                 var fdlc_main = master.Descendants(ReplaceMe).FirstOrDefault();
                                 TestBelonging = fdlc_main.Descendants(ReplaceMe).FirstOrDefault().Value;
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.WriteLine("Exception 2 detected");
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                if (IsChildValid(TestBelonging, ReplacementeElement) == true)
+                                if ((IsChildValid(TestBelonging, ReplacementeElement) == true)|(IsChildValid(TestBelonging, "Player_Dlc_Main")==true))
                                 {
                                     XElement LevelA = Element.Descendants(ReplaceMe).FirstOrDefault();
                                     XElement LevelB = LevelA.Descendants(ReplaceMe).FirstOrDefault();
@@ -411,6 +411,13 @@ namespace BoneSync_02
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                Console.ReadLine();
+                                Console.WriteLine("This is the new content");
+                                Console.WriteLine(TestBelonging);
+                                Console.ReadLine();
+                                Console.WriteLine("THIS IS REPLACED");
+                                Console.WriteLine(ReplacementeElement);
+                                Console.ReadLine();
                                 LogWriter.WriteError("ERROR - no match Detected for "+BoneName+" on Sound Definition");
                                 break;
                             case 3: //fdlc_smain
@@ -419,7 +426,7 @@ namespace BoneSync_02
                                 Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.WriteLine("Exception 3 detected");
                                 Console.ForegroundColor = ConsoleColor.Green;
-                                if (IsChildValid(TestBelonging, ReplacementeElement) == true)
+                                if ((IsChildValid(TestBelonging, ReplacementeElement) == true) | (IsChildValid(TestBelonging, "Player_Dlc_Smain") == true))
                                 {
                                     XElement ToReplace = Element.Descendants(ReplaceMe).FirstOrDefault();
                                     ToReplace.ReplaceWith(ParentTargetContent);
@@ -428,6 +435,13 @@ namespace BoneSync_02
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                Console.ReadLine();
+                                Console.WriteLine("Target to replace");
+                                Console.WriteLine(ReplacementeElement);
+                                Console.ReadLine();
+                                Console.WriteLine("Element replaced to the targer:");
+                                Console.WriteLine(TestBelonging);
+                                Console.ReadLine();
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on Sound Definition");
                                 break;
                             case 4:
@@ -496,9 +510,9 @@ namespace BoneSync_02
                 case 3:
                     switch (Conflict)
                     {
-                        case 2|3:
+                        case 2:
                             foreach (var Element in PotentialTarget)
-                            //EVENTGROUP FRPG_MAIN
+                            //EVENTGROUP FDLC_MAIN
                             {
                                 string TestBelonging = PotentialTarget.Descendants("name").FirstOrDefault().Value;
                                 string BoneID;
@@ -512,6 +526,39 @@ namespace BoneSync_02
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                Console.ReadLine();
+                                Console.WriteLine("BoneID is :");
+                                Console.WriteLine(BoneID);
+                                Console.ReadLine();
+                                Console.WriteLine("Should be replaced with:");
+                                Console.WriteLine(TestBelonging);
+                                Console.ReadLine();
+                                LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on SoundBanks");
+                            }
+                            break;
+                        case 3:
+                            foreach (var Element in PotentialTarget)
+                            //EVENTGROUP FDLC_SMAIN
+                            {
+                                string TestBelonging = PotentialTarget.Descendants("name").FirstOrDefault().Value;
+                                string BoneID;
+                                BoneID = BoneName;
+                                if (IsChildValid(TestBelonging, BoneID) == true)
+                                {
+                                    XElement ToReplace = Element;
+                                    ToReplace.ReplaceWith(ParentTargetContent);
+                                    SoundBone.Save(BuildDir + BoneName + "-2.xml");
+                                    break;
+                                }
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                Console.ReadLine();
+                                Console.WriteLine("BoneID is :");
+                                Console.WriteLine(BoneID);
+                                Console.ReadLine();
+                                Console.WriteLine("Should be replaced with:");
+                                Console.WriteLine(TestBelonging);
+                                Console.ReadLine();
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on SoundBanks");
                             }
                             break;

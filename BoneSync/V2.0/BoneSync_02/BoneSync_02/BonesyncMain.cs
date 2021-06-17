@@ -22,7 +22,7 @@ namespace BoneSync_02
             // will likely change to the SOUNDSOUL root
             Console.WriteLine(" _________________________");
             Console.WriteLine("¦                         ¦");
-            Console.WriteLine("¦       Bonesync 0.3      ¦");
+            Console.WriteLine("¦       Bonesync 0.4      ¦");
             Console.WriteLine("¦_________________________¦");
             Console.WriteLine("");
             Console.WriteLine("Preparing to syncronize...");
@@ -47,10 +47,7 @@ namespace BoneSync_02
                 Console.WriteLine("Regenerating: " + filename+" - ["+CurrentCount+"/"+ fCount+"]");
                 GenerateChild.Execute(filename, CurrentDir, SoundSoulsDOC);
             }
-
             XmlToFdp.Execute(CurrentDir + @"\SoundBones", CurrentDir + @"\XML\RegeneratedFiles");
-            //Returns an exception
-            Console.ReadLine();
         }
     }
 }
