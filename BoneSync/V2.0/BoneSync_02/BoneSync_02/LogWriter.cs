@@ -19,10 +19,9 @@ namespace BoneSync_02
         {
             string CurrentDir = Directory.GetCurrentDirectory();
             string logPath = CurrentDir + @"/GenerationLog.txt";
-            using(StreamWriter Writer = new StreamWriter(logPath, true));
+            using (StreamWriter writer = new StreamWriter(logPath, true))
             {
-                Writer.WriteLine(message);
-                //wHT U NO WORK?!
+                writer.WriteLine($"{DateTime.Now} : {message}");
             }
         }
     }

@@ -410,7 +410,8 @@ namespace BoneSync_02
                                     goto LoopOut;
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("ERROR - no Match Detected");
+                                Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                LogWriter.WriteError("ERROR - no match Detected for "+BoneName+" on Sound Definition");
                                 break;
                             case 3: //fdlc_smain
                                 ReplacementeElement = "fdlc_smain";                               
@@ -426,7 +427,8 @@ namespace BoneSync_02
                                     goto LoopOut;   
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("ERROR - no Match Detected");
+                                Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on Sound Definition");
                                 break;
                             case 4:
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
@@ -439,7 +441,8 @@ namespace BoneSync_02
                                     goto LoopOut;
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("ERROR - no Match Detected");
+                                Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on Sound Definition");
                                 break;
                             case 5:
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
@@ -452,7 +455,8 @@ namespace BoneSync_02
                                     goto LoopOut;
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("ERROR - no Match Detected");
+                                Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on Sound Definition");
                                 break;
                             default: //unregistered cases
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
@@ -464,7 +468,8 @@ namespace BoneSync_02
                                     break;
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("ERROR - no Match Detected");
+                                Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on Sound Definition");
                                 break;
                         }
                     LoopOut:
@@ -484,7 +489,8 @@ namespace BoneSync_02
                             break;
                         }
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("ERROR - no Match Detected");
+                        Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                        LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on SoundBanks");
                     }
                     break;
                 case 3:
@@ -505,7 +511,8 @@ namespace BoneSync_02
                                     break;
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("ERROR - no Match Detected");
+                                Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on SoundBanks");
                             }
                             break;
                         case 4|5:
@@ -523,7 +530,8 @@ namespace BoneSync_02
                             break;
                         }
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("ERROR - no Match Detected");
+                                Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on EventGroup");
                             }
                             break;
                         default:
@@ -542,7 +550,8 @@ namespace BoneSync_02
                                     break;
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
-                                Console.WriteLine("ERROR - no Match Detected");
+                                Console.WriteLine("ERROR - no Match Detected - See Log for Details");
+                                LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on EventGroup");
                             }
                             break;
                     }

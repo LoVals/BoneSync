@@ -25,11 +25,13 @@ namespace BoneSync_02
                 File.Move(file, SoundBonesDir + @"\Backup\"+ filename);
             }
             var XMLtoConvert = Directory.GetFiles(XMLRegenDir, "*.xml", SearchOption.TopDirectoryOnly);
+            Console.WriteLine("Converting XML files to FDP");
             Console.ReadLine();
             foreach (var file in XMLtoConvert)
             {
                 string filename = Path.GetFileNameWithoutExtension(file);
-                File.Move(file, SoundBonesDir + @"\Backup\" + filename + ".fdp");
+                Console.WriteLine("Moving File: " + filename);
+                File.Move(file, SoundBonesDir + @"\" + filename + ".fdp");
             }
         }
     }
