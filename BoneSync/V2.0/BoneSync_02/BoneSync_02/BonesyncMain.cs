@@ -17,6 +17,7 @@ namespace BoneSync_02
         static void Main(string[] args)
         {
             string CurrentDir = Directory.GetCurrentDirectory();
+            string OldXMLDir = CurrentDir + @"\XML\RegeneratedFiles";
             Console.ForegroundColor = ConsoleColor.White;
             // will likely change to the SOUNDSOUL root
             Console.WriteLine(" _________________________");
@@ -25,11 +26,29 @@ namespace BoneSync_02
             Console.WriteLine("¦_________________________¦");
             Console.WriteLine("");
             Console.WriteLine("Preparing to syncronize...");
+            Console.WriteLine("Sweeping Bonedust off...");
+            var OLDXML = Directory.GetFiles(OldXMLDir , "*.xml", SearchOption.TopDirectoryOnly);
+            foreach (var file in OLDXML)
+            {
+                File.Delete(file);
+            }
             FdpToXml.Execute(CurrentDir);
             //COPIES THE PARENT FILE AS XML FILE
-            Console.WriteLine("TEST - REGENERATION OF FDLC_C3471");
-            GenerateChild.Execute("fdlc_c3471", CurrentDir);
-            //EXECUTES SOUNDBONES REGENERATION
+            Console.WriteLine("SOUNDBONES REGENERATION IS STARTING");
+            var SoundBones = Directory.GetFiles(CurrentDir + @"\SoundBones", "*.fdp", SearchOption.TopDirectoryOnly);
+            int fCount = Directory.GetFiles(CurrentDir + @"\SoundBones", "*.fdp", SearchOption.TopDirectoryOnly).Length;
+            int CurrentCount = 0;
+            var SoundSoulsDOC = XDocument.Load(CurrentDir + @"\XML\SoundSouls.xml");
+            foreach (var file in SoundBones)
+            {
+                //EXECUTES SOUNDBONES REGENERATION
+                CurrentCount = CurrentCount + 1;
+                string filename = Path.GetFileNameWithoutExtension(file);
+                Console.WriteLine("Regenerating: " + filename+" - ["+CurrentCount+"/"+ fCount+"]");
+                GenerateChild.Execute(filename, CurrentDir, SoundSoulsDOC);
+            }
+
+            XmlToFdp.Execute(CurrentDir + @"\SoundBones", CurrentDir + @"\XML\RegeneratedFiles");
             //Returns an exception
             Console.ReadLine();
         }

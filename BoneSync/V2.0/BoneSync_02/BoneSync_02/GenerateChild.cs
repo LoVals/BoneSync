@@ -15,7 +15,7 @@ namespace BoneSync_02
 {
     class GenerateChild
     {
-        public static void Execute(string BoneInput, string CurrentDirInput)
+        public static void Execute(string BoneInput, string CurrentDirInput, XDocument ParentFile)
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine();
@@ -27,14 +27,16 @@ namespace BoneSync_02
             string CacheDir = CurrentDirInput + @"\XML\RegeneratedFiles\Cache\";
             string RegenerationDir = CurrentDirInput + @"\XML\RegeneratedFiles\";
             Console.WriteLine("Directories Set");
-            File.Delete(CacheDir + BoneName + " - 2.xml");
-            Console.WriteLine("Deleting old cache...");
-            File.Copy(BuildDir + BoneName+".xml", CacheDir + BoneName + "-2.xml");
+            var BoneCache = Directory.GetFiles(CacheDir, "*.xml", SearchOption.TopDirectoryOnly);
+            Console.WriteLine("Clearing Cache");
+            foreach (var file in BoneCache)
+            {
+                File.Delete(file);
+            }
             Console.WriteLine("Generating cache file...");
+            File.Copy(BuildDir + BoneName+".xml", CacheDir + BoneName + "-2.xml");
             //XDocument Backup = XDocument.Load(BuildDir + BoneName + "-2.xml");
             //Backup.Save(CacheDir + "BoneBackup.xml");
-            var ParentFile = XDocument.Load(CurrentDirInput + @"\XML\SoundSouls.xml");
-            Console.WriteLine("Soundsouls Loaded into memory...");
 
 
             //-------------------------------------------------------------------------------//
@@ -263,9 +265,11 @@ namespace BoneSync_02
             //the easiest solution would be to fix the master project to some degree and separate the events from fdlc_smain and fdlc_smain in the eventgroup section
             //this could also apply to frpg_main and frpg_smain
 
-            
+
             //------------------------------------------------------------------------------
-            GenerationCleanup(BuildDir + BoneName + "-2.xml", BoneName, ConflictType, CacheDir, RegenerationDir);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Beginning Generation Clean-up");
+            GenerationCleanup(CacheDir + BoneName + "-2.xml", BoneName, ConflictType, CacheDir, RegenerationDir);
         }
 
         // BOOLEANS DETERMINE IF THE FOLDER I'M IN IS SPECIFIC AND IF IT BELONGS TO THE CHILD I'M GENERATING
@@ -405,7 +409,8 @@ namespace BoneSync_02
                                     SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     goto LoopOut;
                                 }
-                                Console.WriteLine("no Match Detected - OOF!");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERROR - no Match Detected");
                                 break;
                             case 3: //fdlc_smain
                                 ReplacementeElement = "fdlc_smain";                               
@@ -420,7 +425,8 @@ namespace BoneSync_02
                                     SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     goto LoopOut;   
                                 }
-                                Console.WriteLine("no Match Detected - OOF!");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERROR - no Match Detected");
                                 break;
                             case 4:
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
@@ -432,7 +438,8 @@ namespace BoneSync_02
                                     SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     goto LoopOut;
                                 }
-                                Console.WriteLine("no Match Detected - OOF!");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERROR - no Match Detected");
                                 break;
                             case 5:
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
@@ -444,7 +451,8 @@ namespace BoneSync_02
                                     SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     goto LoopOut;
                                 }
-                                Console.WriteLine("no Match Detected - OOF!");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERROR - no Match Detected");
                                 break;
                             default: //unregistered cases
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
@@ -455,7 +463,8 @@ namespace BoneSync_02
                                     SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     break;
                                 }
-                                Console.WriteLine("no Match Detected - OOF!");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERROR - no Match Detected");
                                 break;
                         }
                     LoopOut:
@@ -474,7 +483,8 @@ namespace BoneSync_02
                             SoundBone.Save(BuildDir + BoneName + "-2.xml");
                             break;
                         }
-                        Console.WriteLine("no Match Detected - OOF!");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("ERROR - no Match Detected");
                     }
                     break;
                 case 3:
@@ -494,7 +504,8 @@ namespace BoneSync_02
                                     SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     break;
                                 }
-                                Console.WriteLine("no Match Detected - OOF!");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERROR - no Match Detected");
                             }
                             break;
                         case 4|5:
@@ -511,8 +522,9 @@ namespace BoneSync_02
                             SoundBone.Save(BuildDir + BoneName + "-2.xml");
                             break;
                         }
-                        Console.WriteLine("no Match Detected - OOF!");
-                    }
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERROR - no Match Detected");
+                            }
                             break;
                         default:
                             foreach (var Element in PotentialTarget)
@@ -529,7 +541,8 @@ namespace BoneSync_02
                                     SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     break;
                                 }
-                                Console.WriteLine("no Match Detected - OOF!");
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("ERROR - no Match Detected");
                             }
                             break;
                     }
@@ -616,11 +629,12 @@ namespace BoneSync_02
             }
             Console.WriteLine("Event Group Clean-Up Complete");
             Console.WriteLine();
-            SoundBone.Save(BuildDir + BoneName + "-Regenerated.xml");
-            var FinalCleanup = File.ReadAllLines(BuildDir + BoneName + "-Regenerated.xml"); 
-            File.WriteAllLines(BuildDir + BoneName + "-Regenerated.xml", FinalCleanup.Skip(1).ToArray());
+            SoundBone.Save(RegenDir + BoneName + ".xml");
+            var FinalCleanup = File.ReadAllLines(RegenDir + BoneName + ".xml"); 
+            File.WriteAllLines(RegenDir + BoneName + ".xml", FinalCleanup.Skip(1).ToArray());
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Cleanup Complete");
+            Console.WriteLine();
 
         }
 

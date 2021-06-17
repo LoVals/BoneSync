@@ -32,7 +32,6 @@ namespace BoneSync_02
             Console.ForegroundColor = ConsoleColor.Yellow;
             
             Console.WriteLine("Deleting Old Data...");
-            Console.ReadLine();
             foreach(var file in BoneCache)
             {
                 File.Delete(file);

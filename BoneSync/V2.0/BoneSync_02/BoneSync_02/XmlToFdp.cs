@@ -14,12 +14,23 @@ namespace BoneSync_02
 {
     class XmlToFdp
     {
-        public static void Execute()
+        public static void Execute(string SoundBonesDir, string XMLRegenDir)
         //Copies over the GENRATED CHILDREN projects as FDP
         {
-            var SoundSoulsFDP = Directory.GetFiles(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\FDP", "*.fdp", SearchOption.TopDirectoryOnly);
-            File.Move(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\Generated\Child1.xml", @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\FDP\Child1.xml");
-            File.Move(@"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\FDP\Child1.xml", @"G:\BoneSync\BoneSync\BoneSync\V2.0\TestFiles\XML\Child1.fdp");
+            var SoundSoulsFDP = Directory.GetFiles(SoundBonesDir, "*.fdp", SearchOption.TopDirectoryOnly);
+            foreach (var file in SoundSoulsFDP)
+            {
+                string filename = Path.GetFileName(file);
+                File.Delete(SoundBonesDir + @"\Backup\" + filename);
+                File.Move(file, SoundBonesDir + @"\Backup\"+ filename);
+            }
+            var XMLtoConvert = Directory.GetFiles(XMLRegenDir, "*.xml", SearchOption.TopDirectoryOnly);
+            Console.ReadLine();
+            foreach (var file in XMLtoConvert)
+            {
+                string filename = Path.GetFileNameWithoutExtension(file);
+                File.Move(file, SoundBonesDir + @"\Backup\" + filename + ".fdp");
+            }
         }
     }
 }
