@@ -411,13 +411,6 @@ namespace BoneSync_02
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
-                                Console.ReadLine();
-                                Console.WriteLine("This is the new content");
-                                Console.WriteLine(TestBelonging);
-                                Console.ReadLine();
-                                Console.WriteLine("THIS IS REPLACED");
-                                Console.WriteLine(ReplacementeElement);
-                                Console.ReadLine();
                                 LogWriter.WriteError("ERROR - no match Detected for "+BoneName+" on Sound Definition");
                                 break;
                             case 3: //fdlc_smain
@@ -435,13 +428,6 @@ namespace BoneSync_02
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
-                                Console.ReadLine();
-                                Console.WriteLine("Target to replace");
-                                Console.WriteLine(ReplacementeElement);
-                                Console.ReadLine();
-                                Console.WriteLine("Element replaced to the targer:");
-                                Console.WriteLine(TestBelonging);
-                                Console.ReadLine();
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on Sound Definition");
                                 break;
                             case 4:
@@ -526,13 +512,6 @@ namespace BoneSync_02
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
-                                Console.ReadLine();
-                                Console.WriteLine("BoneID is :");
-                                Console.WriteLine(BoneID);
-                                Console.ReadLine();
-                                Console.WriteLine("Should be replaced with:");
-                                Console.WriteLine(TestBelonging);
-                                Console.ReadLine();
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on SoundBanks");
                             }
                             break;
@@ -552,13 +531,6 @@ namespace BoneSync_02
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
-                                Console.ReadLine();
-                                Console.WriteLine("BoneID is :");
-                                Console.WriteLine(BoneID);
-                                Console.ReadLine();
-                                Console.WriteLine("Should be replaced with:");
-                                Console.WriteLine(TestBelonging);
-                                Console.ReadLine();
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on SoundBanks");
                             }
                             break;
@@ -578,11 +550,6 @@ namespace BoneSync_02
                         }
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
-                                Console.ReadLine();
-                                Console.WriteLine(BoneID);
-                                Console.ReadLine();
-                                Console.WriteLine(TestBelonging);
-                                Console.ReadLine();
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on EventGroup");
                             }
                             break;
@@ -602,11 +569,6 @@ namespace BoneSync_02
                                 }
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
-                                Console.ReadLine();
-                                Console.WriteLine(BoneID);
-                                Console.ReadLine();
-                                Console.WriteLine(TestBelonging);
-                                Console.ReadLine();
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on EventGroup");
                             }
                             break;
