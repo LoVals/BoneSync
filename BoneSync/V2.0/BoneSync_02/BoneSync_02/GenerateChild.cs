@@ -430,12 +430,11 @@ namespace BoneSync_02
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on Sound Definition");
                                 break;
-                            case 4:
+                            case 4: //FRPG_MAIN
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
-                                    if (IsChildValid(TestBelonging, ReplacementeElement) == true)
-                                {
-                                    XElement LevelA = Element.Descendants(ReplaceMe).FirstOrDefault();
-                                    XElement ToReplace = LevelA.Descendants(ReplaceMe).FirstOrDefault();
+                                if (IsChildValid(TestBelonging, ReplacementeElement) == true)
+                                {                                    
+                                    XElement ToReplace = Element.Descendants(ReplaceMe).FirstOrDefault();
                                     ToReplace.ReplaceWith(ParentTargetContent);
                                     SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     goto LoopOut;
@@ -444,12 +443,11 @@ namespace BoneSync_02
                                 Console.WriteLine("ERROR - no Match Detected - See Log for Details");
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on Sound Definition");
                                 break;
-                            case 5:
+                            case 5: //FRPG_SMAIN
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
                                 if (IsChildValid(TestBelonging, ReplacementeElement) == true)
                                 {
-                                    XElement LevelA = Element.Descendants(ReplaceMe).FirstOrDefault();
-                                    XElement ToReplace = LevelA.Descendants(ReplaceMe).FirstOrDefault();
+                                    XElement ToReplace = Element.Descendants(ReplaceMe).FirstOrDefault();
                                     ToReplace.ReplaceWith(ParentTargetContent);
                                     SoundBone.Save(BuildDir + BoneName + "-2.xml");
                                     goto LoopOut;
@@ -629,6 +627,29 @@ namespace BoneSync_02
                     break;
                 case 4:
                     TextCache = TextCache.Replace("/SoundSouls/Player", "frpg_main");
+                    TextCache = TextCache.Replace("frpg_main-Player_Main-Player", "");
+                    TextCache = TextCache.Replace("-Player_Souls-", "");
+                    TextCache = TextCache.Replace("-Player_Movement-", "");
+                    TextCache = TextCache.Replace("-Player_Actions-", "");
+                    TextCache = TextCache.Replace("-Player_Spells-", "");
+                    TextCache = TextCache.Replace("-Player_States-", "");
+                    TextCache = TextCache.Replace("-Player_Damage-", "");
+                    TextCache = TextCache.Replace("-SpiritForm-", "");
+                    TextCache = TextCache.Replace("-Host-", "");
+                    TextCache = TextCache.Replace("-Player_Voice-", "");
+                    TextCache = TextCache.Replace("-Player_Combat-Weapons_Physics-", "");
+                    TextCache = TextCache.Replace("Player_Main", "frpg_main");
+                    //It should build anyway with the slug in it. I doubt the user will go in the pre-existing soundbones anyway
+                    //RIGHT?!
+
+                    break;
+                case 5:
+                    TextCache = TextCache.Replace("-SoundSouls-Player-Player_Smain-Global-", "");
+                    TextCache = TextCache.Replace("Music-","");
+                    TextCache = TextCache.Replace("Environment-Bonefire-", "");
+                    TextCache = TextCache.Replace("EnemyDeaths-", "");
+                    TextCache = TextCache.Replace("-SoundSouls-Player-Player_Smain-Player-", "");
+                    TextCache = TextCache.Replace("Player_Smain", "frpg_smain");
                     break;
             }
             
@@ -729,11 +750,11 @@ namespace BoneSync_02
                 var smainConfirm = IsException.match_main(BoneName, "frpg_smain", 1);
                 if (mainConfirm == 0)
                 {
-                    return 4;
+                    return 4; //FRPG_MAIN
                 }
                 else if(smainConfirm == 0)
                 {
-                    return 5;
+                    return 5; //FRPG_SMAIN
                 }
                 else
                 {
