@@ -638,7 +638,7 @@ namespace BoneSync_02
                     TextCache = TextCache.Replace("-Host-", "");
                     TextCache = TextCache.Replace("-Player_Voice-", "");
                     TextCache = TextCache.Replace("-Player_Combat-Weapons_Physics-", "");
-                    TextCache = TextCache.Replace("Player_Main", "frpg_main");
+                    //TextCache = TextCache.Replace("Player_Main", "frpg_main");
                     //It should build anyway with the slug in it. I doubt the user will go in the pre-existing soundbones anyway
                     //RIGHT?!
 
