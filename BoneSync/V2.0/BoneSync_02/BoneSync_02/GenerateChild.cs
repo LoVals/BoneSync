@@ -431,6 +431,7 @@ namespace BoneSync_02
                                 LogWriter.WriteError("ERROR - no match Detected for " + BoneName + " on Sound Definition");
                                 break;
                             case 4: //FRPG_MAIN
+                                ReplacementeElement = "Player_Main";
                                 TestBelonging = PotentialTarget.Descendants(ReplaceMe).FirstOrDefault().Value;
                                 if (IsChildValid(TestBelonging, ReplacementeElement) == true)
                                 {                                    
@@ -638,7 +639,7 @@ namespace BoneSync_02
                     TextCache = TextCache.Replace("-Host-", "");
                     TextCache = TextCache.Replace("-Player_Voice-", "");
                     TextCache = TextCache.Replace("-Player_Combat-Weapons_Physics-", "");
-                    //TextCache = TextCache.Replace("Player_Main", "frpg_main");
+                    //TextCache = TextCache.Replace("<name>Player_Main</name>", "<name>frpg_main</name>");
                     //It should build anyway with the slug in it. I doubt the user will go in the pre-existing soundbones anyway
                     //RIGHT?!
 
